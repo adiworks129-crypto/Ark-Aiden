@@ -308,6 +308,27 @@ tests/
     milestone1/
 ```
 
+## Deploying updates to GitHub
+
+Once this repo has a GitHub remote configured (`git remote add origin
+<your-repo-url>`), use `./deploy.sh` for every future push instead of running
+`git add`/`commit`/`push` by hand — it exists specifically so a broken change
+can't reach GitHub by accident:
+
+```bash
+./deploy.sh                              # timestamped commit message, runs the test suite first
+./deploy.sh "Fix calibration edge case"  # your own commit message
+./deploy.sh --skip-tests "quick doc fix" # push without running tests first
+./deploy.sh --branch develop "message"   # push to a branch other than the current one
+```
+
+It runs the full test suite and refuses to push if anything fails, stages and
+commits only if there's actually something changed, and pushes to `origin` on
+your current branch. It relies entirely on whatever git/GitHub authentication
+is already set up on your machine (SSH key, Git Credential Manager, `gh auth
+login`, etc.) — it never asks for or handles a token itself. On Windows, run
+it from Git Bash or WSL (`bash deploy.sh`).
+
 ## Running the tests
 
 Milestone 0 has zero third-party dependencies on purpose (see the Milestone 0 note
