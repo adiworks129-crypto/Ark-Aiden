@@ -1,0 +1,351 @@
+{
+  "metadata": {
+    "report_schema_version": "0.1.0",
+    "generated_at": "2026-07-28T08:47:36.839910+00:00",
+    "trajectory_id": "m1-level_2_structural-seed1",
+    "baseline_estate_id": "milestone1-order-management-estate",
+    "profile_name": "level_2_structural",
+    "trajectory_seed": 1,
+    "engine_version": "0.1.0",
+    "baseline_schema_version": "0.2.0",
+    "ledger_schema_version": "0.1.0",
+    "issue_schema_version": "0.1.0",
+    "agent_output_schema_version": "0.1.0",
+    "metrics_schema_version": "0.1.0",
+    "calibration_schema_version": "0.1.0",
+    "explanation_signals_schema_version": "0.1.0",
+    "complexity_schema_version": "0.1.0",
+    "generator_version": null,
+    "adapter_name": "mulesoft",
+    "adapter_version": "0.1.0"
+  },
+  "environment_summary": {
+    "application_count": 4,
+    "api_count": 4,
+    "flow_count": 9,
+    "dependency_count": 9,
+    "artifact_count": 8
+  },
+  "transformation_summary": {
+    "total_mutations": 6,
+    "distinct_transformation_types": [
+      "dependency_change",
+      "documentation_decay",
+      "naming_drift"
+    ],
+    "severity_mean": 0.42873694687496416,
+    "severity_max": 0.5164620097022348,
+    "affected_entity_count": 4,
+    "complexity_score": 0.2881228244791607,
+    "complexity_profile": {
+      "baseline_estate_id": "milestone1-order-management-estate",
+      "trajectory_seed": 1,
+      "profile_name": "level_2_structural",
+      "mutation_count": 6,
+      "distinct_issue_count": 3,
+      "compounding_count": 2,
+      "max_compounding_depth": 2,
+      "severity_mean": 0.42873694687496416,
+      "severity_max": 0.5164620097022348,
+      "affected_entity_count": 4,
+      "transformation_diversity": 0.5,
+      "transformation_types_used": [
+        "dependency_change",
+        "documentation_decay",
+        "naming_drift"
+      ],
+      "dependency_impact_mean": 0.0,
+      "dependency_impact_max": 0.0,
+      "interaction_score": 0.0,
+      "complexity_score": 0.2881228244791607,
+      "weights_used": {
+        "mutation_count": 1.0,
+        "severity": 1.0,
+        "diversity": 1.0,
+        "dependency_impact": 1.0,
+        "interaction": 1.0,
+        "compounding": 1.0
+      },
+      "complexity_schema_version": "0.1.0"
+    }
+  },
+  "issue_summary": {
+    "total_observable_issues": 3,
+    "issues_by_type": {
+      "documentation_decay": 1,
+      "dependency_change": 1,
+      "naming_drift": 1
+    },
+    "issues_by_severity_bucket": {
+      "low": 1,
+      "medium": 2,
+      "high": 0
+    },
+    "compounding_issue_count": 1,
+    "net_zero_transformation_count": 1,
+    "net_zero_groups": [
+      {
+        "transformation_type": "dependency_change",
+        "affected_entity_ids": [
+          "step-process-verify-customer"
+        ]
+      }
+    ]
+  },
+  "agent_performance": {
+    "total_findings": 0,
+    "category_metrics": {
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+    },
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      }
+    },
+    "entity_localization_metrics": {
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 3,
+      "precision": null,
+      "recall": 0.0,
+      "localization_accuracy": null
+    },
+    "calibration": {
+      "sample_size": 0,
+      "brier_score": null,
+      "ece": null,
+      "calibration_pairs": [],
+      "min_sample_size_for_ece": 5
+    },
+    "explanation_signals": [],
+    "confidence_distribution": {
+      "0.0-0.1": 0,
+      "0.1-0.2": 0,
+      "0.2-0.3": 0,
+      "0.3-0.4": 0,
+      "0.4-0.5": 0,
+      "0.5-0.6": 0,
+      "0.6-0.7": 0,
+      "0.7-0.8": 0,
+      "0.8-0.9": 0,
+      "0.9-1.0": 0
+    }
+  },
+  "failure_analysis": {
+    "missed_issues": [
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-inventory-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-inventory-build-response']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "dependency_change:step-process-validate-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "dependency_change",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'dependency_change' issue on ['step-process-validate-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "naming_drift:flow-inventory-get-main",
+        "claimed_issue_type": null,
+        "actual_issue_type": "naming_drift",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'naming_drift' issue on ['flow-inventory-get-main']."
+      }
+    ],
+    "hallucinated_findings": [],
+    "wrong_category_predictions": [],
+    "correct_location_incorrect_diagnosis": [],
+    "overconfidence_patterns": [],
+    "overconfidence_threshold": 0.7
+  },
+  "research_hooks": {
+    "complexity_score": 0.2881228244791607,
+    "mutation_count": 6,
+    "transformation_type_combination": [
+      "dependency_change",
+      "documentation_decay",
+      "naming_drift"
+    ],
+    "category_f1": null,
+    "entity_localization_accuracy": null,
+    "calibration_ece": null,
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      }
+    }
+  },
+  "issues": [
+    {
+      "issue_id": "documentation_decay:step-inventory-build-response",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-inventory-build-response"
+      ],
+      "observable_symptom": {
+        "step-inventory-build-response": {
+          "description": ""
+        }
+      },
+      "severity": 0.4463569969572443,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-inventory-build-response'], observable as: {'step-inventory-build-response': {'description': ''}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_2_structural-seed1-000",
+          "sequence_index": 0,
+          "original_state": {
+            "step-inventory-build-response": {
+              "description": "Builds the JSON response describing current stock levels for the requested SKU."
+            }
+          },
+          "transformed_state": {
+            "step-inventory-build-response": {
+              "description": "TODO: document this step."
+            }
+          },
+          "severity": 0.3765207077218265,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was generic placeholder."
+        },
+        {
+          "mutation_id": "level_2_structural-seed1-002",
+          "sequence_index": 2,
+          "original_state": {
+            "step-inventory-build-response": {
+              "description": "TODO: document this step."
+            }
+          },
+          "transformed_state": {
+            "step-inventory-build-response": {
+              "description": ""
+            }
+          },
+          "severity": 0.4463569969572443,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was removed entirely (escalated: placeholder was already a no-op)."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "dependency_change:step-process-validate-ref",
+      "issue_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-validate-ref"
+      ],
+      "observable_symptom": {
+        "step-process-validate-ref": {
+          "target_flow_id": "flow-nightly-reconciliation"
+        }
+      },
+      "severity": 0.5164620097022348,
+      "expected_detection_target": "A 'dependency_change' issue affecting ['step-process-validate-ref'], observable as: {'step-process-validate-ref': {'target_flow_id': 'flow-nightly-reconciliation'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_2_structural-seed1-004",
+          "sequence_index": 4,
+          "original_state": {
+            "step-process-validate-ref": {
+              "target_flow_id": "flow-validate-order"
+            }
+          },
+          "transformed_state": {
+            "step-process-validate-ref": {
+              "target_flow_id": "flow-nightly-reconciliation"
+            }
+          },
+          "severity": 0.5164620097022348,
+          "rationale": "Simulates a dependency change: 'step-process-validate-ref' now calls 'flow-nightly-reconciliation' instead of 'flow-validate-order', as if the team switched downstream providers while keeping the estate structurally valid."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "naming_drift:flow-inventory-get-main",
+      "issue_type": "naming_drift",
+      "affected_entity_ids": [
+        "flow-inventory-get-main"
+      ],
+      "observable_symptom": {
+        "flow-inventory-get-main": {
+          "name": "getInventoryMainFlowCamel"
+        }
+      },
+      "severity": 0.30917699491006606,
+      "expected_detection_target": "A 'naming_drift' issue affecting ['flow-inventory-get-main'], observable as: {'flow-inventory-get-main': {'name': 'getInventoryMainFlowCamel'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_2_structural-seed1-005",
+          "sequence_index": 5,
+          "original_state": {
+            "flow-inventory-get-main": {
+              "name": "get-inventory-main-flow"
+            }
+          },
+          "transformed_state": {
+            "flow-inventory-get-main": {
+              "name": "getInventoryMainFlowCamel"
+            }
+          },
+          "severity": 0.30917699491006606,
+          "rationale": "Simulates naming convention drift on Flow 'flow-inventory-get-main' (styles applied: ['_style_kebab_to_camel', '_style_kebab_to_camel']), as if caused by a rushed migration that skipped a naming review."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    }
+  ],
+  "raw_agent_output": {
+    "findings": []
+  }
+}

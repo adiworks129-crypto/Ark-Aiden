@@ -1,0 +1,322 @@
+{
+  "metadata": {
+    "report_schema_version": "0.1.0",
+    "generated_at": "2026-07-28T08:47:36.825963+00:00",
+    "trajectory_id": "m1-level_1_minor-seed1",
+    "baseline_estate_id": "milestone1-order-management-estate",
+    "profile_name": "level_1_minor",
+    "trajectory_seed": 1,
+    "engine_version": "0.1.0",
+    "baseline_schema_version": "0.2.0",
+    "ledger_schema_version": "0.1.0",
+    "issue_schema_version": "0.1.0",
+    "agent_output_schema_version": "0.1.0",
+    "metrics_schema_version": "0.1.0",
+    "calibration_schema_version": "0.1.0",
+    "explanation_signals_schema_version": "0.1.0",
+    "complexity_schema_version": "0.1.0",
+    "generator_version": null,
+    "adapter_name": "mulesoft",
+    "adapter_version": "0.1.0"
+  },
+  "environment_summary": {
+    "application_count": 4,
+    "api_count": 4,
+    "flow_count": 9,
+    "dependency_count": 9,
+    "artifact_count": 8
+  },
+  "transformation_summary": {
+    "total_mutations": 3,
+    "distinct_transformation_types": [
+      "documentation_decay",
+      "naming_drift"
+    ],
+    "severity_mean": 0.178169568041871,
+    "severity_max": 0.22983012037151604,
+    "affected_entity_count": 3,
+    "complexity_score": 0.1296949280069785,
+    "complexity_profile": {
+      "baseline_estate_id": "milestone1-order-management-estate",
+      "trajectory_seed": 1,
+      "profile_name": "level_1_minor",
+      "mutation_count": 3,
+      "distinct_issue_count": 3,
+      "compounding_count": 0,
+      "max_compounding_depth": 1,
+      "severity_mean": 0.178169568041871,
+      "severity_max": 0.22983012037151604,
+      "affected_entity_count": 3,
+      "transformation_diversity": 0.3333333333333333,
+      "transformation_types_used": [
+        "documentation_decay",
+        "naming_drift"
+      ],
+      "dependency_impact_mean": 0.3333333333333333,
+      "dependency_impact_max": 1.0,
+      "interaction_score": 0.0,
+      "complexity_score": 0.1296949280069785,
+      "weights_used": {
+        "mutation_count": 1.0,
+        "severity": 1.0,
+        "diversity": 1.0,
+        "dependency_impact": 1.0,
+        "interaction": 1.0,
+        "compounding": 1.0
+      },
+      "complexity_schema_version": "0.1.0"
+    }
+  },
+  "issue_summary": {
+    "total_observable_issues": 3,
+    "issues_by_type": {
+      "naming_drift": 2,
+      "documentation_decay": 1
+    },
+    "issues_by_severity_bucket": {
+      "low": 3,
+      "medium": 0,
+      "high": 0
+    },
+    "compounding_issue_count": 0,
+    "net_zero_transformation_count": 0,
+    "net_zero_groups": []
+  },
+  "agent_performance": {
+    "total_findings": 1,
+    "category_metrics": {
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 2,
+      "precision": 1.0,
+      "recall": 0.3333333333333333,
+      "f1": 0.5
+    },
+    "category_metrics_by_type": {
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 1,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      }
+    },
+    "entity_localization_metrics": {
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 2,
+      "precision": 1.0,
+      "recall": 0.3333333333333333,
+      "localization_accuracy": 0.5
+    },
+    "calibration": {
+      "sample_size": 1,
+      "brier_score": 0.12249999999999998,
+      "ece": null,
+      "calibration_pairs": [
+        [
+          0.65,
+          true
+        ]
+      ],
+      "min_sample_size_for_ece": 5
+    },
+    "explanation_signals": [
+      {
+        "finding_id": "finding-000",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 248
+      }
+    ],
+    "confidence_distribution": {
+      "0.0-0.1": 0,
+      "0.1-0.2": 0,
+      "0.2-0.3": 0,
+      "0.3-0.4": 0,
+      "0.4-0.5": 0,
+      "0.5-0.6": 0,
+      "0.6-0.7": 1,
+      "0.7-0.8": 0,
+      "0.8-0.9": 0,
+      "0.9-1.0": 0
+    }
+  },
+  "failure_analysis": {
+    "missed_issues": [
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-order-status-call-process",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-order-status-call-process']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "naming_drift:flow-nightly-reconciliation",
+        "claimed_issue_type": null,
+        "actual_issue_type": "naming_drift",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'naming_drift' issue on ['flow-nightly-reconciliation']."
+      }
+    ],
+    "hallucinated_findings": [],
+    "wrong_category_predictions": [],
+    "correct_location_incorrect_diagnosis": [],
+    "overconfidence_patterns": [],
+    "overconfidence_threshold": 0.7
+  },
+  "research_hooks": {
+    "complexity_score": 0.1296949280069785,
+    "mutation_count": 3,
+    "transformation_type_combination": [
+      "documentation_decay",
+      "naming_drift"
+    ],
+    "category_f1": 0.5,
+    "entity_localization_accuracy": 0.5,
+    "calibration_ece": null,
+    "category_metrics_by_type": {
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 1,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      }
+    }
+  },
+  "issues": [
+    {
+      "issue_id": "naming_drift:api-order-processing-process-v1",
+      "issue_type": "naming_drift",
+      "affected_entity_ids": [
+        "api-order-processing-process-v1"
+      ],
+      "observable_symptom": {
+        "api-order-processing-process-v1": {
+          "name": "Order Processing Process API-copy2"
+        }
+      },
+      "severity": 0.17652070772182654,
+      "expected_detection_target": "A 'naming_drift' issue affecting ['api-order-processing-process-v1'], observable as: {'api-order-processing-process-v1': {'name': 'Order Processing Process API-copy2'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_1_minor-seed1-000",
+          "sequence_index": 0,
+          "original_state": {
+            "api-order-processing-process-v1": {
+              "name": "Order Processing Process API"
+            }
+          },
+          "transformed_state": {
+            "api-order-processing-process-v1": {
+              "name": "Order Processing Process API-copy2"
+            }
+          },
+          "severity": 0.17652070772182654,
+          "rationale": "Simulates naming convention drift on API 'api-order-processing-process-v1' (styles applied: ['_style_abbreviate', '_style_add_legacy_suffix (forced, no-op guard)']), as if caused by a rushed migration that skipped a naming review."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "documentation_decay:step-order-status-call-process",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-order-status-call-process"
+      ],
+      "observable_symptom": {
+        "step-order-status-call-process": {
+          "description": "Requests the aggregated processing status"
+        }
+      },
+      "severity": 0.12815787603227047,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-order-status-call-process'], observable as: {'step-order-status-call-process': {'description': 'Requests the aggregated processing status'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_1_minor-seed1-001",
+          "sequence_index": 1,
+          "original_state": {
+            "step-order-status-call-process": {
+              "description": "Requests the aggregated processing status for this order from the Process API."
+            }
+          },
+          "transformed_state": {
+            "step-order-status-call-process": {
+              "description": "Requests the aggregated processing status"
+            }
+          },
+          "severity": 0.12815787603227047,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-order-status-call-process' was truncated."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "naming_drift:flow-nightly-reconciliation",
+      "issue_type": "naming_drift",
+      "affected_entity_ids": [
+        "flow-nightly-reconciliation"
+      ],
+      "observable_symptom": {
+        "flow-nightly-reconciliation": {
+          "name": "nightlyOrderReconciliationFlow"
+        }
+      },
+      "severity": 0.22983012037151604,
+      "expected_detection_target": "A 'naming_drift' issue affecting ['flow-nightly-reconciliation'], observable as: {'flow-nightly-reconciliation': {'name': 'nightlyOrderReconciliationFlow'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_1_minor-seed1-002",
+          "sequence_index": 2,
+          "original_state": {
+            "flow-nightly-reconciliation": {
+              "name": "nightly-order-reconciliation-flow"
+            }
+          },
+          "transformed_state": {
+            "flow-nightly-reconciliation": {
+              "name": "nightlyOrderReconciliationFlow"
+            }
+          },
+          "severity": 0.22983012037151604,
+          "rationale": "Simulates naming convention drift on Flow 'flow-nightly-reconciliation' (styles applied: ['_style_kebab_to_camel']), as if caused by a rushed migration that skipped a naming review."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    }
+  ],
+  "raw_agent_output": {
+    "findings": [
+      {
+        "artifact_reference": "order-processing-process/src/main/resources/api-order-processing-process-v1.yaml",
+        "entity_reference": "Order Processing Process API-copy2",
+        "issue_type": "naming_drift",
+        "explanation": "'Order Processing Process API-copy2' in order-processing-process/src/main/resources/api-order-processing-process-v1.yaml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      }
+    ]
+  }
+}

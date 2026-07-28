@@ -1,0 +1,263 @@
+{
+  "baseline_estate_id": "milestone1-order-management-estate",
+  "baseline_schema_version": "0.2.0",
+  "trajectory_seed": 1,
+  "profile_name": "level_3_legacy",
+  "engine_version": "0.1.0",
+  "ledger_schema_version": "0.1.0",
+  "records": [
+    {
+      "mutation_id": "level_3_legacy-seed1-000",
+      "transformation_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-inventory-build-response"
+      ],
+      "original_state": {
+        "step-inventory-build-response": {
+          "description": "Builds the JSON response describing current stock levels for the requested SKU."
+        }
+      },
+      "transformed_state": {
+        "step-inventory-build-response": {
+          "description": "TODO: document this step."
+        }
+      },
+      "severity": 0.6020276102957687,
+      "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was generic placeholder.",
+      "sequence_index": 0,
+      "timestamp": "2026-07-28T06:11:12.866315+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-001",
+      "transformation_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-verify-customer"
+      ],
+      "original_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-customer-system-v1"
+        }
+      },
+      "transformed_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-order-status-experience-v1"
+        }
+      },
+      "severity": 0.6888980974304466,
+      "rationale": "Simulates a dependency change: 'step-process-verify-customer' now calls 'api-order-status-experience-v1' instead of 'api-customer-system-v1', as if the team switched downstream providers while keeping the estate structurally valid.",
+      "sequence_index": 1,
+      "timestamp": "2026-07-28T06:11:12.866829+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-002",
+      "transformation_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-inventory-build-response"
+      ],
+      "original_state": {
+        "step-inventory-build-response": {
+          "description": "TODO: document this step."
+        }
+      },
+      "transformed_state": {
+        "step-inventory-build-response": {
+          "description": ""
+        }
+      },
+      "severity": 0.6951426626096591,
+      "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was removed entirely.",
+      "sequence_index": 2,
+      "timestamp": "2026-07-28T06:11:12.867242+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-003",
+      "transformation_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-verify-customer"
+      ],
+      "original_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-order-status-experience-v1"
+        }
+      },
+      "transformed_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-customer-system-v1"
+        }
+      },
+      "severity": 0.7429751985141041,
+      "rationale": "Simulates a dependency change: 'step-process-verify-customer' now calls 'api-customer-system-v1' instead of 'api-order-status-experience-v1', as if the team switched downstream providers while keeping the estate structurally valid.",
+      "sequence_index": 3,
+      "timestamp": "2026-07-28T06:11:12.867735+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-004",
+      "transformation_type": "schema_inconsistency",
+      "affected_entity_ids": [
+        "step-order-status-build-response"
+      ],
+      "original_state": {
+        "step-order-status-build-response": {
+          "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    orderId: attributes.uriParams.orderId,\n    status: payload.status,\n    checkedAt: now()\n}"
+        }
+      },
+      "transformed_state": {
+        "step-order-status-build-response": {
+          "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    order_id: attributes.uriParams.orderId,\n    status: payload.status,\n    checkedAt: now()\n}"
+        }
+      },
+      "severity": 0.6065322241829039,
+      "rationale": "Simulates schema/contract inconsistency: field 'orderId' in 'step-order-status-build-response' was renamed to 'order_id' (snake_case convention), diverging from what related components expect.",
+      "sequence_index": 4,
+      "timestamp": "2026-07-28T06:11:12.868452+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-005",
+      "transformation_type": "legacy_version_introduction",
+      "affected_entity_ids": [
+        "api-customer-system-v1-legacy5",
+        "flow-customer-get-main-legacy5"
+      ],
+      "original_state": {
+        "api-customer-system-v1-legacy5": null,
+        "flow-customer-get-main-legacy5": null
+      },
+      "transformed_state": {
+        "api-customer-system-v1-legacy5": {
+          "id": "api-customer-system-v1-legacy5",
+          "name": "Customer System API (Legacy)",
+          "version": "v1-legacy",
+          "entry_flow_id": "flow-customer-get-main-legacy5"
+        },
+        "flow-customer-get-main-legacy5": {
+          "id": "flow-customer-get-main-legacy5",
+          "name": "get-customer-main-flow-legacy",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/customers/{customerId}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-customer-build-response-legacy5-0",
+              "name": "Build Customer Response",
+              "description": "Builds the JSON response describing the customer account's status.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    customerId: attributes.uriParams.customerId,\n    accountStatus: \"ACTIVE\"\n}",
+              "kind": "transform"
+            }
+          ]
+        }
+      },
+      "severity": 0.8605709830445935,
+      "rationale": "Simulates a legacy API version left running after 'api-customer-system-v1' was superseded: 'api-customer-system-v1-legacy5' still points at a frozen implementation ('flow-customer-get-main-legacy5'), per real MuleSoft estates where deprecated versions stay live in API Manager.",
+      "sequence_index": 5,
+      "timestamp": "2026-07-28T06:11:12.868988+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-006",
+      "transformation_type": "naming_drift",
+      "affected_entity_ids": [
+        "api-customer-system-v1"
+      ],
+      "original_state": {
+        "api-customer-system-v1": {
+          "name": "Customer System API"
+        }
+      },
+      "transformed_state": {
+        "api-customer-system-v1": {
+          "name": "Customer"
+        }
+      },
+      "severity": 0.5101783443973843,
+      "rationale": "Simulates naming convention drift on API 'api-customer-system-v1' (styles applied: ['_style_kebab_to_camel', '_style_abbreviate']), as if caused by an unrelated rebranding effort.",
+      "sequence_index": 6,
+      "timestamp": "2026-07-28T06:11:12.869612+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-007",
+      "transformation_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-reconciliation-check-inventory"
+      ],
+      "original_state": {
+        "step-reconciliation-check-inventory": {
+          "target_api_id": "api-inventory-system-v1"
+        }
+      },
+      "transformed_state": {
+        "step-reconciliation-check-inventory": {
+          "target_api_id": "api-customer-system-v1"
+        }
+      },
+      "severity": 0.5116163150299472,
+      "rationale": "Simulates a dependency change: 'step-reconciliation-check-inventory' now calls 'api-customer-system-v1' instead of 'api-inventory-system-v1', as if the team switched downstream providers while keeping the estate structurally valid.",
+      "sequence_index": 7,
+      "timestamp": "2026-07-28T06:11:12.870071+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-008",
+      "transformation_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-validate-ref"
+      ],
+      "original_state": {
+        "step-process-validate-ref": {
+          "target_flow_id": "flow-validate-order"
+        }
+      },
+      "transformed_state": {
+        "step-process-validate-ref": {
+          "target_flow_id": "flow-nightly-reconciliation"
+        }
+      },
+      "severity": 0.721143830517186,
+      "rationale": "Simulates a dependency change: 'step-process-validate-ref' now calls 'flow-nightly-reconciliation' instead of 'flow-validate-order', as if the team switched downstream providers while keeping the estate structurally valid.",
+      "sequence_index": 8,
+      "timestamp": "2026-07-28T06:11:12.870509+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_3_legacy-seed1-009",
+      "transformation_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-order-status-call-process"
+      ],
+      "original_state": {
+        "step-order-status-call-process": {
+          "description": "Requests the aggregated processing status for this order from the Process API."
+        }
+      },
+      "transformed_state": {
+        "step-order-status-call-process": {
+          "description": ""
+        }
+      },
+      "severity": 0.8043790950167282,
+      "rationale": "Simulates incomplete enterprise documentation: description on 'step-order-status-call-process' was removed entirely.",
+      "sequence_index": 9,
+      "timestamp": "2026-07-28T06:11:12.870956+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    }
+  ]
+}

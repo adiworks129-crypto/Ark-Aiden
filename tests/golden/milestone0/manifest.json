@@ -1,0 +1,112 @@
+{
+  "estate_id": "milestone0-example",
+  "schema_version": "0.1.0",
+  "adapter": "mulesoft",
+  "adapter_version": "0.1.0",
+  "artifacts": [
+    {
+      "path": "order-status-service/src/main/mule/order-status-service.xml",
+      "entities": [
+        {
+          "id": "app-order-status",
+          "type": "Application",
+          "name": "order-status-service"
+        },
+        {
+          "id": "flow-order-status-main",
+          "type": "Flow",
+          "name": "order-status-main-flow",
+          "flow_type": "flow"
+        },
+        {
+          "id": "step-build-response",
+          "type": "Step:transform",
+          "flow_id": "flow-order-status-main",
+          "name": "Build Order Status Response"
+        },
+        {
+          "id": "step-call-audit",
+          "type": "Step:flow-ref",
+          "flow_id": "flow-order-status-main",
+          "name": "reference to 'audit-log-sub-flow'"
+        },
+        {
+          "id": "flow-audit-log-sub",
+          "type": "Flow",
+          "name": "audit-log-sub-flow",
+          "flow_type": "sub_flow"
+        },
+        {
+          "id": "step-log-audit",
+          "type": "Step:logger",
+          "flow_id": "flow-audit-log-sub",
+          "name": "Order status lookup completed"
+        }
+      ]
+    },
+    {
+      "path": "order-status-service/src/main/resources/api-order-status-v1.yaml",
+      "entities": [
+        {
+          "id": "api-order-status-v1",
+          "type": "API",
+          "name": "Order Status API",
+          "application_id": "app-order-status"
+        }
+      ]
+    }
+  ],
+  "entity_index": {
+    "app-order-status": {
+      "artifact_path": "order-status-service/src/main/mule/order-status-service.xml",
+      "entity_type": "Application",
+      "name": "order-status-service",
+      "aliases": []
+    },
+    "flow-order-status-main": {
+      "artifact_path": "order-status-service/src/main/mule/order-status-service.xml",
+      "entity_type": "Flow",
+      "name": "order-status-main-flow",
+      "aliases": []
+    },
+    "step-build-response": {
+      "artifact_path": "order-status-service/src/main/mule/order-status-service.xml",
+      "entity_type": "Step:transform",
+      "name": "Build Order Status Response",
+      "aliases": []
+    },
+    "step-call-audit": {
+      "artifact_path": "order-status-service/src/main/mule/order-status-service.xml",
+      "entity_type": "Step:flow-ref",
+      "name": "reference to 'audit-log-sub-flow'",
+      "aliases": []
+    },
+    "flow-audit-log-sub": {
+      "artifact_path": "order-status-service/src/main/mule/order-status-service.xml",
+      "entity_type": "Flow",
+      "name": "audit-log-sub-flow",
+      "aliases": []
+    },
+    "step-log-audit": {
+      "artifact_path": "order-status-service/src/main/mule/order-status-service.xml",
+      "entity_type": "Step:logger",
+      "name": "Order status lookup completed",
+      "aliases": []
+    },
+    "api-order-status-v1": {
+      "artifact_path": "order-status-service/src/main/resources/api-order-status-v1.yaml",
+      "entity_type": "API",
+      "name": "Order Status API",
+      "aliases": []
+    }
+  },
+  "dependencies": [
+    {
+      "kind": "flow-ref",
+      "source_entity_id": "flow-order-status-main",
+      "source_step_id": "step-call-audit",
+      "target_entity_id": "flow-audit-log-sub",
+      "target_entity_type": "Flow"
+    }
+  ]
+}

@@ -1,0 +1,631 @@
+{
+  "estate_id": "generated-seed42",
+  "schema_version": "0.2.0",
+  "applications": [
+    {
+      "id": "app-pricing-experience",
+      "name": "pricing-experience",
+      "apis": [
+        {
+          "id": "api-pricing-experience-v1",
+          "name": "Pricing Experience API",
+          "version": "v1",
+          "entry_flow_id": "flow-pricing-experience-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-pricing-experience-main",
+          "name": "pricing-experience-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/pricing/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-pricing-experience-call-account-process",
+              "name": "Call Account Process API",
+              "description": "Calls the Account Process API as part of experience-layer processing for pricing.",
+              "target_api_id": "api-account-process-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-pricing-experience-call-invoice-process",
+              "name": "Call Invoice Process API",
+              "description": "Calls the Invoice Process API as part of experience-layer processing for pricing.",
+              "target_api_id": "api-invoice-process-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-pricing-experience-build-response",
+              "name": "Build Pricing Response",
+              "description": "Builds the response payload for pricing.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricingId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-pricing-experience-subflow-ref",
+              "target_flow_id": "flow-pricing-experience-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-pricing-experience-sub",
+          "name": "pricing-experience-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-pricing-experience-primary-log",
+              "message": "Pricing experience request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-fulfillment-experience",
+      "name": "fulfillment-experience",
+      "apis": [
+        {
+          "id": "api-fulfillment-experience-v1",
+          "name": "Fulfillment Experience API",
+          "version": "v1",
+          "entry_flow_id": "flow-fulfillment-experience-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-fulfillment-experience-main",
+          "name": "fulfillment-experience-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/fulfillment/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-fulfillment-experience-call-customer-process",
+              "name": "Call Customer Process API",
+              "description": "Calls the Customer Process API as part of experience-layer processing for fulfillment.",
+              "target_api_id": "api-customer-process-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-fulfillment-experience-call-invoice-process",
+              "name": "Call Invoice Process API",
+              "description": "Calls the Invoice Process API as part of experience-layer processing for fulfillment.",
+              "target_api_id": "api-invoice-process-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-fulfillment-experience-build-response",
+              "name": "Build Fulfillment Response",
+              "description": "Builds the response payload for fulfillment.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    fulfillmentId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-fulfillment-experience-subflow-ref",
+              "target_flow_id": "flow-fulfillment-experience-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-fulfillment-experience-sub",
+          "name": "fulfillment-experience-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-fulfillment-experience-primary-log",
+              "message": "Fulfillment experience request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-invoice-process",
+      "name": "invoice-process",
+      "apis": [
+        {
+          "id": "api-invoice-process-v1",
+          "name": "Invoice Process API",
+          "version": "v1",
+          "entry_flow_id": "flow-invoice-process-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-invoice-process-main",
+          "name": "invoice-process-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/invoice/process",
+            "method": "POST",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-invoice-process-subflow-ref",
+              "target_flow_id": "flow-invoice-process-sub",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-invoice-process-call-order-system",
+              "name": "Call Order System API",
+              "description": "Calls the Order System API as part of process-layer processing for invoice.",
+              "target_api_id": "api-order-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-invoice-process-call-subscription-system",
+              "name": "Call Subscription System API",
+              "description": "Calls the Subscription System API as part of process-layer processing for invoice.",
+              "target_api_id": "api-subscription-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-invoice-process-build-result",
+              "name": "Build Invoice Result",
+              "description": "Builds the processing result payload for invoice.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    invoiceId: payload.id,\n    status: \"PROCESSED\"\n}",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-invoice-process-sub",
+          "name": "invoice-process-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-invoice-process-primary-validate",
+              "name": "Validate Invoice Payload",
+              "description": "Checks the incoming invoice payload has all required fields.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-invoice-process-secondary-sub",
+          "name": "invoice-process-secondary-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-invoice-process-secondary-validate",
+              "name": "Validate Invoice Payload",
+              "description": "Checks the incoming invoice payload has all required fields.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-invoice-process-scheduled",
+          "name": "invoice-process-scheduled-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "cron_expression": "0 2 * * *",
+            "description": "Runs nightly at 02:00 to reconcile invoice data.",
+            "type": "scheduler"
+          },
+          "steps": [
+            {
+              "id": "step-invoice-process-scheduled-subflow-ref",
+              "target_flow_id": "flow-invoice-process-secondary-sub",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-invoice-process-scheduled-call-order-system",
+              "name": "Call Order System API",
+              "description": "Calls the Order System API as part of process-layer processing for invoice.",
+              "target_api_id": "api-order-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-invoice-process-scheduled-call-subscription-system",
+              "name": "Call Subscription System API",
+              "description": "Calls the Subscription System API as part of process-layer processing for invoice.",
+              "target_api_id": "api-subscription-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-invoice-process-scheduled-log",
+              "message": "Nightly invoice reconciliation completed",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-customer-process",
+      "name": "customer-process",
+      "apis": [
+        {
+          "id": "api-customer-process-v1",
+          "name": "Customer Process API",
+          "version": "v1",
+          "entry_flow_id": "flow-customer-process-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-customer-process-main",
+          "name": "customer-process-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/customer/process",
+            "method": "POST",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-customer-process-subflow-ref",
+              "target_flow_id": "flow-customer-process-sub",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-customer-process-call-order-system",
+              "name": "Call Order System API",
+              "description": "Calls the Order System API as part of process-layer processing for customer.",
+              "target_api_id": "api-order-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-customer-process-call-subscription-system",
+              "name": "Call Subscription System API",
+              "description": "Calls the Subscription System API as part of process-layer processing for customer.",
+              "target_api_id": "api-subscription-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-customer-process-build-result",
+              "name": "Build Customer Result",
+              "description": "Builds the processing result payload for customer.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    customerId: payload.id,\n    status: \"PROCESSED\"\n}",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-customer-process-sub",
+          "name": "customer-process-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-customer-process-primary-validate",
+              "name": "Validate Customer Payload",
+              "description": "Checks the incoming customer payload has all required fields.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+              "kind": "transform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-account-process",
+      "name": "account-process",
+      "apis": [
+        {
+          "id": "api-account-process-v1",
+          "name": "Account Process API",
+          "version": "v1",
+          "entry_flow_id": "flow-account-process-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-account-process-main",
+          "name": "account-process-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/account/process",
+            "method": "POST",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-account-process-subflow-ref",
+              "target_flow_id": "flow-account-process-sub",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-account-process-call-pricing-system",
+              "name": "Call Pricing System API",
+              "description": "Calls the Pricing System API as part of process-layer processing for account.",
+              "target_api_id": "api-pricing-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-account-process-call-order-system",
+              "name": "Call Order System API",
+              "description": "Calls the Order System API as part of process-layer processing for account.",
+              "target_api_id": "api-order-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-account-process-build-result",
+              "name": "Build Account Result",
+              "description": "Builds the processing result payload for account.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    accountId: payload.id,\n    status: \"PROCESSED\"\n}",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-account-process-sub",
+          "name": "account-process-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-account-process-primary-validate",
+              "name": "Validate Account Payload",
+              "description": "Checks the incoming account payload has all required fields.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+              "kind": "transform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-notification-system",
+      "name": "notification-system",
+      "apis": [
+        {
+          "id": "api-notification-system-v1",
+          "name": "Notification System API",
+          "version": "v1",
+          "entry_flow_id": "flow-notification-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-notification-system-main",
+          "name": "notification-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/notification/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-notification-system-build-response",
+              "name": "Build Notification Response",
+              "description": "Builds the response payload for notification.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    notificationId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-notification-system-subflow-ref",
+              "target_flow_id": "flow-notification-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-notification-system-sub",
+          "name": "notification-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-notification-system-primary-log",
+              "message": "Notification system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-pricing-system",
+      "name": "pricing-system",
+      "apis": [
+        {
+          "id": "api-pricing-system-v1",
+          "name": "Pricing System API",
+          "version": "v1",
+          "entry_flow_id": "flow-pricing-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-pricing-system-main",
+          "name": "pricing-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/pricing/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-pricing-system-build-response",
+              "name": "Build Pricing Response",
+              "description": "Builds the response payload for pricing.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricingId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-pricing-system-subflow-ref",
+              "target_flow_id": "flow-pricing-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-pricing-system-sub",
+          "name": "pricing-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-pricing-system-primary-log",
+              "message": "Pricing system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-order-system",
+      "name": "order-system",
+      "apis": [
+        {
+          "id": "api-order-system-v1",
+          "name": "Order System API",
+          "version": "v1",
+          "entry_flow_id": "flow-order-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-order-system-main",
+          "name": "order-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/order/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-order-system-build-response",
+              "name": "Build Order Response",
+              "description": "Builds the response payload for order.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    orderId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-order-system-subflow-ref",
+              "target_flow_id": "flow-order-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-order-system-sub",
+          "name": "order-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-order-system-primary-log",
+              "message": "Order system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        },
+        {
+          "id": "flow-order-system-scheduled",
+          "name": "order-system-scheduled-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "cron_expression": "0 2 * * *",
+            "description": "Runs nightly at 02:00 to reconcile order data.",
+            "type": "scheduler"
+          },
+          "steps": [
+            {
+              "id": "step-order-system-scheduled-subflow-ref",
+              "target_flow_id": "flow-order-system-sub",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-order-system-scheduled-log",
+              "message": "Nightly order reconciliation completed",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-subscription-system",
+      "name": "subscription-system",
+      "apis": [
+        {
+          "id": "api-subscription-system-v1",
+          "name": "Subscription System API",
+          "version": "v1",
+          "entry_flow_id": "flow-subscription-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-subscription-system-main",
+          "name": "subscription-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/subscription/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-subscription-system-build-response",
+              "name": "Build Subscription Response",
+              "description": "Builds the response payload for subscription.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    subscriptionId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-subscription-system-subflow-ref",
+              "target_flow_id": "flow-subscription-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-subscription-system-sub",
+          "name": "subscription-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-subscription-system-primary-log",
+              "message": "Subscription system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

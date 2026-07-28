@@ -1,0 +1,659 @@
+{
+  "metadata": {
+    "report_schema_version": "0.1.0",
+    "generated_at": "2026-07-28T08:47:36.854281+00:00",
+    "trajectory_id": "m1-level_3_legacy-seed1",
+    "baseline_estate_id": "milestone1-order-management-estate",
+    "profile_name": "level_3_legacy",
+    "trajectory_seed": 1,
+    "engine_version": "0.1.0",
+    "baseline_schema_version": "0.2.0",
+    "ledger_schema_version": "0.1.0",
+    "issue_schema_version": "0.1.0",
+    "agent_output_schema_version": "0.1.0",
+    "metrics_schema_version": "0.1.0",
+    "calibration_schema_version": "0.1.0",
+    "explanation_signals_schema_version": "0.1.0",
+    "complexity_schema_version": "0.1.0",
+    "generator_version": null,
+    "adapter_name": "mulesoft",
+    "adapter_version": "0.1.0"
+  },
+  "environment_summary": {
+    "application_count": 4,
+    "api_count": 5,
+    "flow_count": 10,
+    "dependency_count": 9,
+    "artifact_count": 9
+  },
+  "transformation_summary": {
+    "total_mutations": 10,
+    "distinct_transformation_types": [
+      "dependency_change",
+      "documentation_decay",
+      "legacy_version_introduction",
+      "naming_drift",
+      "schema_inconsistency"
+    ],
+    "severity_mean": 0.6743464361038722,
+    "severity_max": 0.8605709830445935,
+    "affected_entity_count": 9,
+    "complexity_score": 0.47072440601731197,
+    "complexity_profile": {
+      "baseline_estate_id": "milestone1-order-management-estate",
+      "trajectory_seed": 1,
+      "profile_name": "level_3_legacy",
+      "mutation_count": 10,
+      "distinct_issue_count": 7,
+      "compounding_count": 2,
+      "max_compounding_depth": 2,
+      "severity_mean": 0.6743464361038722,
+      "severity_max": 0.8605709830445935,
+      "affected_entity_count": 9,
+      "transformation_diversity": 0.8333333333333334,
+      "transformation_types_used": [
+        "dependency_change",
+        "documentation_decay",
+        "legacy_version_introduction",
+        "naming_drift",
+        "schema_inconsistency"
+      ],
+      "dependency_impact_mean": 0.25,
+      "dependency_impact_max": 2.0,
+      "interaction_score": 0.19999999999999996,
+      "complexity_score": 0.47072440601731197,
+      "weights_used": {
+        "mutation_count": 1.0,
+        "severity": 1.0,
+        "diversity": 1.0,
+        "dependency_impact": 1.0,
+        "interaction": 1.0,
+        "compounding": 1.0
+      },
+      "complexity_schema_version": "0.1.0"
+    }
+  },
+  "issue_summary": {
+    "total_observable_issues": 7,
+    "issues_by_type": {
+      "documentation_decay": 2,
+      "schema_inconsistency": 1,
+      "legacy_version_introduction": 1,
+      "naming_drift": 1,
+      "dependency_change": 2
+    },
+    "issues_by_severity_bucket": {
+      "low": 0,
+      "medium": 3,
+      "high": 4
+    },
+    "compounding_issue_count": 1,
+    "net_zero_transformation_count": 1,
+    "net_zero_groups": [
+      {
+        "transformation_type": "dependency_change",
+        "affected_entity_ids": [
+          "step-process-verify-customer"
+        ]
+      }
+    ]
+  },
+  "agent_performance": {
+    "total_findings": 2,
+    "category_metrics": {
+      "true_positives": 0,
+      "false_positives": 2,
+      "false_negatives": 7,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "legacy_version_introduction": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 0,
+        "false_positives": 2,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "schema_inconsistency": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      }
+    },
+    "entity_localization_metrics": {
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 6,
+      "precision": 1.0,
+      "recall": 0.2857142857142857,
+      "localization_accuracy": 0.4444444444444445
+    },
+    "calibration": {
+      "sample_size": 2,
+      "brier_score": 0.42250000000000004,
+      "ece": null,
+      "calibration_pairs": [
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ]
+      ],
+      "min_sample_size_for_ece": 5
+    },
+    "explanation_signals": [
+      {
+        "finding_id": "finding-000",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 212
+      },
+      {
+        "finding_id": "finding-001",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 232
+      }
+    ],
+    "confidence_distribution": {
+      "0.0-0.1": 0,
+      "0.1-0.2": 0,
+      "0.2-0.3": 0,
+      "0.3-0.4": 0,
+      "0.4-0.5": 0,
+      "0.5-0.6": 0,
+      "0.6-0.7": 2,
+      "0.7-0.8": 0,
+      "0.8-0.9": 0,
+      "0.9-1.0": 0
+    }
+  },
+  "failure_analysis": {
+    "missed_issues": [
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-inventory-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-inventory-build-response']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "schema_inconsistency:step-order-status-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "schema_inconsistency",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'schema_inconsistency' issue on ['step-order-status-build-response']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "legacy_version_introduction:api-customer-system-v1-legacy5+flow-customer-get-main-legacy5",
+        "claimed_issue_type": null,
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'legacy_version_introduction' issue on ['api-customer-system-v1-legacy5', 'flow-customer-get-main-legacy5']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "naming_drift:api-customer-system-v1",
+        "claimed_issue_type": null,
+        "actual_issue_type": "naming_drift",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'naming_drift' issue on ['api-customer-system-v1']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "dependency_change:step-reconciliation-check-inventory",
+        "claimed_issue_type": null,
+        "actual_issue_type": "dependency_change",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'dependency_change' issue on ['step-reconciliation-check-inventory']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "dependency_change:step-process-validate-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "dependency_change",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'dependency_change' issue on ['step-process-validate-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-order-status-call-process",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-order-status-call-process']."
+      }
+    ],
+    "hallucinated_findings": [],
+    "wrong_category_predictions": [],
+    "correct_location_incorrect_diagnosis": [
+      {
+        "finding_id": "finding-000",
+        "issue_id": "legacy_version_introduction:api-customer-system-v1-legacy5+flow-customer-get-main-legacy5",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'legacy_version_introduction:api-customer-system-v1-legacy5+flow-customer-get-main-legacy5' but claimed 'naming_drift' instead of the real issue_type 'legacy_version_introduction'."
+      },
+      {
+        "finding_id": "finding-001",
+        "issue_id": "legacy_version_introduction:api-customer-system-v1-legacy5+flow-customer-get-main-legacy5",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'legacy_version_introduction:api-customer-system-v1-legacy5+flow-customer-get-main-legacy5' but claimed 'naming_drift' instead of the real issue_type 'legacy_version_introduction'."
+      }
+    ],
+    "overconfidence_patterns": [],
+    "overconfidence_threshold": 0.7
+  },
+  "research_hooks": {
+    "complexity_score": 0.47072440601731197,
+    "mutation_count": 10,
+    "transformation_type_combination": [
+      "dependency_change",
+      "documentation_decay",
+      "legacy_version_introduction",
+      "naming_drift",
+      "schema_inconsistency"
+    ],
+    "category_f1": 0.0,
+    "entity_localization_accuracy": 0.4444444444444445,
+    "calibration_ece": null,
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "legacy_version_introduction": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 0,
+        "false_positives": 2,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "schema_inconsistency": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      }
+    }
+  },
+  "issues": [
+    {
+      "issue_id": "documentation_decay:step-inventory-build-response",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-inventory-build-response"
+      ],
+      "observable_symptom": {
+        "step-inventory-build-response": {
+          "description": ""
+        }
+      },
+      "severity": 0.6951426626096591,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-inventory-build-response'], observable as: {'step-inventory-build-response': {'description': ''}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed1-000",
+          "sequence_index": 0,
+          "original_state": {
+            "step-inventory-build-response": {
+              "description": "Builds the JSON response describing current stock levels for the requested SKU."
+            }
+          },
+          "transformed_state": {
+            "step-inventory-build-response": {
+              "description": "TODO: document this step."
+            }
+          },
+          "severity": 0.6020276102957687,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was generic placeholder."
+        },
+        {
+          "mutation_id": "level_3_legacy-seed1-002",
+          "sequence_index": 2,
+          "original_state": {
+            "step-inventory-build-response": {
+              "description": "TODO: document this step."
+            }
+          },
+          "transformed_state": {
+            "step-inventory-build-response": {
+              "description": ""
+            }
+          },
+          "severity": 0.6951426626096591,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was removed entirely."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "schema_inconsistency:step-order-status-build-response",
+      "issue_type": "schema_inconsistency",
+      "affected_entity_ids": [
+        "step-order-status-build-response"
+      ],
+      "observable_symptom": {
+        "step-order-status-build-response": {
+          "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    order_id: attributes.uriParams.orderId,\n    status: payload.status,\n    checkedAt: now()\n}"
+        }
+      },
+      "severity": 0.6065322241829039,
+      "expected_detection_target": "A 'schema_inconsistency' issue affecting ['step-order-status-build-response'], observable as: {'step-order-status-build-response': {'dataweave': '%dw 2.0\\noutput application/json\\n---\\n{\\n    order_id: attributes.uriParams.orderId,\\n    status: payload.status,\\n    checkedAt: now()\\n}'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed1-004",
+          "sequence_index": 4,
+          "original_state": {
+            "step-order-status-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    orderId: attributes.uriParams.orderId,\n    status: payload.status,\n    checkedAt: now()\n}"
+            }
+          },
+          "transformed_state": {
+            "step-order-status-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    order_id: attributes.uriParams.orderId,\n    status: payload.status,\n    checkedAt: now()\n}"
+            }
+          },
+          "severity": 0.6065322241829039,
+          "rationale": "Simulates schema/contract inconsistency: field 'orderId' in 'step-order-status-build-response' was renamed to 'order_id' (snake_case convention), diverging from what related components expect."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "legacy_version_introduction:api-customer-system-v1-legacy5+flow-customer-get-main-legacy5",
+      "issue_type": "legacy_version_introduction",
+      "affected_entity_ids": [
+        "api-customer-system-v1-legacy5",
+        "flow-customer-get-main-legacy5"
+      ],
+      "observable_symptom": {
+        "api-customer-system-v1-legacy5": {
+          "id": "api-customer-system-v1-legacy5",
+          "name": "Customer System API (Legacy)",
+          "version": "v1-legacy",
+          "entry_flow_id": "flow-customer-get-main-legacy5"
+        },
+        "flow-customer-get-main-legacy5": {
+          "id": "flow-customer-get-main-legacy5",
+          "name": "get-customer-main-flow-legacy",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/customers/{customerId}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-customer-build-response-legacy5-0",
+              "name": "Build Customer Response",
+              "description": "Builds the JSON response describing the customer account's status.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    customerId: attributes.uriParams.customerId,\n    accountStatus: \"ACTIVE\"\n}",
+              "kind": "transform"
+            }
+          ]
+        }
+      },
+      "severity": 0.8605709830445935,
+      "expected_detection_target": "A 'legacy_version_introduction' issue affecting ['api-customer-system-v1-legacy5', 'flow-customer-get-main-legacy5'], observable as: {'api-customer-system-v1-legacy5': {'id': 'api-customer-system-v1-legacy5', 'name': 'Customer System API (Legacy)', 'version': 'v1-legacy', 'entry_flow_id': 'flow-customer-get-main-legacy5'}, 'flow-customer-get-main-legacy5': {'id': 'flow-customer-get-main-legacy5', 'name': 'get-customer-main-flow-legacy', 'flow_type': 'flow', 'trigger': {'path': '/customers/{customerId}', 'method': 'GET', 'listener_config_ref': 'HTTP_Listener_config', 'type': 'http-listener'}, 'steps': [{'id': 'step-customer-build-response-legacy5-0', 'name': 'Build Customer Response', 'description': \"Builds the JSON response describing the customer account's status.\", 'dataweave': '%dw 2.0\\noutput application/json\\n---\\n{\\n    customerId: attributes.uriParams.customerId,\\n    accountStatus: \"ACTIVE\"\\n}', 'kind': 'transform'}]}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed1-005",
+          "sequence_index": 5,
+          "original_state": {
+            "api-customer-system-v1-legacy5": null,
+            "flow-customer-get-main-legacy5": null
+          },
+          "transformed_state": {
+            "api-customer-system-v1-legacy5": {
+              "id": "api-customer-system-v1-legacy5",
+              "name": "Customer System API (Legacy)",
+              "version": "v1-legacy",
+              "entry_flow_id": "flow-customer-get-main-legacy5"
+            },
+            "flow-customer-get-main-legacy5": {
+              "id": "flow-customer-get-main-legacy5",
+              "name": "get-customer-main-flow-legacy",
+              "flow_type": "flow",
+              "trigger": {
+                "path": "/customers/{customerId}",
+                "method": "GET",
+                "listener_config_ref": "HTTP_Listener_config",
+                "type": "http-listener"
+              },
+              "steps": [
+                {
+                  "id": "step-customer-build-response-legacy5-0",
+                  "name": "Build Customer Response",
+                  "description": "Builds the JSON response describing the customer account's status.",
+                  "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    customerId: attributes.uriParams.customerId,\n    accountStatus: \"ACTIVE\"\n}",
+                  "kind": "transform"
+                }
+              ]
+            }
+          },
+          "severity": 0.8605709830445935,
+          "rationale": "Simulates a legacy API version left running after 'api-customer-system-v1' was superseded: 'api-customer-system-v1-legacy5' still points at a frozen implementation ('flow-customer-get-main-legacy5'), per real MuleSoft estates where deprecated versions stay live in API Manager."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "naming_drift:api-customer-system-v1",
+      "issue_type": "naming_drift",
+      "affected_entity_ids": [
+        "api-customer-system-v1"
+      ],
+      "observable_symptom": {
+        "api-customer-system-v1": {
+          "name": "Customer"
+        }
+      },
+      "severity": 0.5101783443973843,
+      "expected_detection_target": "A 'naming_drift' issue affecting ['api-customer-system-v1'], observable as: {'api-customer-system-v1': {'name': 'Customer'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed1-006",
+          "sequence_index": 6,
+          "original_state": {
+            "api-customer-system-v1": {
+              "name": "Customer System API"
+            }
+          },
+          "transformed_state": {
+            "api-customer-system-v1": {
+              "name": "Customer"
+            }
+          },
+          "severity": 0.5101783443973843,
+          "rationale": "Simulates naming convention drift on API 'api-customer-system-v1' (styles applied: ['_style_kebab_to_camel', '_style_abbreviate']), as if caused by an unrelated rebranding effort."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "dependency_change:step-reconciliation-check-inventory",
+      "issue_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-reconciliation-check-inventory"
+      ],
+      "observable_symptom": {
+        "step-reconciliation-check-inventory": {
+          "target_api_id": "api-customer-system-v1"
+        }
+      },
+      "severity": 0.5116163150299472,
+      "expected_detection_target": "A 'dependency_change' issue affecting ['step-reconciliation-check-inventory'], observable as: {'step-reconciliation-check-inventory': {'target_api_id': 'api-customer-system-v1'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed1-007",
+          "sequence_index": 7,
+          "original_state": {
+            "step-reconciliation-check-inventory": {
+              "target_api_id": "api-inventory-system-v1"
+            }
+          },
+          "transformed_state": {
+            "step-reconciliation-check-inventory": {
+              "target_api_id": "api-customer-system-v1"
+            }
+          },
+          "severity": 0.5116163150299472,
+          "rationale": "Simulates a dependency change: 'step-reconciliation-check-inventory' now calls 'api-customer-system-v1' instead of 'api-inventory-system-v1', as if the team switched downstream providers while keeping the estate structurally valid."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "dependency_change:step-process-validate-ref",
+      "issue_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-validate-ref"
+      ],
+      "observable_symptom": {
+        "step-process-validate-ref": {
+          "target_flow_id": "flow-nightly-reconciliation"
+        }
+      },
+      "severity": 0.721143830517186,
+      "expected_detection_target": "A 'dependency_change' issue affecting ['step-process-validate-ref'], observable as: {'step-process-validate-ref': {'target_flow_id': 'flow-nightly-reconciliation'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed1-008",
+          "sequence_index": 8,
+          "original_state": {
+            "step-process-validate-ref": {
+              "target_flow_id": "flow-validate-order"
+            }
+          },
+          "transformed_state": {
+            "step-process-validate-ref": {
+              "target_flow_id": "flow-nightly-reconciliation"
+            }
+          },
+          "severity": 0.721143830517186,
+          "rationale": "Simulates a dependency change: 'step-process-validate-ref' now calls 'flow-nightly-reconciliation' instead of 'flow-validate-order', as if the team switched downstream providers while keeping the estate structurally valid."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "documentation_decay:step-order-status-call-process",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-order-status-call-process"
+      ],
+      "observable_symptom": {
+        "step-order-status-call-process": {
+          "description": ""
+        }
+      },
+      "severity": 0.8043790950167282,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-order-status-call-process'], observable as: {'step-order-status-call-process': {'description': ''}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed1-009",
+          "sequence_index": 9,
+          "original_state": {
+            "step-order-status-call-process": {
+              "description": "Requests the aggregated processing status for this order from the Process API."
+            }
+          },
+          "transformed_state": {
+            "step-order-status-call-process": {
+              "description": ""
+            }
+          },
+          "severity": 0.8043790950167282,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-order-status-call-process' was removed entirely."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    }
+  ],
+  "raw_agent_output": {
+    "findings": [
+      {
+        "artifact_reference": "customer-system/src/main/mule/customer-system.xml",
+        "entity_reference": "get-customer-main-flow-legacy",
+        "issue_type": "naming_drift",
+        "explanation": "'get-customer-main-flow-legacy' in customer-system/src/main/mule/customer-system.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "customer-system/src/main/resources/api-customer-system-v1-legacy5.yaml",
+        "entity_reference": "Customer System API (Legacy)",
+        "issue_type": "naming_drift",
+        "explanation": "'Customer System API (Legacy)' in customer-system/src/main/resources/api-customer-system-v1-legacy5.yaml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      }
+    ]
+  }
+}

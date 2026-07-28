@@ -1,0 +1,270 @@
+{
+  "estate_id": "milestone1-order-management-estate",
+  "schema_version": "0.2.0",
+  "applications": [
+    {
+      "id": "app-order-status-experience",
+      "name": "order-status-experience",
+      "apis": [
+        {
+          "id": "api-order-status-experience-v1",
+          "name": "Order Status Experience API",
+          "version": "v1",
+          "entry_flow_id": "flow-order-status-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-order-status-main",
+          "name": "order-status-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/orders/{orderId}/status",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-order-status-call-process",
+              "name": "Call Order Processing Process API",
+              "description": "Requests the aggregated processing status",
+              "target_api_id": "api-order-processing-process-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-order-status-build-response",
+              "name": "Build Order Status Response",
+              "description": "Builds the customer-facing JSON response from the Process API's result.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    orderId: attributes.uriParams.orderId,\n    status: payload.status,\n    checkedAt: now()\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-order-status-audit-ref",
+              "target_flow_id": "flow-order-status-audit-log",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-order-status-audit-log",
+          "name": "audit-log-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-order-status-log-audit",
+              "message": "Order status lookup completed",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-order-processing-process",
+      "name": "order-processing-process",
+      "apis": [
+        {
+          "id": "api-order-processing-process-v1",
+          "name": "Order Processing Process API-copy2",
+          "version": "v1",
+          "entry_flow_id": "flow-process-order-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-process-order-main",
+          "name": "process-order-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/orders/process",
+            "method": "POST",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-process-validate-ref",
+              "target_flow_id": "flow-validate-order",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-process-check-inventory",
+              "name": "Call Inventory System API",
+              "description": "Checks stock levels for the items on this order before confirming processing.",
+              "target_api_id": "api-inventory-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-process-verify-customer",
+              "name": "Call Customer System API",
+              "description": "Verifies the customer account is active and in good standing.",
+              "target_api_id": "api-customer-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-process-build-result",
+              "name": "Build Processing Result",
+              "description": "Assembles the final processing result payload from the inventory and customer checks.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    orderId: payload.orderId,\n    status: \"PROCESSED\"\n}",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-validate-order",
+          "name": "validate-order-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-validate-order-check-payload",
+              "name": "Validate Order Payload",
+              "description": "Checks the incoming order payload has all required fields before further processing.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-nightly-reconciliation",
+          "name": "nightlyOrderReconciliationFlow",
+          "flow_type": "flow",
+          "trigger": {
+            "cron_expression": "0 2 * * *",
+            "description": "Runs nightly at 02:00 to reconcile processed orders against current inventory counts.",
+            "type": "scheduler"
+          },
+          "steps": [
+            {
+              "id": "step-reconciliation-validate-ref",
+              "target_flow_id": "flow-validate-order",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-reconciliation-check-inventory",
+              "name": "Call Inventory System API",
+              "description": "Re-checks inventory counts for all orders processed in the last 24 hours.",
+              "target_api_id": "api-inventory-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-reconciliation-log",
+              "message": "Nightly order reconciliation completed",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-inventory-system",
+      "name": "inventory-system",
+      "apis": [
+        {
+          "id": "api-inventory-system-v1",
+          "name": "Inventory System API",
+          "version": "v1",
+          "entry_flow_id": "flow-inventory-get-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-inventory-get-main",
+          "name": "get-inventory-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/inventory/{sku}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-inventory-build-response",
+              "name": "Build Inventory Response",
+              "description": "Builds the JSON response describing current stock levels for the requested SKU.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    sku: attributes.uriParams.sku,\n    quantityOnHand: 0\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-inventory-log-ref",
+              "target_flow_id": "flow-inventory-log-request",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-inventory-log-request",
+          "name": "log-request-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-inventory-log",
+              "message": "Inventory lookup request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-customer-system",
+      "name": "customer-system",
+      "apis": [
+        {
+          "id": "api-customer-system-v1",
+          "name": "Customer System API",
+          "version": "v1",
+          "entry_flow_id": "flow-customer-get-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-customer-get-main",
+          "name": "get-customer-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/customers/{customerId}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-customer-build-response",
+              "name": "Build Customer Response",
+              "description": "Builds the JSON response describing the customer account's status.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    customerId: attributes.uriParams.customerId,\n    accountStatus: \"ACTIVE\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-customer-log-ref",
+              "target_flow_id": "flow-customer-log-request",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-customer-log-request",
+          "name": "log-request-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-customer-log",
+              "message": "Customer lookup request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

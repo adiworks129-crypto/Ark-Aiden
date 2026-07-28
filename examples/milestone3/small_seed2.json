@@ -1,0 +1,233 @@
+{
+  "estate_id": "generated-seed2",
+  "schema_version": "0.2.0",
+  "applications": [
+    {
+      "id": "app-notification-experience",
+      "name": "notification-experience",
+      "apis": [
+        {
+          "id": "api-notification-experience-v1",
+          "name": "Notification Experience API",
+          "version": "v1",
+          "entry_flow_id": "flow-notification-experience-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-notification-experience-main",
+          "name": "notification-experience-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/notification/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-notification-experience-call-vendor-process",
+              "name": "Call Vendor Process API",
+              "description": "Calls the Vendor Process API as part of experience-layer processing for notification.",
+              "target_api_id": "api-vendor-process-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-notification-experience-build-response",
+              "name": "Build Notification Response",
+              "description": "Builds the response payload for notification.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    notificationId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-notification-experience-subflow-ref",
+              "target_flow_id": "flow-notification-experience-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-notification-experience-sub",
+          "name": "notification-experience-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-notification-experience-primary-log",
+              "message": "Notification experience request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-vendor-process",
+      "name": "vendor-process",
+      "apis": [
+        {
+          "id": "api-vendor-process-v1",
+          "name": "Vendor Process API",
+          "version": "v1",
+          "entry_flow_id": "flow-vendor-process-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-vendor-process-main",
+          "name": "vendor-process-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/vendor/process",
+            "method": "POST",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-vendor-process-subflow-ref",
+              "target_flow_id": "flow-vendor-process-sub",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-vendor-process-call-fulfillment-system",
+              "name": "Call Fulfillment System API",
+              "description": "Calls the Fulfillment System API as part of process-layer processing for vendor.",
+              "target_api_id": "api-fulfillment-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-vendor-process-build-result",
+              "name": "Build Vendor Result",
+              "description": "Builds the processing result payload for vendor.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    vendorId: payload.id,\n    status: \"PROCESSED\"\n}",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-vendor-process-sub",
+          "name": "vendor-process-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-vendor-process-primary-validate",
+              "name": "Validate Vendor Payload",
+              "description": "Checks the incoming vendor payload has all required fields.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+              "kind": "transform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-account-system",
+      "name": "account-system",
+      "apis": [
+        {
+          "id": "api-account-system-v1",
+          "name": "Account System API",
+          "version": "v1",
+          "entry_flow_id": "flow-account-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-account-system-main",
+          "name": "account-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/account/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-account-system-build-response",
+              "name": "Build Account Response",
+              "description": "Builds the response payload for account.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    accountId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-account-system-subflow-ref",
+              "target_flow_id": "flow-account-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-account-system-sub",
+          "name": "account-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-account-system-primary-log",
+              "message": "Account system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-fulfillment-system",
+      "name": "fulfillment-system",
+      "apis": [
+        {
+          "id": "api-fulfillment-system-v1",
+          "name": "Fulfillment System API",
+          "version": "v1",
+          "entry_flow_id": "flow-fulfillment-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-fulfillment-system-main",
+          "name": "fulfillment-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/fulfillment/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-fulfillment-system-build-response",
+              "name": "Build Fulfillment Response",
+              "description": "Builds the response payload for fulfillment.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    fulfillmentId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-fulfillment-system-subflow-ref",
+              "target_flow_id": "flow-fulfillment-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-fulfillment-system-sub",
+          "name": "fulfillment-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-fulfillment-system-primary-log",
+              "message": "Fulfillment system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

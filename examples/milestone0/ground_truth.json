@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1.0",
+  "estate_id": "milestone0-example",
+  "applications": [
+    {
+      "id": "app-order-status",
+      "name": "order-status-service",
+      "apis": [
+        {
+          "id": "api-order-status-v1",
+          "name": "Order Status API",
+          "version": "v1",
+          "entry_flow_id": "flow-order-status-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-order-status-main",
+          "name": "order-status-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "type": "http-listener",
+            "path": "/orders/{orderId}/status",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config"
+          },
+          "steps": [
+            {
+              "kind": "transform",
+              "id": "step-build-response",
+              "name": "Build Order Status Response",
+              "description": "Builds the JSON response payload from the order ID path parameter.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    orderId: attributes.uriParams.orderId,\n    status: \"PENDING\",\n    checkedAt: now()\n}"
+            },
+            {
+              "kind": "flow-ref",
+              "id": "step-call-audit",
+              "target_flow_id": "flow-audit-log-sub"
+            }
+          ]
+        },
+        {
+          "id": "flow-audit-log-sub",
+          "name": "audit-log-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "kind": "logger",
+              "id": "step-log-audit",
+              "level": "INFO",
+              "message": "Order status lookup completed"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "trajectory_id": "milestone1-order-management-estate-seed7",
+  "profile_name": "level_2_structural",
+  "real_issues": 5,
+  "agent_findings": 5,
+  "per_finding": [
+    {
+      "finding_id": "finding-000",
+      "matched_issue_id": "naming_drift:api-order-status-experience-v1",
+      "category_correct": true,
+      "entity_correct": true,
+      "artifact_reference_correct": true,
+      "confidence": 0.9
+    },
+    {
+      "finding_id": "finding-001",
+      "matched_issue_id": "documentation_decay:step-customer-build-response",
+      "category_correct": true,
+      "entity_correct": true,
+      "artifact_reference_correct": true,
+      "confidence": 0.75
+    },
+    {
+      "finding_id": "finding-002",
+      "matched_issue_id": null,
+      "category_correct": true,
+      "entity_correct": false,
+      "artifact_reference_correct": true,
+      "confidence": 0.55
+    },
+    {
+      "finding_id": "finding-003",
+      "matched_issue_id": "duplicate_processing:flow-inventory-log-request-dup0+step-inventory-log-ref",
+      "category_correct": true,
+      "entity_correct": true,
+      "artifact_reference_correct": true,
+      "confidence": 0.6
+    },
+    {
+      "finding_id": "finding-004",
+      "matched_issue_id": null,
+      "category_correct": false,
+      "entity_correct": false,
+      "artifact_reference_correct": true,
+      "confidence": 0.95
+    }
+  ],
+  "category_metrics": {
+    "true_positives": 2,
+    "false_positives": 3,
+    "false_negatives": 3,
+    "precision": 0.4,
+    "recall": 0.4,
+    "f1": 0.4000000000000001
+  },
+  "category_metrics_by_type": {
+    "dependency_change": {
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+    },
+    "documentation_decay": {
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666
+    },
+    "duplicate_processing": {
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+    },
+    "naming_drift": {
+      "true_positives": 1,
+      "false_positives": 1,
+      "false_negatives": 1,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+    }
+  },
+  "entity_localization_metrics": {
+    "true_positives": 3,
+    "false_positives": 2,
+    "false_negatives": 2,
+    "precision": 0.6,
+    "recall": 0.6,
+    "localization_accuracy": 0.6
+  },
+  "calibration": {
+    "sample_size": 5,
+    "brier_score": 0.3275,
+    "ece": 0.45000000000000007
+  },
+  "explanation_signals": [
+    {
+      "finding_id": "finding-000",
+      "mentions_affected_artifact": true,
+      "references_observable_symptom": true,
+      "identifies_plausible_cause": false,
+      "unsupported_assumption_flag": false,
+      "explanation_length_chars": 164
+    },
+    {
+      "finding_id": "finding-001",
+      "mentions_affected_artifact": false,
+      "references_observable_symptom": true,
+      "identifies_plausible_cause": false,
+      "unsupported_assumption_flag": false,
+      "explanation_length_chars": 107
+    },
+    {
+      "finding_id": "finding-002",
+      "mentions_affected_artifact": false,
+      "references_observable_symptom": false,
+      "identifies_plausible_cause": false,
+      "unsupported_assumption_flag": true,
+      "explanation_length_chars": 74
+    },
+    {
+      "finding_id": "finding-003",
+      "mentions_affected_artifact": false,
+      "references_observable_symptom": false,
+      "identifies_plausible_cause": false,
+      "unsupported_assumption_flag": true,
+      "explanation_length_chars": 69
+    },
+    {
+      "finding_id": "finding-004",
+      "mentions_affected_artifact": false,
+      "references_observable_symptom": false,
+      "identifies_plausible_cause": false,
+      "unsupported_assumption_flag": true,
+      "explanation_length_chars": 67
+    }
+  ],
+  "complexity_score": 0.3265012996184049,
+  "mutation_count": 6,
+  "agent_accuracy": 0.4000000000000001,
+  "calibration_error": 0.45000000000000007
+}

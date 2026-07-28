@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.1.0",
+  "_comment": "Feature 2 (domain-conditioned component injection, 'organized randomness'). Which connector/component types are genuinely well-known, real-world patterns for which domain. Every entry is a defensible, real enterprise-software association, not invented for this task -- see Ark_Domain_Component_Injection_Summary.md for pairings that were considered and deliberately left out due to insufficient confidence (cross-domain overlap). Kept deliberately small: three components per domain, not an exhaustive catalog.",
+  "domains": {
+    "finance": {
+      "description": "Banking, payments, and capital-markets enterprise IT.",
+      "plausible_components": [
+        {
+          "key": "core_banking_platform",
+          "display_name": "Core Banking Platform (e.g. Temenos T24, FIS Profile, Finastra Fusion)",
+          "justification": "Core banking platforms are the standard system-of-record integration point in banking/financial-institution estates -- a well-established, textbook association with no equivalent in retail estates."
+        },
+        {
+          "key": "interbank_payment_rail",
+          "display_name": "Interbank Payment Rail / Settlement Network (e.g. SWIFT, ACH, Fedwire, card network settlement)",
+          "justification": "Direct integration with interbank settlement rails (SWIFT, ACH, Fedwire) is specific to financial institutions moving money between banks -- distinct from a retail merchant's payment gateway (e.g. Stripe/Adyen), which was deliberately left out of this mapping (see summary) because retailers use those too."
+        },
+        {
+          "key": "regulatory_compliance_reporting",
+          "display_name": "Regulatory Compliance Reporting Platform (e.g. AML/KYC screening, Basel/Dodd-Frank reporting)",
+          "justification": "AML/KYC screening and prudential regulatory reporting (Basel III, Dodd-Frank) are integration requirements specific to regulated financial institutions, with no equivalent in a retail estate."
+        }
+      ]
+    },
+    "retail": {
+      "description": "Retail, e-commerce, and supply-chain/merchandising enterprise IT.",
+      "plausible_components": [
+        {
+          "key": "sap_retail_scm",
+          "display_name": "SAP Retail / SAP Supply Chain Management (SCM)",
+          "justification": "SAP's retail and supply-chain-management product lines (SAP Retail, SAP SCM) are a textbook, well-documented pattern in retail/merchandising IT for inventory, procurement, and supply-chain integration. Scoped specifically to SAP's retail/SCM verticals (not 'SAP' generally), since SAP also has a strong finance/accounting module (SAP FI/CO) that would undermine a retail-exclusive claim if left unscoped -- see summary."
+        },
+        {
+          "key": "pos_integration",
+          "display_name": "Point-of-Sale (POS) Integration",
+          "justification": "In-store POS system integration (checkout, tender, in-store inventory sync) is a defining retail integration pattern with no equivalent in a finance-domain estate."
+        },
+        {
+          "key": "warehouse_management_system",
+          "display_name": "Warehouse Management System (WMS) / Logistics Connector",
+          "justification": "WMS and logistics/fulfillment connectors (inventory replenishment, shipping) are a standard, well-documented retail/merchandising supply-chain integration pattern."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "baseline_estate_id": "milestone1-order-management-estate",
+  "baseline_schema_version": "0.2.0",
+  "trajectory_seed": 1,
+  "profile_name": "level_2_structural",
+  "engine_version": "0.1.0",
+  "ledger_schema_version": "0.1.0",
+  "records": [
+    {
+      "mutation_id": "level_2_structural-seed1-000",
+      "transformation_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-inventory-build-response"
+      ],
+      "original_state": {
+        "step-inventory-build-response": {
+          "description": "Builds the JSON response describing current stock levels for the requested SKU."
+        }
+      },
+      "transformed_state": {
+        "step-inventory-build-response": {
+          "description": "TODO: document this step."
+        }
+      },
+      "severity": 0.3765207077218265,
+      "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was generic placeholder.",
+      "sequence_index": 0,
+      "timestamp": "2026-07-28T06:11:12.832908+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_2_structural-seed1-001",
+      "transformation_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-verify-customer"
+      ],
+      "original_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-customer-system-v1"
+        }
+      },
+      "transformed_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-order-status-experience-v1"
+        }
+      },
+      "severity": 0.44167357307283495,
+      "rationale": "Simulates a dependency change: 'step-process-verify-customer' now calls 'api-order-status-experience-v1' instead of 'api-customer-system-v1', as if the team switched downstream providers while keeping the estate structurally valid.",
+      "sequence_index": 1,
+      "timestamp": "2026-07-28T06:11:12.833325+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_2_structural-seed1-002",
+      "transformation_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-inventory-build-response"
+      ],
+      "original_state": {
+        "step-inventory-build-response": {
+          "description": "TODO: document this step."
+        }
+      },
+      "transformed_state": {
+        "step-inventory-build-response": {
+          "description": ""
+        }
+      },
+      "severity": 0.4463569969572443,
+      "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-build-response' was removed entirely (escalated: placeholder was already a no-op).",
+      "sequence_index": 2,
+      "timestamp": "2026-07-28T06:11:12.833791+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_2_structural-seed1-003",
+      "transformation_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-verify-customer"
+      ],
+      "original_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-order-status-experience-v1"
+        }
+      },
+      "transformed_state": {
+        "step-process-verify-customer": {
+          "target_api_id": "api-customer-system-v1"
+        }
+      },
+      "severity": 0.4822313988855781,
+      "rationale": "Simulates a dependency change: 'step-process-verify-customer' now calls 'api-customer-system-v1' instead of 'api-order-status-experience-v1', as if the team switched downstream providers while keeping the estate structurally valid.",
+      "sequence_index": 3,
+      "timestamp": "2026-07-28T06:11:12.834262+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_2_structural-seed1-004",
+      "transformation_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-process-validate-ref"
+      ],
+      "original_state": {
+        "step-process-validate-ref": {
+          "target_flow_id": "flow-validate-order"
+        }
+      },
+      "transformed_state": {
+        "step-process-validate-ref": {
+          "target_flow_id": "flow-nightly-reconciliation"
+        }
+      },
+      "severity": 0.5164620097022348,
+      "rationale": "Simulates a dependency change: 'step-process-validate-ref' now calls 'flow-nightly-reconciliation' instead of 'flow-validate-order', as if the team switched downstream providers while keeping the estate structurally valid.",
+      "sequence_index": 4,
+      "timestamp": "2026-07-28T06:11:12.834671+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_2_structural-seed1-005",
+      "transformation_type": "naming_drift",
+      "affected_entity_ids": [
+        "flow-inventory-get-main"
+      ],
+      "original_state": {
+        "flow-inventory-get-main": {
+          "name": "get-inventory-main-flow"
+        }
+      },
+      "transformed_state": {
+        "flow-inventory-get-main": {
+          "name": "getInventoryMainFlowCamel"
+        }
+      },
+      "severity": 0.30917699491006606,
+      "rationale": "Simulates naming convention drift on Flow 'flow-inventory-get-main' (styles applied: ['_style_kebab_to_camel', '_style_kebab_to_camel']), as if caused by a rushed migration that skipped a naming review.",
+      "sequence_index": 5,
+      "timestamp": "2026-07-28T06:11:12.835143+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "connector": "http",
+  "documented_against_version": "1.11 (Mule 4)",
+  "retrieved": "2026-07-28",
+  "notes": "Every element/attribute below is sourced from a real, cited docs.mulesoft.com page. Fields that could not be confirmed against a real page were left out rather than guessed -- see 'source' on each entry. This file is data only: it is read by ark/validation/mulesoft_http_connector.py, never hardcoded into generator/mutation/renderer logic, so it stays inspectable and swappable for another connector's schema later.",
+  "elements": {
+    "http:listener-config": {
+      "description": "Global (server-side) element organizing an HTTP Listener's connection settings. Distinct from http:request-config -- a listener-config can never be referenced by an http:request.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-listener-ref",
+      "required_attributes": ["name"],
+      "optional_attributes": ["basePath"],
+      "required_children": ["http:listener-connection"],
+      "optional_children": []
+    },
+    "http:listener-connection": {
+      "description": "Child of http:listener-config carrying the actual host/port/protocol and, optionally, TLS/reconnection settings.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-connector-xml-reference",
+      "required_attributes": ["host", "port"],
+      "optional_attributes": ["protocol", "usePersistentConnections"],
+      "required_children": [],
+      "optional_children": ["tls:context", "reconnect", "reconnect-forever"]
+    },
+    "http:listener": {
+      "description": "Flow-level source (operation) that listens for inbound requests, referencing a listener-config by name via config-ref.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-listener-ref",
+      "required_attributes": ["path", "config-ref"],
+      "optional_attributes": ["allowedMethods"],
+      "config_ref_target": "http:listener-config",
+      "required_children": [],
+      "optional_children": ["http:response", "http:error-response"]
+    },
+    "http:request-config": {
+      "description": "Global (client-side) element organizing an HTTP Request operation's connection settings. Distinct from http:listener-config -- a request-config can never be referenced by an http:listener.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-request-ref",
+      "required_attributes": ["name"],
+      "optional_attributes": ["basePath"],
+      "required_children": ["http:request-connection"],
+      "optional_children": []
+    },
+    "http:request-connection": {
+      "description": "Child of http:request-config carrying the actual host/port/protocol and, optionally, TLS/authentication/reconnection settings.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-connector-xml-reference",
+      "required_attributes": ["host", "port"],
+      "optional_attributes": ["protocol"],
+      "required_children": [],
+      "optional_children": ["tls:context", "http:authentication", "reconnect", "reconnect-forever"]
+    },
+    "http:request": {
+      "description": "Flow-level operation that makes an outbound HTTP call, referencing a request-config by name via config-ref.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-request-ref",
+      "required_attributes": ["path", "config-ref"],
+      "optional_attributes": ["method"],
+      "config_ref_target": "http:request-config",
+      "required_children": [],
+      "optional_children": ["http:body", "http:headers", "http:uri-params", "http:query-params"]
+    },
+    "http:authentication": {
+      "description": "Wraps exactly one of the five real, documented authentication schemes for the Request operation. Do not invent a scheme not in required_children_choice below.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-authentication",
+      "required_attributes": [],
+      "optional_attributes": [],
+      "required_children_choice": [
+        "http:basic-authentication",
+        "http:digest-authentication",
+        "http:ntlm-authentication",
+        "oauth:authorization-code-grant-type",
+        "oauth:client-credentials-grant-type"
+      ]
+    },
+    "http:basic-authentication": {
+      "description": "Username/password sent as an Authorization header.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-authentication",
+      "required_attributes": ["username", "password"],
+      "optional_attributes": ["preemptive"]
+    },
+    "http:digest-authentication": {
+      "description": "Digest auth: username/password only (no domain/workstation -- that's NTLM, not Digest).",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-authentication",
+      "required_attributes": ["username", "password"],
+      "optional_attributes": []
+    },
+    "http:ntlm-authentication": {
+      "description": "NTLM auth: username/password required; domain/workstation optional.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-authentication",
+      "required_attributes": ["username", "password"],
+      "optional_attributes": ["domain", "workstation"]
+    },
+    "oauth:authorization-code-grant-type": {
+      "description": "OAuth 2.0 Authorization Code grant. HTTP Connector documents only OAuth 2.0 -- there is no plain 'OAuth'/OAuth1 scheme.",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-authentication",
+      "required_attributes": [
+        "externalCallbackUrl", "localAuthorizationUrl", "authorizationUrl",
+        "clientId", "clientSecret", "tokenUrl"
+      ],
+      "optional_attributes": [
+        "localCallbackUrl", "scopes", "tlsContextFactory",
+        "responseAccessToken", "responseRefreshToken", "responseExpiresIn", "refreshTokenWhen"
+      ]
+    },
+    "oauth:client-credentials-grant-type": {
+      "description": "OAuth 2.0 Client Credentials grant -- no callback/authorization URLs needed (no resource-owner redirect step).",
+      "source": "https://docs.mulesoft.com/http-connector/latest/http-authentication",
+      "required_attributes": ["clientId", "clientSecret", "tokenUrl"],
+      "optional_attributes": [
+        "scopes", "refreshTokenWhen", "responseAccessToken", "responseRefreshToken", "responseExpiresIn"
+      ]
+    },
+    "reconnect": {
+      "description": "Standard Mule SDK reconnection strategy (not HTTP-specific) -- a fixed number of attempts.",
+      "source": "https://docs.mulesoft.com/mule-runtime/latest/reconnection-strategy-about",
+      "required_attributes": [],
+      "optional_attributes": ["count", "frequency"]
+    },
+    "reconnect-forever": {
+      "description": "Standard Mule SDK reconnection strategy (not HTTP-specific) -- retries indefinitely at a fixed frequency.",
+      "source": "https://docs.mulesoft.com/mule-runtime/latest/reconnection-strategy-about",
+      "required_attributes": [],
+      "optional_attributes": ["frequency"]
+    }
+  },
+  "excluded_by_design": {
+    "tls:context / tls:key-store / tls:trust-store": "Real and documented (seen inline in http-connector-xml-reference examples), but deliberately left out of THIS schema file's validated element set -- TLS context is a generic Mule-runtime element shared by every connector, not HTTP-specific, and modeling it precisely (keystore/truststore/protocol enums) is its own reviewable unit. Referenced here only as an allowed, unvalidated optional_children entry so its mere presence doesn't trigger an 'unknown element' failure.",
+    "http:load-static-resource / http:basic-security-filter": "Real, documented HTTP Connector operations, but out of scope for this pass -- Ark's estates only ever need a listener source + request/transform operations (see ark/core/models.py's Step union), so these were never going to be exercised and are excluded rather than speculatively schema'd.",
+    "OAuth1 / a generic 'OAuth' scheme": "Does not exist in the real docs -- HTTP Connector documents OAuth 2.0 only, with two grant types (Authorization Code, Client Credentials). An earlier draft of this task assumed 'Basic / OAuth / OAuth2' as three schemes; the real, verified list is five (Basic, Digest, NTLM, and the two OAuth2 grant types) -- corrected here rather than silently kept."
+  }
+}

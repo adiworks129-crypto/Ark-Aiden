@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "report_schema_version": "0.1.0",
+    "generated_at": "2026-07-28T08:47:36.815728+00:00",
+    "trajectory_id": "m1-level_0_clean-seed1",
+    "baseline_estate_id": "milestone1-order-management-estate",
+    "profile_name": "level_0_clean",
+    "trajectory_seed": 1,
+    "engine_version": "0.1.0",
+    "baseline_schema_version": "0.2.0",
+    "ledger_schema_version": "0.1.0",
+    "issue_schema_version": "0.1.0",
+    "agent_output_schema_version": "0.1.0",
+    "metrics_schema_version": "0.1.0",
+    "calibration_schema_version": "0.1.0",
+    "explanation_signals_schema_version": "0.1.0",
+    "complexity_schema_version": "0.1.0",
+    "generator_version": null,
+    "adapter_name": "mulesoft",
+    "adapter_version": "0.1.0"
+  },
+  "environment_summary": {
+    "application_count": 4,
+    "api_count": 4,
+    "flow_count": 9,
+    "dependency_count": 9,
+    "artifact_count": 8
+  },
+  "transformation_summary": {
+    "total_mutations": 0,
+    "distinct_transformation_types": [],
+    "severity_mean": 0.0,
+    "severity_max": 0.0,
+    "affected_entity_count": 0,
+    "complexity_score": 0.0,
+    "complexity_profile": {
+      "baseline_estate_id": "milestone1-order-management-estate",
+      "trajectory_seed": 1,
+      "profile_name": "level_0_clean",
+      "mutation_count": 0,
+      "distinct_issue_count": 0,
+      "compounding_count": 0,
+      "max_compounding_depth": 0,
+      "severity_mean": 0.0,
+      "severity_max": 0.0,
+      "affected_entity_count": 0,
+      "transformation_diversity": 0.0,
+      "transformation_types_used": [],
+      "dependency_impact_mean": 0.0,
+      "dependency_impact_max": 0.0,
+      "interaction_score": 0.0,
+      "complexity_score": 0.0,
+      "weights_used": {
+        "mutation_count": 1.0,
+        "severity": 1.0,
+        "diversity": 1.0,
+        "dependency_impact": 1.0,
+        "interaction": 1.0,
+        "compounding": 1.0
+      },
+      "complexity_schema_version": "0.1.0"
+    }
+  },
+  "issue_summary": {
+    "total_observable_issues": 0,
+    "issues_by_type": {},
+    "issues_by_severity_bucket": {
+      "low": 0,
+      "medium": 0,
+      "high": 0
+    },
+    "compounding_issue_count": 0,
+    "net_zero_transformation_count": 0,
+    "net_zero_groups": []
+  },
+  "agent_performance": {
+    "total_findings": 0,
+    "category_metrics": {
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "category_metrics_by_type": {},
+    "entity_localization_metrics": {
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": null,
+      "recall": null,
+      "localization_accuracy": null
+    },
+    "calibration": {
+      "sample_size": 0,
+      "brier_score": null,
+      "ece": null,
+      "calibration_pairs": [],
+      "min_sample_size_for_ece": 5
+    },
+    "explanation_signals": [],
+    "confidence_distribution": {
+      "0.0-0.1": 0,
+      "0.1-0.2": 0,
+      "0.2-0.3": 0,
+      "0.3-0.4": 0,
+      "0.4-0.5": 0,
+      "0.5-0.6": 0,
+      "0.6-0.7": 0,
+      "0.7-0.8": 0,
+      "0.8-0.9": 0,
+      "0.9-1.0": 0
+    }
+  },
+  "failure_analysis": {
+    "missed_issues": [],
+    "hallucinated_findings": [],
+    "wrong_category_predictions": [],
+    "correct_location_incorrect_diagnosis": [],
+    "overconfidence_patterns": [],
+    "overconfidence_threshold": 0.7
+  },
+  "research_hooks": {
+    "complexity_score": 0.0,
+    "mutation_count": 0,
+    "transformation_type_combination": [],
+    "category_f1": null,
+    "entity_localization_accuracy": null,
+    "calibration_ece": null,
+    "category_metrics_by_type": {}
+  },
+  "issues": [],
+  "raw_agent_output": {
+    "findings": []
+  }
+}

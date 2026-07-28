@@ -1,0 +1,79 @@
+{
+  "baseline_estate_id": "milestone1-order-management-estate",
+  "baseline_schema_version": "0.2.0",
+  "trajectory_seed": 1,
+  "profile_name": "level_1_minor",
+  "engine_version": "0.1.0",
+  "ledger_schema_version": "0.1.0",
+  "records": [
+    {
+      "mutation_id": "level_1_minor-seed1-000",
+      "transformation_type": "naming_drift",
+      "affected_entity_ids": [
+        "api-order-processing-process-v1"
+      ],
+      "original_state": {
+        "api-order-processing-process-v1": {
+          "name": "Order Processing Process API"
+        }
+      },
+      "transformed_state": {
+        "api-order-processing-process-v1": {
+          "name": "Order Processing Process API-copy2"
+        }
+      },
+      "severity": 0.17652070772182654,
+      "rationale": "Simulates naming convention drift on API 'api-order-processing-process-v1' (styles applied: ['_style_abbreviate', '_style_add_legacy_suffix (forced, no-op guard)']), as if caused by a rushed migration that skipped a naming review.",
+      "sequence_index": 0,
+      "timestamp": "2026-07-28T06:11:12.801763+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_1_minor-seed1-001",
+      "transformation_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-order-status-call-process"
+      ],
+      "original_state": {
+        "step-order-status-call-process": {
+          "description": "Requests the aggregated processing status for this order from the Process API."
+        }
+      },
+      "transformed_state": {
+        "step-order-status-call-process": {
+          "description": "Requests the aggregated processing status"
+        }
+      },
+      "severity": 0.12815787603227047,
+      "rationale": "Simulates incomplete enterprise documentation: description on 'step-order-status-call-process' was truncated.",
+      "sequence_index": 1,
+      "timestamp": "2026-07-28T06:11:12.802224+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    },
+    {
+      "mutation_id": "level_1_minor-seed1-002",
+      "transformation_type": "naming_drift",
+      "affected_entity_ids": [
+        "flow-nightly-reconciliation"
+      ],
+      "original_state": {
+        "flow-nightly-reconciliation": {
+          "name": "nightly-order-reconciliation-flow"
+        }
+      },
+      "transformed_state": {
+        "flow-nightly-reconciliation": {
+          "name": "nightlyOrderReconciliationFlow"
+        }
+      },
+      "severity": 0.22983012037151604,
+      "rationale": "Simulates naming convention drift on Flow 'flow-nightly-reconciliation' (styles applied: ['_style_kebab_to_camel']), as if caused by a rushed migration that skipped a naming review.",
+      "sequence_index": 2,
+      "timestamp": "2026-07-28T06:11:12.802635+00:00",
+      "seed": 1,
+      "record_schema_version": "0.1.0"
+    }
+  ]
+}

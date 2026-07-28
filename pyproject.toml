@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ark"
+version = "0.1.0"
+description = "Synthetic enterprise integration estate framework with ground-truth tracking for AI agent evaluation."
+requires-python = ">=3.10"
+# Milestone 0 is zero-dependency on purpose (stdlib dataclasses + unittest) —
+# see the Milestone 0 note in Ark_Architecture_and_Plan.md. Pydantic is the
+# planned dependency once later milestones (e.g. the generator) need it.
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+# Only needed by integrations/anthropic_agent_client.py and
+# integrations/gemini_agent_client.py -- real, vendor-specific AgentClient
+# implementations that live outside the `ark` package on purpose (see
+# integrations/__init__.py). Ark's own core, and ark/harness's
+# ScriptedAgentClient reference double, need none of this.
+llm = [
+    "anthropic>=0.40",
+    "google-genai>=1.0",
+]
+# Only needed to actually run `streamlit run ark/ui/app.py`. ark/ui/logic.py
+# (all the non-widget logic behind the UI) has no Streamlit dependency and
+# is fully unit-tested without this extra installed -- see ark/ui/__init__.py.
+ui = [
+    "streamlit>=1.30",
+    "pandas>=2.0",
+]
+
+[tool.setuptools.packages.find]
+# Two real top-level packages live at repo root by deliberate design --
+# `ark` (the core framework) and `integrations` (vendor-specific AgentClient
+# implementations, kept OUTSIDE `ark` on purpose -- see
+# integrations/__init__.py). setuptools' automatic flat-layout discovery
+# refuses to guess between them, so both are named explicitly here.
+# `examples`/`tests` are excluded -- they're not meant to be installed.
+include = ["ark*", "integrations*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

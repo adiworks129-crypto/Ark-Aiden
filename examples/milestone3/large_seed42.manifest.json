@@ -1,0 +1,18 @@
+{
+  "seed": 42,
+  "generator_version": "0.1.0",
+  "schema_version": "0.2.0",
+  "config": {
+    "seed": 42,
+    "num_experience_apis": 2,
+    "num_process_apis": 3,
+    "num_system_apis": 4,
+    "dependency_density": 0.5,
+    "shared_component_frequency": 0.5,
+    "scheduled_job_ratio": 0.4,
+    "topology_style": "layered",
+    "naming_style": "kebab-case",
+    "vocabulary_domain": "enterprise_default",
+    "estate_id_prefix": "generated"
+  }
+}

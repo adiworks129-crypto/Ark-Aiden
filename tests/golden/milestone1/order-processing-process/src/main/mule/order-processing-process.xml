@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <http:listener-config name="HTTP_Listener_config">
+        <http:listener-connection host="0.0.0.0" port="8081"/>
+    </http:listener-config>
+    <http:request-config name="HTTP_Request_config">
+        <http:request-connection host="localhost" port="8082"/>
+    </http:request-config>
+
+    <flow name="process-order-main-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/orders/process" allowedMethods="POST"/>
+        <flow-ref name="validate-order-sub-flow"/>
+        <http:request method="GET" path="/inventory/{sku}" config-ref="HTTP_Request_config" doc:name="Call Inventory System API"/>
+        <http:request method="GET" path="/customers/{customerId}" config-ref="HTTP_Request_config" doc:name="Call Customer System API"/>
+        <ee:transform doc:name="Build Processing Result">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    orderId: payload.orderId,
+    status: "PROCESSED"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+
+    <sub-flow name="validate-order-sub-flow">
+        <ee:transform doc:name="Validate Order Payload">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <flow name="nightly-order-reconciliation-flow">
+        <scheduler>
+            <scheduling-strategy>
+                <cron expression="0 2 * * *"/>
+            </scheduling-strategy>
+        </scheduler>
+        <flow-ref name="validate-order-sub-flow"/>
+        <http:request method="GET" path="/inventory/{sku}" config-ref="HTTP_Request_config" doc:name="Call Inventory System API"/>
+        <logger level="INFO" message="Nightly order reconciliation completed"/>
+    </flow>
+
+</mule>

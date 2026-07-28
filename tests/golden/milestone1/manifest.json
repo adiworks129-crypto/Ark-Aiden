@@ -1,0 +1,531 @@
+{
+  "estate_id": "milestone1-order-management-estate",
+  "schema_version": "0.2.0",
+  "adapter": "mulesoft",
+  "adapter_version": "0.1.0",
+  "artifacts": [
+    {
+      "path": "customer-system/src/main/mule/customer-system.xml",
+      "entities": [
+        {
+          "id": "app-customer-system",
+          "type": "Application",
+          "name": "customer-system"
+        },
+        {
+          "id": "flow-customer-get-main",
+          "type": "Flow",
+          "name": "get-customer-main-flow",
+          "flow_type": "flow"
+        },
+        {
+          "id": "step-customer-build-response",
+          "type": "Step:transform",
+          "flow_id": "flow-customer-get-main",
+          "name": "Build Customer Response"
+        },
+        {
+          "id": "step-customer-log-ref",
+          "type": "Step:flow-ref",
+          "flow_id": "flow-customer-get-main",
+          "name": "reference to 'log-request-sub-flow'"
+        },
+        {
+          "id": "flow-customer-log-request",
+          "type": "Flow",
+          "name": "log-request-sub-flow",
+          "flow_type": "sub_flow"
+        },
+        {
+          "id": "step-customer-log",
+          "type": "Step:logger",
+          "flow_id": "flow-customer-log-request",
+          "name": "Customer lookup request received"
+        }
+      ]
+    },
+    {
+      "path": "customer-system/src/main/resources/api-customer-system-v1.yaml",
+      "entities": [
+        {
+          "id": "api-customer-system-v1",
+          "type": "API",
+          "name": "Customer System API",
+          "application_id": "app-customer-system"
+        }
+      ]
+    },
+    {
+      "path": "inventory-system/src/main/mule/inventory-system.xml",
+      "entities": [
+        {
+          "id": "app-inventory-system",
+          "type": "Application",
+          "name": "inventory-system"
+        },
+        {
+          "id": "flow-inventory-get-main",
+          "type": "Flow",
+          "name": "get-inventory-main-flow",
+          "flow_type": "flow"
+        },
+        {
+          "id": "step-inventory-build-response",
+          "type": "Step:transform",
+          "flow_id": "flow-inventory-get-main",
+          "name": "Build Inventory Response"
+        },
+        {
+          "id": "step-inventory-log-ref",
+          "type": "Step:flow-ref",
+          "flow_id": "flow-inventory-get-main",
+          "name": "reference to 'log-request-sub-flow'"
+        },
+        {
+          "id": "flow-inventory-log-request",
+          "type": "Flow",
+          "name": "log-request-sub-flow",
+          "flow_type": "sub_flow"
+        },
+        {
+          "id": "step-inventory-log",
+          "type": "Step:logger",
+          "flow_id": "flow-inventory-log-request",
+          "name": "Inventory lookup request received"
+        }
+      ]
+    },
+    {
+      "path": "inventory-system/src/main/resources/api-inventory-system-v1.yaml",
+      "entities": [
+        {
+          "id": "api-inventory-system-v1",
+          "type": "API",
+          "name": "Inventory System API",
+          "application_id": "app-inventory-system"
+        }
+      ]
+    },
+    {
+      "path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entities": [
+        {
+          "id": "app-order-processing-process",
+          "type": "Application",
+          "name": "order-processing-process"
+        },
+        {
+          "id": "flow-process-order-main",
+          "type": "Flow",
+          "name": "process-order-main-flow",
+          "flow_type": "flow"
+        },
+        {
+          "id": "step-process-validate-ref",
+          "type": "Step:flow-ref",
+          "flow_id": "flow-process-order-main",
+          "name": "reference to 'validate-order-sub-flow'"
+        },
+        {
+          "id": "step-process-check-inventory",
+          "type": "Step:api-call",
+          "flow_id": "flow-process-order-main",
+          "name": "Call Inventory System API"
+        },
+        {
+          "id": "step-process-verify-customer",
+          "type": "Step:api-call",
+          "flow_id": "flow-process-order-main",
+          "name": "Call Customer System API"
+        },
+        {
+          "id": "step-process-build-result",
+          "type": "Step:transform",
+          "flow_id": "flow-process-order-main",
+          "name": "Build Processing Result"
+        },
+        {
+          "id": "flow-validate-order",
+          "type": "Flow",
+          "name": "validate-order-sub-flow",
+          "flow_type": "sub_flow"
+        },
+        {
+          "id": "step-validate-order-check-payload",
+          "type": "Step:transform",
+          "flow_id": "flow-validate-order",
+          "name": "Validate Order Payload"
+        },
+        {
+          "id": "flow-nightly-reconciliation",
+          "type": "Flow",
+          "name": "nightly-order-reconciliation-flow",
+          "flow_type": "flow"
+        },
+        {
+          "id": "step-reconciliation-validate-ref",
+          "type": "Step:flow-ref",
+          "flow_id": "flow-nightly-reconciliation",
+          "name": "reference to 'validate-order-sub-flow'"
+        },
+        {
+          "id": "step-reconciliation-check-inventory",
+          "type": "Step:api-call",
+          "flow_id": "flow-nightly-reconciliation",
+          "name": "Call Inventory System API"
+        },
+        {
+          "id": "step-reconciliation-log",
+          "type": "Step:logger",
+          "flow_id": "flow-nightly-reconciliation",
+          "name": "Nightly order reconciliation completed"
+        }
+      ]
+    },
+    {
+      "path": "order-processing-process/src/main/resources/api-order-processing-process-v1.yaml",
+      "entities": [
+        {
+          "id": "api-order-processing-process-v1",
+          "type": "API",
+          "name": "Order Processing Process API",
+          "application_id": "app-order-processing-process"
+        }
+      ]
+    },
+    {
+      "path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entities": [
+        {
+          "id": "app-order-status-experience",
+          "type": "Application",
+          "name": "order-status-experience"
+        },
+        {
+          "id": "flow-order-status-main",
+          "type": "Flow",
+          "name": "order-status-main-flow",
+          "flow_type": "flow"
+        },
+        {
+          "id": "step-order-status-call-process",
+          "type": "Step:api-call",
+          "flow_id": "flow-order-status-main",
+          "name": "Call Order Processing Process API"
+        },
+        {
+          "id": "step-order-status-build-response",
+          "type": "Step:transform",
+          "flow_id": "flow-order-status-main",
+          "name": "Build Order Status Response"
+        },
+        {
+          "id": "step-order-status-audit-ref",
+          "type": "Step:flow-ref",
+          "flow_id": "flow-order-status-main",
+          "name": "reference to 'audit-log-sub-flow'"
+        },
+        {
+          "id": "flow-order-status-audit-log",
+          "type": "Flow",
+          "name": "audit-log-sub-flow",
+          "flow_type": "sub_flow"
+        },
+        {
+          "id": "step-order-status-log-audit",
+          "type": "Step:logger",
+          "flow_id": "flow-order-status-audit-log",
+          "name": "Order status lookup completed"
+        }
+      ]
+    },
+    {
+      "path": "order-status-experience/src/main/resources/api-order-status-experience-v1.yaml",
+      "entities": [
+        {
+          "id": "api-order-status-experience-v1",
+          "type": "API",
+          "name": "Order Status Experience API",
+          "application_id": "app-order-status-experience"
+        }
+      ]
+    }
+  ],
+  "entity_index": {
+    "app-order-status-experience": {
+      "artifact_path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entity_type": "Application",
+      "name": "order-status-experience",
+      "aliases": []
+    },
+    "flow-order-status-main": {
+      "artifact_path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entity_type": "Flow",
+      "name": "order-status-main-flow",
+      "aliases": []
+    },
+    "step-order-status-call-process": {
+      "artifact_path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entity_type": "Step:api-call",
+      "name": "Call Order Processing Process API",
+      "aliases": []
+    },
+    "step-order-status-build-response": {
+      "artifact_path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entity_type": "Step:transform",
+      "name": "Build Order Status Response",
+      "aliases": []
+    },
+    "step-order-status-audit-ref": {
+      "artifact_path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entity_type": "Step:flow-ref",
+      "name": "reference to 'audit-log-sub-flow'",
+      "aliases": []
+    },
+    "flow-order-status-audit-log": {
+      "artifact_path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entity_type": "Flow",
+      "name": "audit-log-sub-flow",
+      "aliases": []
+    },
+    "step-order-status-log-audit": {
+      "artifact_path": "order-status-experience/src/main/mule/order-status-experience.xml",
+      "entity_type": "Step:logger",
+      "name": "Order status lookup completed",
+      "aliases": []
+    },
+    "api-order-status-experience-v1": {
+      "artifact_path": "order-status-experience/src/main/resources/api-order-status-experience-v1.yaml",
+      "entity_type": "API",
+      "name": "Order Status Experience API",
+      "aliases": []
+    },
+    "app-order-processing-process": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Application",
+      "name": "order-processing-process",
+      "aliases": []
+    },
+    "flow-process-order-main": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Flow",
+      "name": "process-order-main-flow",
+      "aliases": []
+    },
+    "step-process-validate-ref": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:flow-ref",
+      "name": "reference to 'validate-order-sub-flow'",
+      "aliases": []
+    },
+    "step-process-check-inventory": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:api-call",
+      "name": "Call Inventory System API",
+      "aliases": []
+    },
+    "step-process-verify-customer": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:api-call",
+      "name": "Call Customer System API",
+      "aliases": []
+    },
+    "step-process-build-result": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:transform",
+      "name": "Build Processing Result",
+      "aliases": []
+    },
+    "flow-validate-order": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Flow",
+      "name": "validate-order-sub-flow",
+      "aliases": []
+    },
+    "step-validate-order-check-payload": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:transform",
+      "name": "Validate Order Payload",
+      "aliases": []
+    },
+    "flow-nightly-reconciliation": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Flow",
+      "name": "nightly-order-reconciliation-flow",
+      "aliases": []
+    },
+    "step-reconciliation-validate-ref": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:flow-ref",
+      "name": "reference to 'validate-order-sub-flow'",
+      "aliases": []
+    },
+    "step-reconciliation-check-inventory": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:api-call",
+      "name": "Call Inventory System API",
+      "aliases": []
+    },
+    "step-reconciliation-log": {
+      "artifact_path": "order-processing-process/src/main/mule/order-processing-process.xml",
+      "entity_type": "Step:logger",
+      "name": "Nightly order reconciliation completed",
+      "aliases": []
+    },
+    "api-order-processing-process-v1": {
+      "artifact_path": "order-processing-process/src/main/resources/api-order-processing-process-v1.yaml",
+      "entity_type": "API",
+      "name": "Order Processing Process API",
+      "aliases": []
+    },
+    "app-inventory-system": {
+      "artifact_path": "inventory-system/src/main/mule/inventory-system.xml",
+      "entity_type": "Application",
+      "name": "inventory-system",
+      "aliases": []
+    },
+    "flow-inventory-get-main": {
+      "artifact_path": "inventory-system/src/main/mule/inventory-system.xml",
+      "entity_type": "Flow",
+      "name": "get-inventory-main-flow",
+      "aliases": []
+    },
+    "step-inventory-build-response": {
+      "artifact_path": "inventory-system/src/main/mule/inventory-system.xml",
+      "entity_type": "Step:transform",
+      "name": "Build Inventory Response",
+      "aliases": []
+    },
+    "step-inventory-log-ref": {
+      "artifact_path": "inventory-system/src/main/mule/inventory-system.xml",
+      "entity_type": "Step:flow-ref",
+      "name": "reference to 'log-request-sub-flow'",
+      "aliases": []
+    },
+    "flow-inventory-log-request": {
+      "artifact_path": "inventory-system/src/main/mule/inventory-system.xml",
+      "entity_type": "Flow",
+      "name": "log-request-sub-flow",
+      "aliases": []
+    },
+    "step-inventory-log": {
+      "artifact_path": "inventory-system/src/main/mule/inventory-system.xml",
+      "entity_type": "Step:logger",
+      "name": "Inventory lookup request received",
+      "aliases": []
+    },
+    "api-inventory-system-v1": {
+      "artifact_path": "inventory-system/src/main/resources/api-inventory-system-v1.yaml",
+      "entity_type": "API",
+      "name": "Inventory System API",
+      "aliases": []
+    },
+    "app-customer-system": {
+      "artifact_path": "customer-system/src/main/mule/customer-system.xml",
+      "entity_type": "Application",
+      "name": "customer-system",
+      "aliases": []
+    },
+    "flow-customer-get-main": {
+      "artifact_path": "customer-system/src/main/mule/customer-system.xml",
+      "entity_type": "Flow",
+      "name": "get-customer-main-flow",
+      "aliases": []
+    },
+    "step-customer-build-response": {
+      "artifact_path": "customer-system/src/main/mule/customer-system.xml",
+      "entity_type": "Step:transform",
+      "name": "Build Customer Response",
+      "aliases": []
+    },
+    "step-customer-log-ref": {
+      "artifact_path": "customer-system/src/main/mule/customer-system.xml",
+      "entity_type": "Step:flow-ref",
+      "name": "reference to 'log-request-sub-flow'",
+      "aliases": []
+    },
+    "flow-customer-log-request": {
+      "artifact_path": "customer-system/src/main/mule/customer-system.xml",
+      "entity_type": "Flow",
+      "name": "log-request-sub-flow",
+      "aliases": []
+    },
+    "step-customer-log": {
+      "artifact_path": "customer-system/src/main/mule/customer-system.xml",
+      "entity_type": "Step:logger",
+      "name": "Customer lookup request received",
+      "aliases": []
+    },
+    "api-customer-system-v1": {
+      "artifact_path": "customer-system/src/main/resources/api-customer-system-v1.yaml",
+      "entity_type": "API",
+      "name": "Customer System API",
+      "aliases": []
+    }
+  },
+  "dependencies": [
+    {
+      "kind": "api-call",
+      "source_entity_id": "flow-order-status-main",
+      "source_step_id": "step-order-status-call-process",
+      "target_entity_id": "api-order-processing-process-v1",
+      "target_entity_type": "API"
+    },
+    {
+      "kind": "flow-ref",
+      "source_entity_id": "flow-order-status-main",
+      "source_step_id": "step-order-status-audit-ref",
+      "target_entity_id": "flow-order-status-audit-log",
+      "target_entity_type": "Flow"
+    },
+    {
+      "kind": "flow-ref",
+      "source_entity_id": "flow-process-order-main",
+      "source_step_id": "step-process-validate-ref",
+      "target_entity_id": "flow-validate-order",
+      "target_entity_type": "Flow"
+    },
+    {
+      "kind": "api-call",
+      "source_entity_id": "flow-process-order-main",
+      "source_step_id": "step-process-check-inventory",
+      "target_entity_id": "api-inventory-system-v1",
+      "target_entity_type": "API"
+    },
+    {
+      "kind": "api-call",
+      "source_entity_id": "flow-process-order-main",
+      "source_step_id": "step-process-verify-customer",
+      "target_entity_id": "api-customer-system-v1",
+      "target_entity_type": "API"
+    },
+    {
+      "kind": "flow-ref",
+      "source_entity_id": "flow-nightly-reconciliation",
+      "source_step_id": "step-reconciliation-validate-ref",
+      "target_entity_id": "flow-validate-order",
+      "target_entity_type": "Flow"
+    },
+    {
+      "kind": "api-call",
+      "source_entity_id": "flow-nightly-reconciliation",
+      "source_step_id": "step-reconciliation-check-inventory",
+      "target_entity_id": "api-inventory-system-v1",
+      "target_entity_type": "API"
+    },
+    {
+      "kind": "flow-ref",
+      "source_entity_id": "flow-inventory-get-main",
+      "source_step_id": "step-inventory-log-ref",
+      "target_entity_id": "flow-inventory-log-request",
+      "target_entity_type": "Flow"
+    },
+    {
+      "kind": "flow-ref",
+      "source_entity_id": "flow-customer-get-main",
+      "source_step_id": "step-customer-log-ref",
+      "target_entity_id": "flow-customer-log-request",
+      "target_entity_type": "Flow"
+    }
+  ]
+}
