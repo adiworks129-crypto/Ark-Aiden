@@ -1,0 +1,891 @@
+{
+  "metadata": {
+    "report_schema_version": "0.1.0",
+    "generated_at": "2026-07-30T21:11:09.921643+00:00",
+    "trajectory_id": "pink-unicorn-level_3_legacy-seed14",
+    "baseline_estate_id": "generated-seed14",
+    "profile_name": "level_3_legacy",
+    "trajectory_seed": 14,
+    "engine_version": "0.1.0",
+    "baseline_schema_version": "0.3.0",
+    "ledger_schema_version": "0.1.0",
+    "issue_schema_version": "0.1.0",
+    "agent_output_schema_version": "0.1.0",
+    "metrics_schema_version": "0.1.0",
+    "calibration_schema_version": "0.1.0",
+    "explanation_signals_schema_version": "0.1.0",
+    "complexity_schema_version": "0.1.0",
+    "generator_version": "0.1.0",
+    "adapter_name": "mulesoft",
+    "adapter_version": "0.1.0"
+  },
+  "environment_summary": {
+    "application_count": 4,
+    "api_count": 5,
+    "flow_count": 10,
+    "dependency_count": 7,
+    "artifact_count": 9
+  },
+  "transformation_summary": {
+    "total_mutations": 10,
+    "distinct_transformation_types": [
+      "dependency_change",
+      "documentation_decay",
+      "duplicate_processing",
+      "legacy_version_introduction",
+      "naming_drift",
+      "schema_inconsistency"
+    ],
+    "severity_mean": 0.6440948753514083,
+    "severity_max": 0.7988014992320356,
+    "affected_entity_count": 11,
+    "complexity_score": 0.42545881400156943,
+    "complexity_profile": {
+      "baseline_estate_id": "generated-seed14",
+      "trajectory_seed": 14,
+      "profile_name": "level_3_legacy",
+      "mutation_count": 10,
+      "distinct_issue_count": 9,
+      "compounding_count": 1,
+      "max_compounding_depth": 2,
+      "severity_mean": 0.6440948753514083,
+      "severity_max": 0.7988014992320356,
+      "affected_entity_count": 11,
+      "transformation_diversity": 0.8571428571428571,
+      "transformation_types_used": [
+        "dependency_change",
+        "documentation_decay",
+        "duplicate_processing",
+        "legacy_version_introduction",
+        "naming_drift",
+        "schema_inconsistency"
+      ],
+      "dependency_impact_mean": 0.09090909090909091,
+      "dependency_impact_max": 1.0,
+      "interaction_score": 0.16666666666666663,
+      "complexity_score": 0.42545881400156943,
+      "weights_used": {
+        "mutation_count": 1.0,
+        "severity": 1.0,
+        "diversity": 1.0,
+        "dependency_impact": 1.0,
+        "interaction": 1.0,
+        "compounding": 1.0
+      },
+      "complexity_schema_version": "0.1.0"
+    }
+  },
+  "issue_summary": {
+    "total_observable_issues": 9,
+    "issues_by_type": {
+      "naming_drift": 2,
+      "schema_inconsistency": 3,
+      "dependency_change": 1,
+      "duplicate_processing": 1,
+      "legacy_version_introduction": 1,
+      "documentation_decay": 1
+    },
+    "issues_by_severity_bucket": {
+      "low": 0,
+      "medium": 6,
+      "high": 3
+    },
+    "compounding_issue_count": 1,
+    "net_zero_transformation_count": 0,
+    "net_zero_groups": []
+  },
+  "agent_performance": {
+    "total_findings": 5,
+    "category_metrics": {
+      "true_positives": 1,
+      "false_positives": 4,
+      "false_negatives": 8,
+      "precision": 0.2,
+      "recall": 0.1111111111111111,
+      "f1": 0.14285714285714285
+    },
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "duplicate_processing": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "legacy_version_introduction": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 1,
+        "false_positives": 4,
+        "false_negatives": 1,
+        "precision": 0.2,
+        "recall": 0.5,
+        "f1": 0.28571428571428575
+      },
+      "schema_inconsistency": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      }
+    },
+    "entity_localization_metrics": {
+      "true_positives": 5,
+      "false_positives": 0,
+      "false_negatives": 6,
+      "precision": 1.0,
+      "recall": 0.5555555555555556,
+      "localization_accuracy": 0.7142857142857143
+    },
+    "calibration": {
+      "sample_size": 5,
+      "brier_score": 0.36250000000000004,
+      "ece": 0.45,
+      "calibration_pairs": [
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          true
+        ]
+      ],
+      "min_sample_size_for_ece": 5
+    },
+    "explanation_signals": [
+      {
+        "finding_id": "finding-000",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 221
+      },
+      {
+        "finding_id": "finding-001",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 221
+      },
+      {
+        "finding_id": "finding-002",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 224
+      },
+      {
+        "finding_id": "finding-003",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 241
+      },
+      {
+        "finding_id": "finding-004",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 230
+      }
+    ],
+    "confidence_distribution": {
+      "0.0-0.1": 0,
+      "0.1-0.2": 0,
+      "0.2-0.3": 0,
+      "0.3-0.4": 0,
+      "0.4-0.5": 0,
+      "0.5-0.6": 0,
+      "0.6-0.7": 5,
+      "0.7-0.8": 0,
+      "0.8-0.9": 0,
+      "0.9-1.0": 0
+    }
+  },
+  "failure_analysis": {
+    "missed_issues": [
+      {
+        "finding_id": null,
+        "issue_id": "naming_drift:app-warehouse-process",
+        "claimed_issue_type": null,
+        "actual_issue_type": "naming_drift",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'naming_drift' issue on ['app-warehouse-process']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "schema_inconsistency:step-warehouse-process-build-result",
+        "claimed_issue_type": null,
+        "actual_issue_type": "schema_inconsistency",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'schema_inconsistency' issue on ['step-warehouse-process-build-result']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "dependency_change:step-pricing-experience-call-warehouse-process",
+        "claimed_issue_type": null,
+        "actual_issue_type": "dependency_change",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'dependency_change' issue on ['step-pricing-experience-call-warehouse-process']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "duplicate_processing:flow-pricing-experience-sub-dup3+step-pricing-experience-subflow-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "duplicate_processing",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'duplicate_processing' issue on ['flow-pricing-experience-sub-dup3', 'step-pricing-experience-subflow-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "schema_inconsistency:step-pricing-experience-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "schema_inconsistency",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'schema_inconsistency' issue on ['step-pricing-experience-build-response']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "legacy_version_introduction:api-pricing-experience-v1-legacy5+flow-pricing-experience-main-legacy5",
+        "claimed_issue_type": null,
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'legacy_version_introduction' issue on ['api-pricing-experience-v1-legacy5', 'flow-pricing-experience-main-legacy5']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "schema_inconsistency:step-account-system-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "schema_inconsistency",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'schema_inconsistency' issue on ['step-account-system-build-response']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-loyalty-system-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-loyalty-system-build-response']."
+      }
+    ],
+    "hallucinated_findings": [],
+    "wrong_category_predictions": [],
+    "correct_location_incorrect_diagnosis": [
+      {
+        "finding_id": "finding-000",
+        "issue_id": "duplicate_processing:flow-pricing-experience-sub-dup3+step-pricing-experience-subflow-ref",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "duplicate_processing",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'duplicate_processing:flow-pricing-experience-sub-dup3+step-pricing-experience-subflow-ref' but claimed 'naming_drift' instead of the real issue_type 'duplicate_processing'."
+      },
+      {
+        "finding_id": "finding-001",
+        "issue_id": "duplicate_processing:flow-pricing-experience-sub-dup3+step-pricing-experience-subflow-ref",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "duplicate_processing",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'duplicate_processing:flow-pricing-experience-sub-dup3+step-pricing-experience-subflow-ref' but claimed 'naming_drift' instead of the real issue_type 'duplicate_processing'."
+      },
+      {
+        "finding_id": "finding-002",
+        "issue_id": "legacy_version_introduction:api-pricing-experience-v1-legacy5+flow-pricing-experience-main-legacy5",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'legacy_version_introduction:api-pricing-experience-v1-legacy5+flow-pricing-experience-main-legacy5' but claimed 'naming_drift' instead of the real issue_type 'legacy_version_introduction'."
+      },
+      {
+        "finding_id": "finding-003",
+        "issue_id": "legacy_version_introduction:api-pricing-experience-v1-legacy5+flow-pricing-experience-main-legacy5",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'legacy_version_introduction:api-pricing-experience-v1-legacy5+flow-pricing-experience-main-legacy5' but claimed 'naming_drift' instead of the real issue_type 'legacy_version_introduction'."
+      }
+    ],
+    "overconfidence_patterns": [],
+    "overconfidence_threshold": 0.7
+  },
+  "research_hooks": {
+    "complexity_score": 0.42545881400156943,
+    "mutation_count": 10,
+    "transformation_type_combination": [
+      "dependency_change",
+      "documentation_decay",
+      "duplicate_processing",
+      "legacy_version_introduction",
+      "naming_drift",
+      "schema_inconsistency"
+    ],
+    "category_f1": 0.14285714285714285,
+    "entity_localization_accuracy": 0.7142857142857143,
+    "calibration_ece": 0.45,
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "duplicate_processing": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "legacy_version_introduction": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 1,
+        "false_positives": 4,
+        "false_negatives": 1,
+        "precision": 0.2,
+        "recall": 0.5,
+        "f1": 0.28571428571428575
+      },
+      "schema_inconsistency": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      }
+    }
+  },
+  "issues": [
+    {
+      "issue_id": "naming_drift:app-warehouse-process",
+      "issue_type": "naming_drift",
+      "affected_entity_ids": [
+        "app-warehouse-process"
+      ],
+      "observable_symptom": {
+        "app-warehouse-process": {
+          "name": "WAREHOUSE-process"
+        }
+      },
+      "severity": 0.6084460906241292,
+      "expected_detection_target": "A 'naming_drift' issue affecting ['app-warehouse-process'], observable as: {'app-warehouse-process': {'name': 'WAREHOUSE-process'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-000",
+          "sequence_index": 0,
+          "original_state": {
+            "app-warehouse-process": {
+              "name": "warehouse-process"
+            }
+          },
+          "transformed_state": {
+            "app-warehouse-process": {
+              "name": "WAREHOUSE-process"
+            }
+          },
+          "severity": 0.6084460906241292,
+          "rationale": "Simulates naming convention drift on Application 'app-warehouse-process' (styles applied: ['_style_case_shift', '_style_case_shift']), as if caused by a team reorganization."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "schema_inconsistency:step-warehouse-process-build-result",
+      "issue_type": "schema_inconsistency",
+      "affected_entity_ids": [
+        "step-warehouse-process-build-result"
+      ],
+      "observable_symptom": {
+        "step-warehouse-process-build-result": {
+          "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    war: payload.id,\n    status: \"PROCESSED\"\n}"
+        }
+      },
+      "severity": 0.621195189555342,
+      "expected_detection_target": "A 'schema_inconsistency' issue affecting ['step-warehouse-process-build-result'], observable as: {'step-warehouse-process-build-result': {'dataweave': '%dw 2.0\\noutput application/json\\n---\\n{\\n    war: payload.id,\\n    status: \"PROCESSED\"\\n}'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-001",
+          "sequence_index": 1,
+          "original_state": {
+            "step-warehouse-process-build-result": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    warehouseId: payload.id,\n    status: \"PROCESSED\"\n}"
+            }
+          },
+          "transformed_state": {
+            "step-warehouse-process-build-result": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    war: payload.id,\n    status: \"PROCESSED\"\n}"
+            }
+          },
+          "severity": 0.621195189555342,
+          "rationale": "Simulates schema/contract inconsistency: field 'warehouseId' in 'step-warehouse-process-build-result' was renamed to 'war' (abbreviated convention), diverging from what related components expect."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "dependency_change:step-pricing-experience-call-warehouse-process",
+      "issue_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-pricing-experience-call-warehouse-process"
+      ],
+      "observable_symptom": {
+        "step-pricing-experience-call-warehouse-process": {
+          "target_api_id": "api-loyalty-system-v1"
+        }
+      },
+      "severity": 0.6054065740801874,
+      "expected_detection_target": "A 'dependency_change' issue affecting ['step-pricing-experience-call-warehouse-process'], observable as: {'step-pricing-experience-call-warehouse-process': {'target_api_id': 'api-loyalty-system-v1'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-002",
+          "sequence_index": 2,
+          "original_state": {
+            "step-pricing-experience-call-warehouse-process": {
+              "target_api_id": "api-warehouse-process-v1"
+            }
+          },
+          "transformed_state": {
+            "step-pricing-experience-call-warehouse-process": {
+              "target_api_id": "api-loyalty-system-v1"
+            }
+          },
+          "severity": 0.6054065740801874,
+          "rationale": "Simulates a dependency change: 'step-pricing-experience-call-warehouse-process' now calls 'api-loyalty-system-v1' instead of 'api-warehouse-process-v1', as if the team switched downstream providers while keeping the estate structurally valid."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "duplicate_processing:flow-pricing-experience-sub-dup3+step-pricing-experience-subflow-ref",
+      "issue_type": "duplicate_processing",
+      "affected_entity_ids": [
+        "flow-pricing-experience-sub-dup3",
+        "step-pricing-experience-subflow-ref"
+      ],
+      "observable_symptom": {
+        "flow-pricing-experience-sub-dup3": {
+          "id": "flow-pricing-experience-sub-dup3",
+          "name": "pricing-experience-sub-flow-copy",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-pricing-experience-primary-log-dup3-0",
+              "message": "Pricing experience request received (updated)",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        },
+        "step-pricing-experience-subflow-ref": {
+          "target_flow_id": "flow-pricing-experience-sub-dup3"
+        }
+      },
+      "severity": 0.6442680442460813,
+      "expected_detection_target": "A 'duplicate_processing' issue affecting ['flow-pricing-experience-sub-dup3', 'step-pricing-experience-subflow-ref'], observable as: {'flow-pricing-experience-sub-dup3': {'id': 'flow-pricing-experience-sub-dup3', 'name': 'pricing-experience-sub-flow-copy', 'flow_type': 'sub_flow', 'trigger': None, 'steps': [{'id': 'step-pricing-experience-primary-log-dup3-0', 'message': 'Pricing experience request received (updated)', 'level': 'INFO', 'kind': 'logger'}]}, 'step-pricing-experience-subflow-ref': {'target_flow_id': 'flow-pricing-experience-sub-dup3'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-003",
+          "sequence_index": 3,
+          "original_state": {
+            "flow-pricing-experience-sub-dup3": null,
+            "step-pricing-experience-subflow-ref": {
+              "target_flow_id": "flow-pricing-experience-sub"
+            }
+          },
+          "transformed_state": {
+            "flow-pricing-experience-sub-dup3": {
+              "id": "flow-pricing-experience-sub-dup3",
+              "name": "pricing-experience-sub-flow-copy",
+              "flow_type": "sub_flow",
+              "trigger": null,
+              "steps": [
+                {
+                  "id": "step-pricing-experience-primary-log-dup3-0",
+                  "message": "Pricing experience request received (updated)",
+                  "level": "INFO",
+                  "kind": "logger"
+                }
+              ]
+            },
+            "step-pricing-experience-subflow-ref": {
+              "target_flow_id": "flow-pricing-experience-sub-dup3"
+            }
+          },
+          "severity": 0.6442680442460813,
+          "rationale": "Simulates redundant processing paths: 'flow-pricing-experience-sub' was duplicated as 'flow-pricing-experience-sub-dup3', and caller step 'step-pricing-experience-subflow-ref' was switched to use the duplicate while any other callers keep using the original."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "schema_inconsistency:step-pricing-experience-build-response",
+      "issue_type": "schema_inconsistency",
+      "affected_entity_ids": [
+        "step-pricing-experience-build-response"
+      ],
+      "observable_symptom": {
+        "step-pricing-experience-build-response": {
+          "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricing_id: attributes.uriParams.id,\n    status: \"OK\"\n}"
+        }
+      },
+      "severity": 0.706507480590652,
+      "expected_detection_target": "A 'schema_inconsistency' issue affecting ['step-pricing-experience-build-response'], observable as: {'step-pricing-experience-build-response': {'dataweave': '%dw 2.0\\noutput application/json\\n---\\n{\\n    pricing_id: attributes.uriParams.id,\\n    status: \"OK\"\\n}'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-004",
+          "sequence_index": 4,
+          "original_state": {
+            "step-pricing-experience-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricingId: attributes.uriParams.id,\n    status: \"OK\"\n}"
+            }
+          },
+          "transformed_state": {
+            "step-pricing-experience-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricing_id: attributes.uriParams.id,\n    status: \"OK\"\n}"
+            }
+          },
+          "severity": 0.706507480590652,
+          "rationale": "Simulates schema/contract inconsistency: field 'pricingId' in 'step-pricing-experience-build-response' was renamed to 'pricing_id' (snake_case convention), diverging from what related components expect."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "legacy_version_introduction:api-pricing-experience-v1-legacy5+flow-pricing-experience-main-legacy5",
+      "issue_type": "legacy_version_introduction",
+      "affected_entity_ids": [
+        "api-pricing-experience-v1-legacy5",
+        "flow-pricing-experience-main-legacy5"
+      ],
+      "observable_symptom": {
+        "api-pricing-experience-v1-legacy5": {
+          "id": "api-pricing-experience-v1-legacy5",
+          "name": "Pricing Experience API (Legacy)",
+          "version": "v1-legacy",
+          "entry_flow_id": "flow-pricing-experience-main-legacy5"
+        },
+        "flow-pricing-experience-main-legacy5": {
+          "id": "flow-pricing-experience-main-legacy5",
+          "name": "pricing-experience-main-flow-legacy",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/pricing/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-pricing-experience-call-warehouse-process-legacy5-0",
+              "name": "Call Warehouse Process API",
+              "description": "Calls the Warehouse Process API as part of experience-layer processing for pricing.",
+              "target_api_id": "api-loyalty-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-pricing-experience-build-response-legacy5-1",
+              "name": "Build Pricing Response",
+              "description": "Builds the response payload for pricing.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricing_id: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            }
+          ]
+        }
+      },
+      "severity": 0.5659792989808479,
+      "expected_detection_target": "A 'legacy_version_introduction' issue affecting ['api-pricing-experience-v1-legacy5', 'flow-pricing-experience-main-legacy5'], observable as: {'api-pricing-experience-v1-legacy5': {'id': 'api-pricing-experience-v1-legacy5', 'name': 'Pricing Experience API (Legacy)', 'version': 'v1-legacy', 'entry_flow_id': 'flow-pricing-experience-main-legacy5'}, 'flow-pricing-experience-main-legacy5': {'id': 'flow-pricing-experience-main-legacy5', 'name': 'pricing-experience-main-flow-legacy', 'flow_type': 'flow', 'trigger': {'path': '/pricing/{id}', 'method': 'GET', 'listener_config_ref': 'HTTP_Listener_config', 'type': 'http-listener'}, 'steps': [{'id': 'step-pricing-experience-call-warehouse-process-legacy5-0', 'name': 'Call Warehouse Process API', 'description': 'Calls the Warehouse Process API as part of experience-layer processing for pricing.', 'target_api_id': 'api-loyalty-system-v1', 'kind': 'api-call'}, {'id': 'step-pricing-experience-build-response-legacy5-1', 'name': 'Build Pricing Response', 'description': 'Builds the response payload for pricing.', 'dataweave': '%dw 2.0\\noutput application/json\\n---\\n{\\n    pricing_id: attributes.uriParams.id,\\n    status: \"OK\"\\n}', 'kind': 'transform'}]}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-005",
+          "sequence_index": 5,
+          "original_state": {
+            "api-pricing-experience-v1-legacy5": null,
+            "flow-pricing-experience-main-legacy5": null
+          },
+          "transformed_state": {
+            "api-pricing-experience-v1-legacy5": {
+              "id": "api-pricing-experience-v1-legacy5",
+              "name": "Pricing Experience API (Legacy)",
+              "version": "v1-legacy",
+              "entry_flow_id": "flow-pricing-experience-main-legacy5"
+            },
+            "flow-pricing-experience-main-legacy5": {
+              "id": "flow-pricing-experience-main-legacy5",
+              "name": "pricing-experience-main-flow-legacy",
+              "flow_type": "flow",
+              "trigger": {
+                "path": "/pricing/{id}",
+                "method": "GET",
+                "listener_config_ref": "HTTP_Listener_config",
+                "type": "http-listener"
+              },
+              "steps": [
+                {
+                  "id": "step-pricing-experience-call-warehouse-process-legacy5-0",
+                  "name": "Call Warehouse Process API",
+                  "description": "Calls the Warehouse Process API as part of experience-layer processing for pricing.",
+                  "target_api_id": "api-loyalty-system-v1",
+                  "kind": "api-call"
+                },
+                {
+                  "id": "step-pricing-experience-build-response-legacy5-1",
+                  "name": "Build Pricing Response",
+                  "description": "Builds the response payload for pricing.",
+                  "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricing_id: attributes.uriParams.id,\n    status: \"OK\"\n}",
+                  "kind": "transform"
+                }
+              ]
+            }
+          },
+          "severity": 0.5659792989808479,
+          "rationale": "Simulates a legacy API version left running after 'api-pricing-experience-v1' was superseded: 'api-pricing-experience-v1-legacy5' still points at a frozen implementation ('flow-pricing-experience-main-legacy5'), per real MuleSoft estates where deprecated versions stay live in API Manager."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "schema_inconsistency:step-account-system-build-response",
+      "issue_type": "schema_inconsistency",
+      "affected_entity_ids": [
+        "step-account-system-build-response"
+      ],
+      "observable_symptom": {
+        "step-account-system-build-response": {
+          "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    account_id: attributes.uriParams.id,\n    status: \"OK\"\n}"
+        }
+      },
+      "severity": 0.7315121757658845,
+      "expected_detection_target": "A 'schema_inconsistency' issue affecting ['step-account-system-build-response'], observable as: {'step-account-system-build-response': {'dataweave': '%dw 2.0\\noutput application/json\\n---\\n{\\n    account_id: attributes.uriParams.id,\\n    status: \"OK\"\\n}'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-006",
+          "sequence_index": 6,
+          "original_state": {
+            "step-account-system-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    accountId: attributes.uriParams.id,\n    status: \"OK\"\n}"
+            }
+          },
+          "transformed_state": {
+            "step-account-system-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    AccountId: attributes.uriParams.id,\n    status: \"OK\"\n}"
+            }
+          },
+          "severity": 0.549210538252665,
+          "rationale": "Simulates schema/contract inconsistency: field 'accountId' in 'step-account-system-build-response' was renamed to 'AccountId' (PascalCase convention), diverging from what related components expect."
+        },
+        {
+          "mutation_id": "level_3_legacy-seed14-008",
+          "sequence_index": 8,
+          "original_state": {
+            "step-account-system-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    AccountId: attributes.uriParams.id,\n    status: \"OK\"\n}"
+            }
+          },
+          "transformed_state": {
+            "step-account-system-build-response": {
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    account_id: attributes.uriParams.id,\n    status: \"OK\"\n}"
+            }
+          },
+          "severity": 0.7315121757658845,
+          "rationale": "Simulates schema/contract inconsistency: field 'AccountId' in 'step-account-system-build-response' was renamed to 'account_id' (snake_case convention), diverging from what related components expect."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "naming_drift:api-pricing-experience-v1",
+      "issue_type": "naming_drift",
+      "affected_entity_ids": [
+        "api-pricing-experience-v1"
+      ],
+      "observable_symptom": {
+        "api-pricing-experience-v1": {
+          "name": "Pricing Experience API-copy2"
+        }
+      },
+      "severity": 0.6096218621862581,
+      "expected_detection_target": "A 'naming_drift' issue affecting ['api-pricing-experience-v1'], observable as: {'api-pricing-experience-v1': {'name': 'Pricing Experience API-copy2'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-007",
+          "sequence_index": 7,
+          "original_state": {
+            "api-pricing-experience-v1": {
+              "name": "Pricing Experience API"
+            }
+          },
+          "transformed_state": {
+            "api-pricing-experience-v1": {
+              "name": "Pricing Experience API-copy2"
+            }
+          },
+          "severity": 0.6096218621862581,
+          "rationale": "Simulates naming convention drift on API 'api-pricing-experience-v1' (styles applied: ['_style_abbreviate', '_style_abbreviate', '_style_add_legacy_suffix (forced, no-op guard)']), as if caused by a team reorganization."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "documentation_decay:step-loyalty-system-build-response",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-loyalty-system-build-response"
+      ],
+      "observable_symptom": {
+        "step-loyalty-system-build-response": {
+          "description": ""
+        }
+      },
+      "severity": 0.7988014992320356,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-loyalty-system-build-response'], observable as: {'step-loyalty-system-build-response': {'description': ''}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed14-009",
+          "sequence_index": 9,
+          "original_state": {
+            "step-loyalty-system-build-response": {
+              "description": "Builds the response payload for loyalty."
+            }
+          },
+          "transformed_state": {
+            "step-loyalty-system-build-response": {
+              "description": ""
+            }
+          },
+          "severity": 0.7988014992320356,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-loyalty-system-build-response' was removed entirely."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    }
+  ],
+  "raw_agent_output": {
+    "findings": [
+      {
+        "artifact_reference": "pricing-experience/src/main/mule/pricing-experience.xml",
+        "entity_reference": "pricing-experience-sub-flow-copy",
+        "issue_type": "naming_drift",
+        "explanation": "'pricing-experience-sub-flow-copy' in pricing-experience/src/main/mule/pricing-experience.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "pricing-experience/src/main/mule/pricing-experience.xml",
+        "entity_reference": "pricing-experience-sub-flow-copy",
+        "issue_type": "naming_drift",
+        "explanation": "'pricing-experience-sub-flow-copy' in pricing-experience/src/main/mule/pricing-experience.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "pricing-experience/src/main/mule/pricing-experience.xml",
+        "entity_reference": "pricing-experience-main-flow-legacy",
+        "issue_type": "naming_drift",
+        "explanation": "'pricing-experience-main-flow-legacy' in pricing-experience/src/main/mule/pricing-experience.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "pricing-experience/src/main/resources/api-pricing-experience-v1-legacy5.yaml",
+        "entity_reference": "Pricing Experience API (Legacy)",
+        "issue_type": "naming_drift",
+        "explanation": "'Pricing Experience API (Legacy)' in pricing-experience/src/main/resources/api-pricing-experience-v1-legacy5.yaml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "pricing-experience/src/main/resources/api-pricing-experience-v1.yaml",
+        "entity_reference": "Pricing Experience API-copy2",
+        "issue_type": "naming_drift",
+        "explanation": "'Pricing Experience API-copy2' in pricing-experience/src/main/resources/api-pricing-experience-v1.yaml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      }
+    ]
+  },
+  "rendering_validation": {
+    "schema_version": "0.1.0",
+    "validator_name": "mulesoft_http_connector",
+    "is_valid": false,
+    "total_issues": 3,
+    "issues_by_artifact": {
+      "pricing-experience/src/main/mule/pricing-experience.xml": [
+        {
+          "element": "http:request",
+          "attribute": "{http://www.mulesoft.org/schema/mule/documentation}name",
+          "message": "Unknown attribute '{http://www.mulesoft.org/schema/mule/documentation}name' on <http:request> -- not in the documented schema for this element (see ark/schemas/mulesoft/http_connector.json)."
+        },
+        {
+          "element": "http:request",
+          "attribute": "{http://www.mulesoft.org/schema/mule/documentation}name",
+          "message": "Unknown attribute '{http://www.mulesoft.org/schema/mule/documentation}name' on <http:request> -- not in the documented schema for this element (see ark/schemas/mulesoft/http_connector.json)."
+        }
+      ],
+      "WAREHOUSE-process/src/main/mule/WAREHOUSE-process.xml": [
+        {
+          "element": "http:request",
+          "attribute": "{http://www.mulesoft.org/schema/mule/documentation}name",
+          "message": "Unknown attribute '{http://www.mulesoft.org/schema/mule/documentation}name' on <http:request> -- not in the documented schema for this element (see ark/schemas/mulesoft/http_connector.json)."
+        }
+      ]
+    },
+    "validation_error": null
+  }
+}

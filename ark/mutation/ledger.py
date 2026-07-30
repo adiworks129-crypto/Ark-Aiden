@@ -67,3 +67,24 @@ def ledger_to_dict(ledger: MutationLedger) -> dict:
 
 def ledger_to_json(ledger: MutationLedger, indent: int | None = 2) -> str:
     return json.dumps(ledger_to_dict(ledger), indent=indent)
+
+
+def ledger_from_dict(data: dict) -> MutationLedger:
+    """Reconstruct a MutationLedger from a dict produced by
+    ledger_to_dict()/json.loads(ledger_to_json(...)) -- the reciprocal of
+    ledger_to_dict(), added for the estate persistence layer
+    (ark.generator.persistence), which needs to reload a previously-saved
+    trajectory's ledger without re-running any mutation.
+
+    Same "deliberately lightweight" contract ark.evaluator.report's own
+    *_from_dict() helpers already use: assumes the input has exactly the
+    shape ledger_to_dict() produces, and lets plain dataclass construction
+    raise a normal TypeError on anything missing or extra. No schema
+    migration across ledger_schema_version/record_schema_version changes."""
+    restored = dict(data)
+    restored["records"] = [MutationRecord(**record) for record in data.get("records", [])]
+    return MutationLedger(**restored)
+
+
+def ledger_from_json(text: str) -> MutationLedger:
+    return ledger_from_dict(json.loads(text))

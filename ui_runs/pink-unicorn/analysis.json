@@ -1,0 +1,399 @@
+{
+  "analysis_schema_version": "0.1.0",
+  "generated_at": "2026-07-30T21:11:09.967590+00:00",
+  "report_count": 11,
+  "skipped_report_count": 0,
+  "experiment_summary": {
+    "trajectory_count": 11,
+    "average_complexity_score": 0.41378468623590126,
+    "average_category_f1": 0.12211640211640211,
+    "average_entity_localization_accuracy": 0.7346016184251478,
+    "average_calibration_ece": 0.5502777777777778,
+    "transformation_type_distribution": {
+      "dependency_change": 8,
+      "documentation_decay": 10,
+      "duplicate_processing": 8,
+      "legacy_version_introduction": 7,
+      "naming_drift": 9,
+      "schema_inconsistency": 7
+    }
+  },
+  "complexity_analysis": {
+    "buckets": [
+      {
+        "label": "0.00-0.20",
+        "lower_bound": 0.0,
+        "upper_bound": 0.2,
+        "trajectory_count": 0,
+        "average_category_f1": null,
+        "average_entity_localization_accuracy": null,
+        "average_calibration_ece": null
+      },
+      {
+        "label": "0.20-0.40",
+        "lower_bound": 0.2,
+        "upper_bound": 0.4,
+        "trajectory_count": 4,
+        "average_category_f1": 0.06666666666666668,
+        "average_entity_localization_accuracy": 0.8023809523809525,
+        "average_calibration_ece": 0.6266666666666667
+      },
+      {
+        "label": "0.40-0.60",
+        "lower_bound": 0.4,
+        "upper_bound": 0.6,
+        "trajectory_count": 7,
+        "average_category_f1": 0.14588057445200303,
+        "average_entity_localization_accuracy": 0.7055533324440887,
+        "average_calibration_ece": 0.5044444444444445
+      },
+      {
+        "label": "0.60-0.80",
+        "lower_bound": 0.6,
+        "upper_bound": 0.8,
+        "trajectory_count": 0,
+        "average_category_f1": null,
+        "average_entity_localization_accuracy": null,
+        "average_calibration_ece": null
+      },
+      {
+        "label": "0.80-1.00",
+        "lower_bound": 0.8,
+        "upper_bound": 1.0,
+        "trajectory_count": 0,
+        "average_category_f1": null,
+        "average_entity_localization_accuracy": null,
+        "average_calibration_ece": null
+      }
+    ],
+    "correlations": [
+      {
+        "metric_name": "category_f1",
+        "correlation_with_complexity_score": -0.07765122960126333,
+        "sample_size": 10,
+        "min_sample_size": 5,
+        "disclaimer": "Pearson correlation coefficient over the reports actually provided in this batch. This is an observed association, not a causal claim, and is not adjusted for confounding factors (e.g. mutation_count and severity tend to rise together, so either could be 'the' driver of any association seen here)."
+      },
+      {
+        "metric_name": "entity_localization_accuracy",
+        "correlation_with_complexity_score": -0.4388448638235211,
+        "sample_size": 10,
+        "min_sample_size": 5,
+        "disclaimer": "Pearson correlation coefficient over the reports actually provided in this batch. This is an observed association, not a causal claim, and is not adjusted for confounding factors (e.g. mutation_count and severity tend to rise together, so either could be 'the' driver of any association seen here)."
+      },
+      {
+        "metric_name": "calibration_ece",
+        "correlation_with_complexity_score": -0.330738537463615,
+        "sample_size": 8,
+        "min_sample_size": 5,
+        "disclaimer": "Pearson correlation coefficient over the reports actually provided in this batch. This is an observed association, not a causal claim, and is not adjusted for confounding factors (e.g. mutation_count and severity tend to rise together, so either could be 'the' driver of any association seen here)."
+      }
+    ]
+  },
+  "transformation_impact_analysis": {
+    "baseline": null,
+    "by_transformation_type": [
+      {
+        "transformation_type": "dependency_change",
+        "observed": {
+          "trajectory_count": 8,
+          "average_category_f1": 0.08979591836734695,
+          "average_entity_localization_accuracy": 0.6586901427237563,
+          "average_calibration_ece": 0.5509999999999999
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_type": "documentation_decay",
+        "observed": {
+          "trajectory_count": 10,
+          "average_category_f1": 0.06984126984126986,
+          "average_entity_localization_accuracy": 0.6845367776740326,
+          "average_calibration_ece": 0.5792857142857143
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_type": "duplicate_processing",
+        "observed": {
+          "trajectory_count": 8,
+          "average_category_f1": 0.11693121693121693,
+          "average_entity_localization_accuracy": 0.7530734516028634,
+          "average_calibration_ece": 0.554537037037037
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_type": "legacy_version_introduction",
+        "observed": {
+          "trajectory_count": 7,
+          "average_category_f1": 0.17445200302343158,
+          "average_entity_localization_accuracy": 0.814510248543862,
+          "average_calibration_ece": 0.5360317460317461
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_type": "naming_drift",
+        "observed": {
+          "trajectory_count": 9,
+          "average_category_f1": 0.15264550264550264,
+          "average_entity_localization_accuracy": 0.7111091658885776,
+          "average_calibration_ece": 0.5170370370370371
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_type": "schema_inconsistency",
+        "observed": {
+          "trajectory_count": 7,
+          "average_category_f1": 0.023809523809523808,
+          "average_entity_localization_accuracy": 0.660978835978836,
+          "average_calibration_ece": 0.6
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      }
+    ],
+    "by_transformation_combination": [
+      {
+        "transformation_types": [
+          "dependency_change",
+          "documentation_decay",
+          "duplicate_processing",
+          "legacy_version_introduction",
+          "naming_drift"
+        ],
+        "observed": {
+          "trajectory_count": 2,
+          "average_category_f1": 0.10000000000000002,
+          "average_entity_localization_accuracy": 0.8117647058823529,
+          "average_calibration_ece": 0.615
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "dependency_change",
+          "documentation_decay",
+          "duplicate_processing",
+          "legacy_version_introduction",
+          "naming_drift",
+          "schema_inconsistency"
+        ],
+        "observed": {
+          "trajectory_count": 1,
+          "average_category_f1": 0.14285714285714285,
+          "average_entity_localization_accuracy": 0.7142857142857143,
+          "average_calibration_ece": 0.45
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "dependency_change",
+          "documentation_decay",
+          "duplicate_processing",
+          "legacy_version_introduction",
+          "schema_inconsistency"
+        ],
+        "observed": {
+          "trajectory_count": 1,
+          "average_category_f1": 0.0,
+          "average_entity_localization_accuracy": 0.8571428571428572,
+          "average_calibration_ece": 0.65
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "dependency_change",
+          "documentation_decay",
+          "duplicate_processing",
+          "naming_drift",
+          "schema_inconsistency"
+        ],
+        "observed": {
+          "trajectory_count": 2,
+          "average_category_f1": 0.0,
+          "average_entity_localization_accuracy": 0.4222222222222223,
+          "average_calibration_ece": null
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "dependency_change",
+          "documentation_decay",
+          "legacy_version_introduction",
+          "naming_drift"
+        ],
+        "observed": {
+          "trajectory_count": 1,
+          "average_category_f1": 0.28571428571428575,
+          "average_entity_localization_accuracy": 0.5714285714285715,
+          "average_calibration_ece": 0.425
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "dependency_change",
+          "documentation_decay",
+          "naming_drift",
+          "schema_inconsistency"
+        ],
+        "observed": {
+          "trajectory_count": 1,
+          "average_category_f1": null,
+          "average_entity_localization_accuracy": null,
+          "average_calibration_ece": null
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "documentation_decay",
+          "duplicate_processing",
+          "schema_inconsistency"
+        ],
+        "observed": {
+          "trajectory_count": 1,
+          "average_category_f1": 0.0,
+          "average_entity_localization_accuracy": 0.8,
+          "average_calibration_ece": 0.65
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "documentation_decay",
+          "legacy_version_introduction",
+          "naming_drift",
+          "schema_inconsistency"
+        ],
+        "observed": {
+          "trajectory_count": 1,
+          "average_category_f1": 0.0,
+          "average_entity_localization_accuracy": 0.7499999999999999,
+          "average_calibration_ece": 0.65
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      },
+      {
+        "transformation_types": [
+          "duplicate_processing",
+          "legacy_version_introduction",
+          "naming_drift"
+        ],
+        "observed": {
+          "trajectory_count": 1,
+          "average_category_f1": 0.5925925925925926,
+          "average_entity_localization_accuracy": 1.1851851851851851,
+          "average_calibration_ece": 0.34722222222222227
+        },
+        "baseline": null,
+        "category_f1_degradation": null,
+        "entity_localization_degradation": null,
+        "calibration_ece_degradation": null
+      }
+    ]
+  },
+  "calibration_drift_analysis": {
+    "points": [
+      {
+        "complexity_bucket_label": "0.00-0.20",
+        "trajectory_count": 0,
+        "average_confidence": null,
+        "average_category_f1": null,
+        "average_brier_score": null,
+        "average_ece": null,
+        "confidence_minus_accuracy_gap": null
+      },
+      {
+        "complexity_bucket_label": "0.20-0.40",
+        "trajectory_count": 4,
+        "average_confidence": 0.6566666666666666,
+        "average_category_f1": 0.06666666666666668,
+        "average_brier_score": 0.4003333333333334,
+        "average_ece": 0.6266666666666667,
+        "confidence_minus_accuracy_gap": 0.59
+      },
+      {
+        "complexity_bucket_label": "0.40-0.60",
+        "trajectory_count": 7,
+        "average_confidence": 0.6579365079365079,
+        "average_category_f1": 0.14588057445200303,
+        "average_brier_score": 0.3788095238095238,
+        "average_ece": 0.5044444444444445,
+        "confidence_minus_accuracy_gap": 0.512055933484505
+      },
+      {
+        "complexity_bucket_label": "0.60-0.80",
+        "trajectory_count": 0,
+        "average_confidence": null,
+        "average_category_f1": null,
+        "average_brier_score": null,
+        "average_ece": null,
+        "confidence_minus_accuracy_gap": null
+      },
+      {
+        "complexity_bucket_label": "0.80-1.00",
+        "trajectory_count": 0,
+        "average_confidence": null,
+        "average_category_f1": null,
+        "average_brier_score": null,
+        "average_ece": null,
+        "confidence_minus_accuracy_gap": null
+      }
+    ],
+    "correlation_between_complexity_and_ece": {
+      "metric_name": "calibration_ece",
+      "correlation_with_complexity_score": -0.330738537463615,
+      "sample_size": 8,
+      "min_sample_size": 5,
+      "disclaimer": "Pearson correlation coefficient over the reports actually provided in this batch. This is an observed association, not a causal claim, and is not adjusted for confounding factors (e.g. mutation_count and severity tend to rise together, so either could be 'the' driver of any association seen here)."
+    }
+  }
+}

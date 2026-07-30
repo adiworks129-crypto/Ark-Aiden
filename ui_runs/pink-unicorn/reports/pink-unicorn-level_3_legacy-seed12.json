@@ -1,0 +1,1007 @@
+{
+  "metadata": {
+    "report_schema_version": "0.1.0",
+    "generated_at": "2026-07-30T21:11:09.793135+00:00",
+    "trajectory_id": "pink-unicorn-level_3_legacy-seed12",
+    "baseline_estate_id": "generated-seed12",
+    "profile_name": "level_3_legacy",
+    "trajectory_seed": 12,
+    "engine_version": "0.1.0",
+    "baseline_schema_version": "0.3.0",
+    "ledger_schema_version": "0.1.0",
+    "issue_schema_version": "0.1.0",
+    "agent_output_schema_version": "0.1.0",
+    "metrics_schema_version": "0.1.0",
+    "calibration_schema_version": "0.1.0",
+    "explanation_signals_schema_version": "0.1.0",
+    "complexity_schema_version": "0.1.0",
+    "generator_version": "0.1.0",
+    "adapter_name": "mulesoft",
+    "adapter_version": "0.1.0"
+  },
+  "environment_summary": {
+    "application_count": 4,
+    "api_count": 5,
+    "flow_count": 14,
+    "dependency_count": 7,
+    "artifact_count": 9
+  },
+  "transformation_summary": {
+    "total_mutations": 10,
+    "distinct_transformation_types": [
+      "dependency_change",
+      "documentation_decay",
+      "duplicate_processing",
+      "legacy_version_introduction",
+      "naming_drift"
+    ],
+    "severity_mean": 0.724992357172313,
+    "severity_max": 0.8912161780597412,
+    "affected_entity_count": 12,
+    "complexity_score": 0.4374987261953855,
+    "complexity_profile": {
+      "baseline_estate_id": "generated-seed12",
+      "trajectory_seed": 12,
+      "profile_name": "level_3_legacy",
+      "mutation_count": 10,
+      "distinct_issue_count": 10,
+      "compounding_count": 1,
+      "max_compounding_depth": 3,
+      "severity_mean": 0.724992357172313,
+      "severity_max": 0.8912161780597412,
+      "affected_entity_count": 12,
+      "transformation_diversity": 0.7142857142857143,
+      "transformation_types_used": [
+        "dependency_change",
+        "documentation_decay",
+        "duplicate_processing",
+        "legacy_version_introduction",
+        "naming_drift"
+      ],
+      "dependency_impact_mean": 0.16666666666666666,
+      "dependency_impact_max": 1.0,
+      "interaction_score": 0.2857142857142857,
+      "complexity_score": 0.4374987261953855,
+      "weights_used": {
+        "mutation_count": 1.0,
+        "severity": 1.0,
+        "diversity": 1.0,
+        "dependency_impact": 1.0,
+        "interaction": 1.0,
+        "compounding": 1.0
+      },
+      "complexity_schema_version": "0.1.0"
+    }
+  },
+  "issue_summary": {
+    "total_observable_issues": 10,
+    "issues_by_type": {
+      "dependency_change": 2,
+      "documentation_decay": 3,
+      "duplicate_processing": 3,
+      "legacy_version_introduction": 1,
+      "naming_drift": 1
+    },
+    "issues_by_severity_bucket": {
+      "low": 0,
+      "medium": 3,
+      "high": 7
+    },
+    "compounding_issue_count": 0,
+    "net_zero_transformation_count": 0,
+    "net_zero_groups": []
+  },
+  "agent_performance": {
+    "total_findings": 7,
+    "category_metrics": {
+      "true_positives": 0,
+      "false_positives": 7,
+      "false_negatives": 10,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "duplicate_processing": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "legacy_version_introduction": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 0,
+        "false_positives": 7,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "entity_localization_metrics": {
+      "true_positives": 7,
+      "false_positives": 0,
+      "false_negatives": 6,
+      "precision": 1.0,
+      "recall": 0.7,
+      "localization_accuracy": 0.8235294117647058
+    },
+    "calibration": {
+      "sample_size": 7,
+      "brier_score": 0.42250000000000004,
+      "ece": 0.65,
+      "calibration_pairs": [
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ],
+        [
+          0.65,
+          false
+        ]
+      ],
+      "min_sample_size_for_ece": 5
+    },
+    "explanation_signals": [
+      {
+        "finding_id": "finding-000",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 215
+      },
+      {
+        "finding_id": "finding-001",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 218
+      },
+      {
+        "finding_id": "finding-002",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 215
+      },
+      {
+        "finding_id": "finding-003",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 235
+      },
+      {
+        "finding_id": "finding-004",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 224
+      },
+      {
+        "finding_id": "finding-005",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 219
+      },
+      {
+        "finding_id": "finding-006",
+        "mentions_affected_artifact": true,
+        "references_observable_symptom": true,
+        "identifies_plausible_cause": false,
+        "unsupported_assumption_flag": false,
+        "explanation_length_chars": 224
+      }
+    ],
+    "confidence_distribution": {
+      "0.0-0.1": 0,
+      "0.1-0.2": 0,
+      "0.2-0.3": 0,
+      "0.3-0.4": 0,
+      "0.4-0.5": 0,
+      "0.5-0.6": 0,
+      "0.6-0.7": 7,
+      "0.7-0.8": 0,
+      "0.8-0.9": 0,
+      "0.9-1.0": 0
+    }
+  },
+  "failure_analysis": {
+    "missed_issues": [
+      {
+        "finding_id": null,
+        "issue_id": "dependency_change:step-pricing-system-subflow-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "dependency_change",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'dependency_change' issue on ['step-pricing-system-subflow-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-pricing-system-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-pricing-system-build-response']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "duplicate_processing:flow-pricing-system-secondary-sub-dup2+step-pricing-system-subflow-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "duplicate_processing",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'duplicate_processing' issue on ['flow-pricing-system-secondary-sub-dup2', 'step-pricing-system-subflow-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "dependency_change:step-pricing-system-scheduled-subflow-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "dependency_change",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'dependency_change' issue on ['step-pricing-system-scheduled-subflow-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "legacy_version_introduction:api-inventory-system-v1-legacy4+flow-inventory-system-main-legacy4",
+        "claimed_issue_type": null,
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'legacy_version_introduction' issue on ['api-inventory-system-v1-legacy4', 'flow-inventory-system-main-legacy4']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "duplicate_processing:flow-inventory-system-sub-dup5+step-inventory-system-subflow-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "duplicate_processing",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'duplicate_processing' issue on ['flow-inventory-system-sub-dup5', 'step-inventory-system-subflow-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-customer-experience-build-response",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-customer-experience-build-response']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "documentation_decay:step-customer-experience-call-subscription-process",
+        "claimed_issue_type": null,
+        "actual_issue_type": "documentation_decay",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'documentation_decay' issue on ['step-customer-experience-call-subscription-process']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "duplicate_processing:flow-pricing-system-secondary-sub-dup2-dup8+step-pricing-system-subflow-ref",
+        "claimed_issue_type": null,
+        "actual_issue_type": "duplicate_processing",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'duplicate_processing' issue on ['flow-pricing-system-secondary-sub-dup2-dup8', 'step-pricing-system-subflow-ref']."
+      },
+      {
+        "finding_id": null,
+        "issue_id": "naming_drift:api-customer-experience-v1",
+        "claimed_issue_type": null,
+        "actual_issue_type": "naming_drift",
+        "confidence": null,
+        "detail": "No finding correctly identified this 'naming_drift' issue on ['api-customer-experience-v1']."
+      }
+    ],
+    "hallucinated_findings": [],
+    "wrong_category_predictions": [],
+    "correct_location_incorrect_diagnosis": [
+      {
+        "finding_id": "finding-000",
+        "issue_id": "duplicate_processing:flow-inventory-system-sub-dup5+step-inventory-system-subflow-ref",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "duplicate_processing",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'duplicate_processing:flow-inventory-system-sub-dup5+step-inventory-system-subflow-ref' but claimed 'naming_drift' instead of the real issue_type 'duplicate_processing'."
+      },
+      {
+        "finding_id": "finding-001",
+        "issue_id": "legacy_version_introduction:api-inventory-system-v1-legacy4+flow-inventory-system-main-legacy4",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'legacy_version_introduction:api-inventory-system-v1-legacy4+flow-inventory-system-main-legacy4' but claimed 'naming_drift' instead of the real issue_type 'legacy_version_introduction'."
+      },
+      {
+        "finding_id": "finding-002",
+        "issue_id": "duplicate_processing:flow-inventory-system-sub-dup5+step-inventory-system-subflow-ref",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "duplicate_processing",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'duplicate_processing:flow-inventory-system-sub-dup5+step-inventory-system-subflow-ref' but claimed 'naming_drift' instead of the real issue_type 'duplicate_processing'."
+      },
+      {
+        "finding_id": "finding-003",
+        "issue_id": "legacy_version_introduction:api-inventory-system-v1-legacy4+flow-inventory-system-main-legacy4",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "legacy_version_introduction",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'legacy_version_introduction:api-inventory-system-v1-legacy4+flow-inventory-system-main-legacy4' but claimed 'naming_drift' instead of the real issue_type 'legacy_version_introduction'."
+      },
+      {
+        "finding_id": "finding-004",
+        "issue_id": "duplicate_processing:flow-pricing-system-secondary-sub-dup2-dup8+step-pricing-system-subflow-ref",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "duplicate_processing",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'duplicate_processing:flow-pricing-system-secondary-sub-dup2-dup8+step-pricing-system-subflow-ref' but claimed 'naming_drift' instead of the real issue_type 'duplicate_processing'."
+      },
+      {
+        "finding_id": "finding-005",
+        "issue_id": "duplicate_processing:flow-pricing-system-secondary-sub-dup2+step-pricing-system-subflow-ref",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "duplicate_processing",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'duplicate_processing:flow-pricing-system-secondary-sub-dup2+step-pricing-system-subflow-ref' but claimed 'naming_drift' instead of the real issue_type 'duplicate_processing'."
+      },
+      {
+        "finding_id": "finding-006",
+        "issue_id": "duplicate_processing:flow-pricing-system-secondary-sub-dup2-dup8+step-pricing-system-subflow-ref",
+        "claimed_issue_type": "naming_drift",
+        "actual_issue_type": "duplicate_processing",
+        "confidence": 0.65,
+        "detail": "Correctly localized 'duplicate_processing:flow-pricing-system-secondary-sub-dup2-dup8+step-pricing-system-subflow-ref' but claimed 'naming_drift' instead of the real issue_type 'duplicate_processing'."
+      }
+    ],
+    "overconfidence_patterns": [],
+    "overconfidence_threshold": 0.7
+  },
+  "research_hooks": {
+    "complexity_score": 0.4374987261953855,
+    "mutation_count": 10,
+    "transformation_type_combination": [
+      "dependency_change",
+      "documentation_decay",
+      "duplicate_processing",
+      "legacy_version_introduction",
+      "naming_drift"
+    ],
+    "category_f1": 0.0,
+    "entity_localization_accuracy": 0.8235294117647058,
+    "calibration_ece": 0.65,
+    "category_metrics_by_type": {
+      "dependency_change": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 2,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "documentation_decay": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "duplicate_processing": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 3,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "legacy_version_introduction": {
+        "true_positives": 0,
+        "false_positives": 0,
+        "false_negatives": 1,
+        "precision": null,
+        "recall": 0.0,
+        "f1": null
+      },
+      "naming_drift": {
+        "true_positives": 0,
+        "false_positives": 7,
+        "false_negatives": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    }
+  },
+  "issues": [
+    {
+      "issue_id": "dependency_change:step-pricing-system-subflow-ref",
+      "issue_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-pricing-system-subflow-ref"
+      ],
+      "observable_symptom": {
+        "step-pricing-system-subflow-ref": {
+          "target_flow_id": "flow-pricing-system-secondary-sub"
+        }
+      },
+      "severity": 0.7629890010629021,
+      "expected_detection_target": "A 'dependency_change' issue affecting ['step-pricing-system-subflow-ref'], observable as: {'step-pricing-system-subflow-ref': {'target_flow_id': 'flow-pricing-system-secondary-sub'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-000",
+          "sequence_index": 0,
+          "original_state": {
+            "step-pricing-system-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-sub"
+            }
+          },
+          "transformed_state": {
+            "step-pricing-system-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-secondary-sub"
+            }
+          },
+          "severity": 0.7629890010629021,
+          "rationale": "Simulates a dependency change: 'step-pricing-system-subflow-ref' now calls 'flow-pricing-system-secondary-sub' instead of 'flow-pricing-system-sub', as if the team switched downstream providers while keeping the estate structurally valid."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "documentation_decay:step-pricing-system-build-response",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-pricing-system-build-response"
+      ],
+      "observable_symptom": {
+        "step-pricing-system-build-response": {
+          "description": "TODO: document this step."
+        }
+      },
+      "severity": 0.5043441772360272,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-pricing-system-build-response'], observable as: {'step-pricing-system-build-response': {'description': 'TODO: document this step.'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-001",
+          "sequence_index": 1,
+          "original_state": {
+            "step-pricing-system-build-response": {
+              "description": "Builds the response payload for pricing."
+            }
+          },
+          "transformed_state": {
+            "step-pricing-system-build-response": {
+              "description": "TODO: document this step."
+            }
+          },
+          "severity": 0.5043441772360272,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-pricing-system-build-response' was generic placeholder."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "duplicate_processing:flow-pricing-system-secondary-sub-dup2+step-pricing-system-subflow-ref",
+      "issue_type": "duplicate_processing",
+      "affected_entity_ids": [
+        "flow-pricing-system-secondary-sub-dup2",
+        "step-pricing-system-subflow-ref"
+      ],
+      "observable_symptom": {
+        "flow-pricing-system-secondary-sub-dup2": {
+          "id": "flow-pricing-system-secondary-sub-dup2",
+          "name": "pricing-system-secondary-sub-flow-copy",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-pricing-system-secondary-log-dup2-0",
+              "message": "Pricing system request received (updated)",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        },
+        "step-pricing-system-subflow-ref": {
+          "target_flow_id": "flow-pricing-system-secondary-sub-dup2"
+        }
+      },
+      "severity": 0.6096192557913326,
+      "expected_detection_target": "A 'duplicate_processing' issue affecting ['flow-pricing-system-secondary-sub-dup2', 'step-pricing-system-subflow-ref'], observable as: {'flow-pricing-system-secondary-sub-dup2': {'id': 'flow-pricing-system-secondary-sub-dup2', 'name': 'pricing-system-secondary-sub-flow-copy', 'flow_type': 'sub_flow', 'trigger': None, 'steps': [{'id': 'step-pricing-system-secondary-log-dup2-0', 'message': 'Pricing system request received (updated)', 'level': 'INFO', 'kind': 'logger'}]}, 'step-pricing-system-subflow-ref': {'target_flow_id': 'flow-pricing-system-secondary-sub-dup2'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-002",
+          "sequence_index": 2,
+          "original_state": {
+            "flow-pricing-system-secondary-sub-dup2": null,
+            "step-pricing-system-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-secondary-sub"
+            }
+          },
+          "transformed_state": {
+            "flow-pricing-system-secondary-sub-dup2": {
+              "id": "flow-pricing-system-secondary-sub-dup2",
+              "name": "pricing-system-secondary-sub-flow-copy",
+              "flow_type": "sub_flow",
+              "trigger": null,
+              "steps": [
+                {
+                  "id": "step-pricing-system-secondary-log-dup2-0",
+                  "message": "Pricing system request received (updated)",
+                  "level": "INFO",
+                  "kind": "logger"
+                }
+              ]
+            },
+            "step-pricing-system-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-secondary-sub-dup2"
+            }
+          },
+          "severity": 0.6096192557913326,
+          "rationale": "Simulates redundant processing paths: 'flow-pricing-system-secondary-sub' was duplicated as 'flow-pricing-system-secondary-sub-dup2', and caller step 'step-pricing-system-subflow-ref' was switched to use the duplicate while any other callers keep using the original."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "dependency_change:step-pricing-system-scheduled-subflow-ref",
+      "issue_type": "dependency_change",
+      "affected_entity_ids": [
+        "step-pricing-system-scheduled-subflow-ref"
+      ],
+      "observable_symptom": {
+        "step-pricing-system-scheduled-subflow-ref": {
+          "target_flow_id": "flow-pricing-system-sub"
+        }
+      },
+      "severity": 0.7232760191013392,
+      "expected_detection_target": "A 'dependency_change' issue affecting ['step-pricing-system-scheduled-subflow-ref'], observable as: {'step-pricing-system-scheduled-subflow-ref': {'target_flow_id': 'flow-pricing-system-sub'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-003",
+          "sequence_index": 3,
+          "original_state": {
+            "step-pricing-system-scheduled-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-secondary-sub"
+            }
+          },
+          "transformed_state": {
+            "step-pricing-system-scheduled-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-sub"
+            }
+          },
+          "severity": 0.7232760191013392,
+          "rationale": "Simulates a dependency change: 'step-pricing-system-scheduled-subflow-ref' now calls 'flow-pricing-system-sub' instead of 'flow-pricing-system-secondary-sub', as if the team switched downstream providers while keeping the estate structurally valid."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "legacy_version_introduction:api-inventory-system-v1-legacy4+flow-inventory-system-main-legacy4",
+      "issue_type": "legacy_version_introduction",
+      "affected_entity_ids": [
+        "api-inventory-system-v1-legacy4",
+        "flow-inventory-system-main-legacy4"
+      ],
+      "observable_symptom": {
+        "api-inventory-system-v1-legacy4": {
+          "id": "api-inventory-system-v1-legacy4",
+          "name": "Inventory System API (Legacy)",
+          "version": "v1-legacy",
+          "entry_flow_id": "flow-inventory-system-main-legacy4"
+        },
+        "flow-inventory-system-main-legacy4": {
+          "id": "flow-inventory-system-main-legacy4",
+          "name": "inventory-system-main-flow-legacy",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/inventory/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-inventory-system-build-response-legacy4-0",
+              "name": "Build Inventory Response",
+              "description": "Builds the response payload for inventory.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    inventoryId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            }
+          ]
+        }
+      },
+      "severity": 0.8912161780597412,
+      "expected_detection_target": "A 'legacy_version_introduction' issue affecting ['api-inventory-system-v1-legacy4', 'flow-inventory-system-main-legacy4'], observable as: {'api-inventory-system-v1-legacy4': {'id': 'api-inventory-system-v1-legacy4', 'name': 'Inventory System API (Legacy)', 'version': 'v1-legacy', 'entry_flow_id': 'flow-inventory-system-main-legacy4'}, 'flow-inventory-system-main-legacy4': {'id': 'flow-inventory-system-main-legacy4', 'name': 'inventory-system-main-flow-legacy', 'flow_type': 'flow', 'trigger': {'path': '/inventory/{id}', 'method': 'GET', 'listener_config_ref': 'HTTP_Listener_config', 'type': 'http-listener'}, 'steps': [{'id': 'step-inventory-system-build-response-legacy4-0', 'name': 'Build Inventory Response', 'description': 'Builds the response payload for inventory.', 'dataweave': '%dw 2.0\\noutput application/json\\n---\\n{\\n    inventoryId: attributes.uriParams.id,\\n    status: \"OK\"\\n}', 'kind': 'transform'}]}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-004",
+          "sequence_index": 4,
+          "original_state": {
+            "api-inventory-system-v1-legacy4": null,
+            "flow-inventory-system-main-legacy4": null
+          },
+          "transformed_state": {
+            "api-inventory-system-v1-legacy4": {
+              "id": "api-inventory-system-v1-legacy4",
+              "name": "Inventory System API (Legacy)",
+              "version": "v1-legacy",
+              "entry_flow_id": "flow-inventory-system-main-legacy4"
+            },
+            "flow-inventory-system-main-legacy4": {
+              "id": "flow-inventory-system-main-legacy4",
+              "name": "inventory-system-main-flow-legacy",
+              "flow_type": "flow",
+              "trigger": {
+                "path": "/inventory/{id}",
+                "method": "GET",
+                "listener_config_ref": "HTTP_Listener_config",
+                "type": "http-listener"
+              },
+              "steps": [
+                {
+                  "id": "step-inventory-system-build-response-legacy4-0",
+                  "name": "Build Inventory Response",
+                  "description": "Builds the response payload for inventory.",
+                  "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    inventoryId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+                  "kind": "transform"
+                }
+              ]
+            }
+          },
+          "severity": 0.8912161780597412,
+          "rationale": "Simulates a legacy API version left running after 'api-inventory-system-v1' was superseded: 'api-inventory-system-v1-legacy4' still points at a frozen implementation ('flow-inventory-system-main-legacy4'), per real MuleSoft estates where deprecated versions stay live in API Manager."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "duplicate_processing:flow-inventory-system-sub-dup5+step-inventory-system-subflow-ref",
+      "issue_type": "duplicate_processing",
+      "affected_entity_ids": [
+        "flow-inventory-system-sub-dup5",
+        "step-inventory-system-subflow-ref"
+      ],
+      "observable_symptom": {
+        "flow-inventory-system-sub-dup5": {
+          "id": "flow-inventory-system-sub-dup5",
+          "name": "inventory-system-sub-flow-copy",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-inventory-system-primary-log-dup5-0",
+              "message": "Inventory system request received (updated)",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        },
+        "step-inventory-system-subflow-ref": {
+          "target_flow_id": "flow-inventory-system-sub-dup5"
+        }
+      },
+      "severity": 0.6358720717012076,
+      "expected_detection_target": "A 'duplicate_processing' issue affecting ['flow-inventory-system-sub-dup5', 'step-inventory-system-subflow-ref'], observable as: {'flow-inventory-system-sub-dup5': {'id': 'flow-inventory-system-sub-dup5', 'name': 'inventory-system-sub-flow-copy', 'flow_type': 'sub_flow', 'trigger': None, 'steps': [{'id': 'step-inventory-system-primary-log-dup5-0', 'message': 'Inventory system request received (updated)', 'level': 'INFO', 'kind': 'logger'}]}, 'step-inventory-system-subflow-ref': {'target_flow_id': 'flow-inventory-system-sub-dup5'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-005",
+          "sequence_index": 5,
+          "original_state": {
+            "flow-inventory-system-sub-dup5": null,
+            "step-inventory-system-subflow-ref": {
+              "target_flow_id": "flow-inventory-system-sub"
+            }
+          },
+          "transformed_state": {
+            "flow-inventory-system-sub-dup5": {
+              "id": "flow-inventory-system-sub-dup5",
+              "name": "inventory-system-sub-flow-copy",
+              "flow_type": "sub_flow",
+              "trigger": null,
+              "steps": [
+                {
+                  "id": "step-inventory-system-primary-log-dup5-0",
+                  "message": "Inventory system request received (updated)",
+                  "level": "INFO",
+                  "kind": "logger"
+                }
+              ]
+            },
+            "step-inventory-system-subflow-ref": {
+              "target_flow_id": "flow-inventory-system-sub-dup5"
+            }
+          },
+          "severity": 0.6358720717012076,
+          "rationale": "Simulates redundant processing paths: 'flow-inventory-system-sub' was duplicated as 'flow-inventory-system-sub-dup5', and caller step 'step-inventory-system-subflow-ref' was switched to use the duplicate while any other callers keep using the original."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "documentation_decay:step-customer-experience-build-response",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-customer-experience-build-response"
+      ],
+      "observable_symptom": {
+        "step-customer-experience-build-response": {
+          "description": ""
+        }
+      },
+      "severity": 0.7304858321512345,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-customer-experience-build-response'], observable as: {'step-customer-experience-build-response': {'description': ''}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-006",
+          "sequence_index": 6,
+          "original_state": {
+            "step-customer-experience-build-response": {
+              "description": "Builds the response payload for customer."
+            }
+          },
+          "transformed_state": {
+            "step-customer-experience-build-response": {
+              "description": ""
+            }
+          },
+          "severity": 0.7304858321512345,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-customer-experience-build-response' was removed entirely."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "documentation_decay:step-customer-experience-call-subscription-process",
+      "issue_type": "documentation_decay",
+      "affected_entity_ids": [
+        "step-customer-experience-call-subscription-process"
+      ],
+      "observable_symptom": {
+        "step-customer-experience-call-subscription-process": {
+          "description": ""
+        }
+      },
+      "severity": 0.7054079433886573,
+      "expected_detection_target": "A 'documentation_decay' issue affecting ['step-customer-experience-call-subscription-process'], observable as: {'step-customer-experience-call-subscription-process': {'description': ''}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-007",
+          "sequence_index": 7,
+          "original_state": {
+            "step-customer-experience-call-subscription-process": {
+              "description": "Calls the Subscription Process API as part of experience-layer processing for customer."
+            }
+          },
+          "transformed_state": {
+            "step-customer-experience-call-subscription-process": {
+              "description": ""
+            }
+          },
+          "severity": 0.7054079433886573,
+          "rationale": "Simulates incomplete enterprise documentation: description on 'step-customer-experience-call-subscription-process' was removed entirely."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "duplicate_processing:flow-pricing-system-secondary-sub-dup2-dup8+step-pricing-system-subflow-ref",
+      "issue_type": "duplicate_processing",
+      "affected_entity_ids": [
+        "flow-pricing-system-secondary-sub-dup2-dup8",
+        "step-pricing-system-subflow-ref"
+      ],
+      "observable_symptom": {
+        "flow-pricing-system-secondary-sub-dup2-dup8": {
+          "id": "flow-pricing-system-secondary-sub-dup2-dup8",
+          "name": "pricing-system-secondary-sub-flow-copy-copy",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-pricing-system-secondary-log-dup2-0-dup8-0",
+              "message": "Pricing system request received (updated) (updated)",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        },
+        "step-pricing-system-subflow-ref": {
+          "target_flow_id": "flow-pricing-system-secondary-sub-dup2-dup8"
+        }
+      },
+      "severity": 0.8191504086327653,
+      "expected_detection_target": "A 'duplicate_processing' issue affecting ['flow-pricing-system-secondary-sub-dup2-dup8', 'step-pricing-system-subflow-ref'], observable as: {'flow-pricing-system-secondary-sub-dup2-dup8': {'id': 'flow-pricing-system-secondary-sub-dup2-dup8', 'name': 'pricing-system-secondary-sub-flow-copy-copy', 'flow_type': 'sub_flow', 'trigger': None, 'steps': [{'id': 'step-pricing-system-secondary-log-dup2-0-dup8-0', 'message': 'Pricing system request received (updated) (updated)', 'level': 'INFO', 'kind': 'logger'}]}, 'step-pricing-system-subflow-ref': {'target_flow_id': 'flow-pricing-system-secondary-sub-dup2-dup8'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-008",
+          "sequence_index": 8,
+          "original_state": {
+            "flow-pricing-system-secondary-sub-dup2-dup8": null,
+            "step-pricing-system-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-secondary-sub-dup2"
+            }
+          },
+          "transformed_state": {
+            "flow-pricing-system-secondary-sub-dup2-dup8": {
+              "id": "flow-pricing-system-secondary-sub-dup2-dup8",
+              "name": "pricing-system-secondary-sub-flow-copy-copy",
+              "flow_type": "sub_flow",
+              "trigger": null,
+              "steps": [
+                {
+                  "id": "step-pricing-system-secondary-log-dup2-0-dup8-0",
+                  "message": "Pricing system request received (updated) (updated)",
+                  "level": "INFO",
+                  "kind": "logger"
+                }
+              ]
+            },
+            "step-pricing-system-subflow-ref": {
+              "target_flow_id": "flow-pricing-system-secondary-sub-dup2-dup8"
+            }
+          },
+          "severity": 0.8191504086327653,
+          "rationale": "Simulates redundant processing paths: 'flow-pricing-system-secondary-sub-dup2' was duplicated as 'flow-pricing-system-secondary-sub-dup2-dup8', and caller step 'step-pricing-system-subflow-ref' was switched to use the duplicate while any other callers keep using the original."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    },
+    {
+      "issue_id": "naming_drift:api-customer-experience-v1",
+      "issue_type": "naming_drift",
+      "affected_entity_ids": [
+        "api-customer-experience-v1"
+      ],
+      "observable_symptom": {
+        "api-customer-experience-v1": {
+          "name": "Customer Experience API_"
+        }
+      },
+      "severity": 0.8675626845979234,
+      "expected_detection_target": "A 'naming_drift' issue affecting ['api-customer-experience-v1'], observable as: {'api-customer-experience-v1': {'name': 'Customer Experience API_'}}.",
+      "transformation_history": [
+        {
+          "mutation_id": "level_3_legacy-seed12-009",
+          "sequence_index": 9,
+          "original_state": {
+            "api-customer-experience-v1": {
+              "name": "Customer Experience API"
+            }
+          },
+          "transformed_state": {
+            "api-customer-experience-v1": {
+              "name": "Customer Experience API_"
+            }
+          },
+          "severity": 0.8675626845979234,
+          "rationale": "Simulates naming convention drift on API 'api-customer-experience-v1' (styles applied: ['_style_add_legacy_suffix', '_style_abbreviate', '_style_abbreviate']), as if caused by a team reorganization."
+        }
+      ],
+      "issue_schema_version": "0.1.0"
+    }
+  ],
+  "raw_agent_output": {
+    "findings": [
+      {
+        "artifact_reference": "inventory-system/src/main/mule/inventory-system.xml",
+        "entity_reference": "inventory-system-sub-flow-copy",
+        "issue_type": "naming_drift",
+        "explanation": "'inventory-system-sub-flow-copy' in inventory-system/src/main/mule/inventory-system.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "inventory-system/src/main/mule/inventory-system.xml",
+        "entity_reference": "inventory-system-main-flow-legacy",
+        "issue_type": "naming_drift",
+        "explanation": "'inventory-system-main-flow-legacy' in inventory-system/src/main/mule/inventory-system.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "inventory-system/src/main/mule/inventory-system.xml",
+        "entity_reference": "inventory-system-sub-flow-copy",
+        "issue_type": "naming_drift",
+        "explanation": "'inventory-system-sub-flow-copy' in inventory-system/src/main/mule/inventory-system.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "inventory-system/src/main/resources/api-inventory-system-v1-legacy4.yaml",
+        "entity_reference": "Inventory System API (Legacy)",
+        "issue_type": "naming_drift",
+        "explanation": "'Inventory System API (Legacy)' in inventory-system/src/main/resources/api-inventory-system-v1-legacy4.yaml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "pricing-system/src/main/mule/pricing-system.xml",
+        "entity_reference": "pricing-system-secondary-sub-flow-copy-copy",
+        "issue_type": "naming_drift",
+        "explanation": "'pricing-system-secondary-sub-flow-copy-copy' in pricing-system/src/main/mule/pricing-system.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "pricing-system/src/main/mule/pricing-system.xml",
+        "entity_reference": "pricing-system-secondary-sub-flow-copy",
+        "issue_type": "naming_drift",
+        "explanation": "'pricing-system-secondary-sub-flow-copy' in pricing-system/src/main/mule/pricing-system.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      },
+      {
+        "artifact_reference": "pricing-system/src/main/mule/pricing-system.xml",
+        "entity_reference": "pricing-system-secondary-sub-flow-copy-copy",
+        "issue_type": "naming_drift",
+        "explanation": "'pricing-system-secondary-sub-flow-copy-copy' in pricing-system/src/main/mule/pricing-system.xml uses a naming style (all-caps or a legacy-looking suffix) that's inconsistent with the rest of the project's naming convention.",
+        "confidence": 0.65
+      }
+    ]
+  },
+  "rendering_validation": {
+    "schema_version": "0.1.0",
+    "validator_name": "mulesoft_http_connector",
+    "is_valid": false,
+    "total_issues": 2,
+    "issues_by_artifact": {
+      "customer-experience/src/main/mule/customer-experience.xml": [
+        {
+          "element": "http:request",
+          "attribute": "{http://www.mulesoft.org/schema/mule/documentation}name",
+          "message": "Unknown attribute '{http://www.mulesoft.org/schema/mule/documentation}name' on <http:request> -- not in the documented schema for this element (see ark/schemas/mulesoft/http_connector.json)."
+        }
+      ],
+      "subscription-process/src/main/mule/subscription-process.xml": [
+        {
+          "element": "http:request",
+          "attribute": "{http://www.mulesoft.org/schema/mule/documentation}name",
+          "message": "Unknown attribute '{http://www.mulesoft.org/schema/mule/documentation}name' on <http:request> -- not in the documented schema for this element (see ark/schemas/mulesoft/http_connector.json)."
+        }
+      ]
+    },
+    "validation_error": null
+  }
+}

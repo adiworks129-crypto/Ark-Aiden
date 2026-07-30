@@ -1,0 +1,3 @@
+title: Inventory Process API (Legacy)
+version: v1-legacy
+entryFlow: inventoryProcessMainFlowCamel-legacy

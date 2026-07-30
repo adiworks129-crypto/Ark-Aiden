@@ -77,6 +77,21 @@ class MutationOperator(ABC):
     """
 
     transformation_type: str
+    description: str
+    """Session E addition: a short (1-2 sentence), agent-facing description
+    of what this issue type looks like from the outside -- what an
+    observer would actually see in the rendered files, never Ark's own
+    implementation vocabulary (no mention of severity, clone_estate,
+    specific internal class names, etc.), and never anything that would
+    tell the agent which domain a specific estate belongs to. This is
+    surfaced verbatim in ark.harness.prompt.build_agent_prompt() via
+    ark.evaluator.schema.ISSUE_TYPE_DESCRIPTIONS -- the one and only place
+    an operator's own words reach the agent. A bare annotation with no
+    default here, same as transformation_type above: a concrete operator
+    that forgets to set this will raise AttributeError the moment
+    anything touches `.description`, and tests/test_issue_taxonomy_prompt.py
+    checks exactly that, for every registered operator, so a future 8th
+    operator can't silently ship without one."""
 
     @abstractmethod
     def find_candidates(self, estate: GroundTruthEstate) -> list[dict]:

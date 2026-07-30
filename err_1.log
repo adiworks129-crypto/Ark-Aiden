@@ -1,0 +1,4 @@
+warning: unable to unlink '/sessions/affectionate-epic-lovelace/mnt/Ark/.git/index.lock': Operation not permitted
+warning: unable to unlink '.git/objects/e2/tmp_obj_0fHmtJ': Operation not permitted
+warning: unable to unlink '/sessions/affectionate-epic-lovelace/mnt/Ark/.git/HEAD.lock': Operation not permitted
+warning: unable to unlink '/sessions/affectionate-epic-lovelace/mnt/Ark/.git/objects/maintenance.lock': Operation not permitted

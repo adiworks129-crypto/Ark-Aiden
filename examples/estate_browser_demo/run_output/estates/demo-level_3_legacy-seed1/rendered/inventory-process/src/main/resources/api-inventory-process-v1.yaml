@@ -1,0 +1,3 @@
+title: Inventory Process API
+version: v1
+entryFlow: inventoryProcessMainFlowCamel

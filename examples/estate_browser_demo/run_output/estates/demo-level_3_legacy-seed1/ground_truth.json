@@ -1,0 +1,234 @@
+{
+  "estate_id": "generated-seed1",
+  "schema_version": "0.3.0",
+  "applications": [
+    {
+      "id": "app-inventory-experience",
+      "name": "inventory-experience",
+      "apis": [
+        {
+          "id": "api-inventory-experience-v1",
+          "name": "Inventory Experience API",
+          "version": "v1",
+          "entry_flow_id": "flow-inventory-experience-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-inventory-experience-main",
+          "name": "inventory-experience-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/inventory/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-inventory-experience-call-inventory-process",
+              "name": "Call Inventory Process API",
+              "description": "Calls the Inventory Process API as part of experience-layer processing for inventory.",
+              "target_api_id": "api-inventory-process-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-inventory-experience-build-response",
+              "name": "Build Inventory Response",
+              "description": "Builds the response payload for inventory.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    inventoryId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-inventory-experience-subflow-ref",
+              "target_flow_id": "flow-inventory-experience-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-inventory-experience-sub",
+          "name": "inventory-experience-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-inventory-experience-primary-log",
+              "message": "Inventory experience request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-inventory-process",
+      "name": "inventory-process",
+      "apis": [
+        {
+          "id": "api-inventory-process-v1",
+          "name": "Inventory Process API",
+          "version": "v1",
+          "entry_flow_id": "flow-inventory-process-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-inventory-process-main",
+          "name": "inventory-process-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/inventory/process",
+            "method": "POST",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-inventory-process-subflow-ref",
+              "target_flow_id": "flow-inventory-process-sub",
+              "kind": "flow-ref"
+            },
+            {
+              "id": "step-inventory-process-call-invoice-system",
+              "name": "Call Invoice System API",
+              "description": "Calls the Invoice System API as part of process-layer processing for inventory.",
+              "target_api_id": "api-invoice-system-v1",
+              "kind": "api-call"
+            },
+            {
+              "id": "step-inventory-process-build-result",
+              "name": "Build Inventory Result",
+              "description": "Builds the processing result payload for inventory.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    inventoryId: payload.id,\n    status: \"PROCESSED\"\n}",
+              "kind": "transform"
+            }
+          ]
+        },
+        {
+          "id": "flow-inventory-process-sub",
+          "name": "inventory-process-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-inventory-process-primary-validate",
+              "name": "Validate Inventory Payload",
+              "description": "Checks the incoming inventory payload has all required fields.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+              "kind": "transform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-invoice-system",
+      "name": "invoice-system",
+      "apis": [
+        {
+          "id": "api-invoice-system-v1",
+          "name": "Invoice System API",
+          "version": "v1",
+          "entry_flow_id": "flow-invoice-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-invoice-system-main",
+          "name": "invoice-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/invoice/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-invoice-system-build-response",
+              "name": "Build Invoice Response",
+              "description": "Builds the response payload for invoice.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    invoiceId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-invoice-system-subflow-ref",
+              "target_flow_id": "flow-invoice-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-invoice-system-sub",
+          "name": "invoice-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-invoice-system-primary-log",
+              "message": "Invoice system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "app-pricing-system",
+      "name": "pricing-system",
+      "apis": [
+        {
+          "id": "api-pricing-system-v1",
+          "name": "Pricing System API",
+          "version": "v1",
+          "entry_flow_id": "flow-pricing-system-main"
+        }
+      ],
+      "flows": [
+        {
+          "id": "flow-pricing-system-main",
+          "name": "pricing-system-main-flow",
+          "flow_type": "flow",
+          "trigger": {
+            "path": "/pricing/{id}",
+            "method": "GET",
+            "listener_config_ref": "HTTP_Listener_config",
+            "type": "http-listener"
+          },
+          "steps": [
+            {
+              "id": "step-pricing-system-build-response",
+              "name": "Build Pricing Response",
+              "description": "Builds the response payload for pricing.",
+              "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    pricingId: attributes.uriParams.id,\n    status: \"OK\"\n}",
+              "kind": "transform"
+            },
+            {
+              "id": "step-pricing-system-subflow-ref",
+              "target_flow_id": "flow-pricing-system-sub",
+              "kind": "flow-ref"
+            }
+          ]
+        },
+        {
+          "id": "flow-pricing-system-sub",
+          "name": "pricing-system-sub-flow",
+          "flow_type": "sub_flow",
+          "trigger": null,
+          "steps": [
+            {
+              "id": "step-pricing-system-primary-log",
+              "message": "Pricing system request received",
+              "level": "INFO",
+              "kind": "logger"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "domain": null
+}

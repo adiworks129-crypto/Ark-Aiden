@@ -108,6 +108,11 @@ class NamingDriftOperator(MutationOperator):
     to 3 at high severity), not which single thing changes."""
 
     transformation_type = "naming_drift"
+    description = (
+        "A component's display name uses a naming convention that's inconsistent with similar "
+        "components elsewhere in the project (mixed casing, an abbreviation, or an unexpected "
+        "'legacy'-style suffix), even though it otherwise behaves normally."
+    )
 
     def find_candidates(self, estate: GroundTruthEstate) -> list[dict]:
         candidates: list[dict] = []
@@ -173,6 +178,10 @@ class DocumentationDecayOperator(MutationOperator):
     (medium) -> empty string (high)."""
 
     transformation_type = "documentation_decay"
+    description = (
+        "A step's description is missing, truncated, or replaced with vague, generic placeholder "
+        "text that doesn't actually explain what the step does."
+    )
 
     def find_candidates(self, estate: GroundTruthEstate) -> list[dict]:
         candidates: list[dict] = []
@@ -250,6 +259,10 @@ class DuplicateProcessingOperator(MutationOperator):
     _drift_duplicate_content below."""
 
     transformation_type = "duplicate_processing"
+    description = (
+        "Two flows do nearly the same thing, and only some callers were switched to use the newer "
+        "one -- a redundant processing path that's only partially been adopted."
+    )
 
     def find_candidates(self, estate: GroundTruthEstate) -> list[dict]:
         candidates: list[dict] = []
@@ -339,6 +352,11 @@ class LegacyVersionOperator(MutationOperator):
     sibling, so the estate is always still fully valid."""
 
     transformation_type = "legacy_version_introduction"
+    description = (
+        "An older, still-present sibling version of an API or flow exists alongside the current "
+        "one, implementing an earlier revision of the same functionality (e.g. missing a feature "
+        "the newer version already has)."
+    )
 
     def find_candidates(self, estate: GroundTruthEstate) -> list[dict]:
         candidates = []
@@ -427,6 +445,11 @@ class SchemaInconsistencyOperator(MutationOperator):
     works at the level ground truth actually models today."""
 
     transformation_type = "schema_inconsistency"
+    description = (
+        "A field name used in one component's data mapping doesn't match the naming convention "
+        "used for the same concept elsewhere, as if two components meant to share a contract have "
+        "silently diverged."
+    )
 
     _FIELD_PATTERN = re.compile(r"(\w+)Id:")
 
@@ -501,6 +524,10 @@ class DependencyChangeOperator(MutationOperator):
     realistic dependency evolution, not a broken reference."""
 
     transformation_type = "dependency_change"
+    description = (
+        "A step calls a different downstream API or flow than the rest of the project's pattern "
+        "would suggest -- a plausible, but perhaps unintended, dependency switch."
+    )
 
     def find_candidates(self, estate: GroundTruthEstate) -> list[dict]:
         all_api_ids_by_app = {app.id: {a.id for a in app.apis} for app in estate.applications}
@@ -635,6 +662,10 @@ class DomainComponentInjectionOperator(MutationOperator):
     """
 
     transformation_type = "domain_implausible_component"
+    description = (
+        "A component that is realistic and well-formed on its own, but doesn't fit the estate's "
+        "business domain (e.g. a retail point-of-sale connector appearing in a finance system)."
+    )
 
     def find_candidates(self, estate: GroundTruthEstate) -> list[dict]:
         if estate.domain not in SUPPORTED_DOMAINS:

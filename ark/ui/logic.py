@@ -34,6 +34,8 @@ from __future__ import annotations
 
 import dataclasses
 import os
+import re
+from datetime import datetime
 from typing import Any
 
 from ark.evaluator.analysis import ExperimentAnalysis
@@ -49,6 +51,15 @@ from ark.harness.scripted_client import ScriptedAgentClient
 from ark.mutation.profiles import PROFILES
 
 MILESTONE1_GROUND_TRUTH = "examples/milestone1/ground_truth.json"
+
+UI_RUNS_ROOT = "ui_runs"
+"""Where a real "Run Experiment" click (app.py) persists its estates --
+a second, deliberate convention alongside the existing `examples/<name>/
+run_output` one every demo/example script already uses (see
+ark.ui.browser_logic.DEFAULT_ESTATE_SEARCH_ROOTS, which scans both). Kept
+OUT of `examples/` on purpose: real, user-triggered runs aren't demo
+fixtures, even though they use the same underlying save_estates=True
+mechanism."""
 
 AGENT_CHOICE_SCRIPTED = "ScriptedAgentClient (offline)"
 AGENT_CHOICE_ANTHROPIC = "Anthropic Claude Agent (API)"
@@ -230,9 +241,39 @@ def agent_model_label(agent_client: AgentClient) -> str:
 # ---------------------------------------------------------------------------
 
 
+def suggest_run_name() -> str:
+    """A reasonable default value for app.py's "Estate name" field --
+    timestamp-based so two runs never collide by default, never assumed
+    to be stable/deterministic (unlike everything else in this module,
+    this one genuinely depends on wall-clock time, the same "one
+    expected-to-vary field" pattern report.py's own `generated_at`
+    already documents). The user is always free to type over it."""
+    return f"run-{datetime.now():%Y%m%d-%H%M%S}"
+
+
+_SAFE_RUN_NAME_PATTERN = re.compile(r"[^a-z0-9-]+")
+_COLLAPSE_HYPHENS_PATTERN = re.compile(r"-+")
+
+
+def slugify_run_name(name: str) -> str:
+    """Turn free-text UI input into a string safe to use both as a
+    filesystem directory name (part of a trajectory's output_dir) and as
+    a TrajectorySpec.label fragment (which flows straight into
+    reports/<label>.json and estates/<label>/ -- see
+    ark.experiment.runner). Lowercases, replaces anything that isn't
+    a-z/0-9/hyphen with a hyphen, collapses repeats, and strips leading/
+    trailing hyphens. An empty or all-punctuation input (e.g. "" or
+    "!!!") falls back to "estate" rather than producing an empty or
+    all-hyphen path segment."""
+    lowered = name.strip().lower()
+    hyphenated = _SAFE_RUN_NAME_PATTERN.sub("-", lowered)
+    collapsed = _COLLAPSE_HYPHENS_PATTERN.sub("-", hyphenated).strip("-")
+    return collapsed or "estate"
+
+
 def build_trajectory_specs(
     estate_source: str, profile_name: str, seed: int, num_trajectories: int,
-    *, domain: str | None = None,
+    *, domain: str | None = None, run_name: str | None = None,
 ) -> list[TrajectorySpec]:
     """Build `num_trajectories` TrajectorySpecs at one profile, one per
     consecutive seed starting at `seed` (seed, seed+1, ..., seed+n-1) --
@@ -259,6 +300,15 @@ def build_trajectory_specs(
     existed -- passing it for e.g. `level_3_legacy` has no effect beyond
     tagging the generated estate (which that profile's operators never
     read).
+
+    `run_name`, if given, is prepended to every label in this batch
+    (`f"{run_name}-{profile_name}-seed{trajectory_seed}"` instead of just
+    `f"{profile_name}-seed{trajectory_seed}"`) -- should already be
+    slugify_run_name()'d by the caller (app.py always does this) so it's
+    safe as both a label fragment and a directory name. Defaults to None,
+    which reproduces the exact label shape every existing caller/test
+    already depends on -- purely additive, no behavior change for anyone
+    who doesn't pass it.
     """
     if profile_name not in PROFILES:
         raise ValueError(f"Unknown profile: {profile_name!r}. Available: {PROFILE_CHOICES}")
@@ -267,10 +317,11 @@ def build_trajectory_specs(
     if num_trajectories < 1:
         raise ValueError(f"num_trajectories must be >= 1, got {num_trajectories}.")
 
+    label_prefix = f"{run_name}-" if run_name else ""
     specs = []
     for offset in range(num_trajectories):
         trajectory_seed = seed + offset
-        label = f"{profile_name}-seed{trajectory_seed}"
+        label = f"{label_prefix}{profile_name}-seed{trajectory_seed}"
         if estate_source == ESTATE_SOURCE_MILESTONE1:
             specs.append(
                 TrajectorySpec(
@@ -293,13 +344,28 @@ def build_trajectory_specs(
 # ---------------------------------------------------------------------------
 
 
-def run_ui_experiment(specs: list[TrajectorySpec], agent_client: AgentClient) -> ExperimentRunResult:
-    """Exactly ark.experiment.runner.run_experiment(specs, agent_client) --
-    no new logic. Exists so ark/ui/app.py has one obvious place to call
-    for "run the whole pipeline," even though app.py is equally free to
-    (and does, for other calls) import ark.experiment/ark.evaluator/
-    ark.harness directly, per the architecture requirement."""
-    return run_experiment(specs, agent_client)
+def run_ui_experiment(
+    specs: list[TrajectorySpec],
+    agent_client: AgentClient,
+    *,
+    output_dir: str | None = None,
+    save_estates: bool = False,
+) -> ExperimentRunResult:
+    """Exactly ark.experiment.runner.run_experiment(specs, agent_client,
+    output_dir=output_dir, save_estates=save_estates) -- no new logic.
+    Exists so ark/ui/app.py has one obvious place to call for "run the
+    whole pipeline," even though app.py is equally free to (and does, for
+    other calls) import ark.experiment/ark.evaluator/ark.harness directly,
+    per the architecture requirement.
+
+    `output_dir`/`save_estates` default to None/False -- the exact
+    previous behavior (nothing persisted to disk) for any caller that
+    doesn't pass them, e.g. every existing test in
+    tests/test_milestone8.py. app.py's real "Run Experiment" button always
+    passes both now, so every click persists its estates under
+    UI_RUNS_ROOT/<slug>/ -- see this module's own UI_RUNS_ROOT docstring
+    for why."""
+    return run_experiment(specs, agent_client, output_dir=output_dir, save_estates=save_estates)
 
 
 def report_for_label(run_result: ExperimentRunResult, label: str) -> EvaluationReport:
@@ -589,6 +655,19 @@ def artifacts_for_label(run_result: ExperimentRunResult, label: str) -> dict[str
     """Exactly what the agent was shown for this trajectory -- see
     ark.experiment.runner.TrajectoryRunResult.rendered_artifacts."""
     return run_result.artifacts_by_label[label]
+
+
+def original_artifacts_for_label(run_result: ExperimentRunResult, label: str) -> dict[str, str]:
+    """This trajectory's baseline estate -- the same one artifacts_for_label()
+    returns, but rendered BEFORE any mutation operator ran. See
+    ark.experiment.runner.TrajectoryRunResult.baseline_artifacts.
+
+    Research-only, same isolation tier as issue_rows()/report.raw_agent_output:
+    the agent never saw this. It exists so ark.ui's Artifact Viewer can show
+    it in the "Hidden from Agent (research view only)" section, letting a
+    researcher diff it against artifacts_for_label()'s output to see exactly
+    what a trajectory's mutation profile changed."""
+    return run_result.baseline_artifacts_by_label[label]
 
 
 _EVALUATOR_ONLY_KEYS = frozenset(

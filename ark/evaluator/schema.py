@@ -55,6 +55,30 @@ AGENT_OUTPUT_SCHEMA_VERSION = "0.1.0"
 # operator is ever added.
 ISSUE_TYPE_TAXONOMY: frozenset[str] = frozenset(OPERATOR_REGISTRY.keys()) | {"other"}
 
+_OTHER_ISSUE_TYPE_DESCRIPTION = (
+    "Something else worth flagging that doesn't fit cleanly into any of the categories above."
+)
+
+# Session E ("Issue Taxonomy Descriptions in Agent Prompt"): a short,
+# agent-facing description per taxonomy member, sourced live from each
+# operator's own `.description` (see ark.mutation.base.MutationOperator)
+# rather than hand-copied here -- same "can't silently drift from the
+# registry" reasoning ISSUE_TYPE_TAXONOMY above already documents, just
+# extended to cover prose, not only the type-name set. "other" isn't a
+# real operator, so it gets one literal, hardcoded description
+# (_OTHER_ISSUE_TYPE_DESCRIPTION above) -- the one deliberate exception,
+# since there is no registry entry for it to source from.
+#
+# ark.harness.prompt.build_agent_prompt() is the one place this reaches
+# the agent -- see that module's own docstring for why importing from
+# here (evaluator-internal) is a deliberate, documented exception to
+# "never import ark.evaluator internals into the harness," same
+# exception ISSUE_TYPE_TAXONOMY already relies on.
+ISSUE_TYPE_DESCRIPTIONS: dict[str, str] = {
+    op.transformation_type: op.description for op in OPERATOR_REGISTRY.values()
+}
+ISSUE_TYPE_DESCRIPTIONS["other"] = _OTHER_ISSUE_TYPE_DESCRIPTION
+
 _REQUIRED_FINDING_FIELDS = (
     "artifact_reference",
     "entity_reference",

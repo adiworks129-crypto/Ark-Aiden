@@ -1,0 +1,306 @@
+{
+  "ledger": {
+    "baseline_estate_id": "generated-seed1",
+    "baseline_schema_version": "0.3.0",
+    "trajectory_seed": 1,
+    "profile_name": "level_3_legacy",
+    "engine_version": "0.1.0",
+    "ledger_schema_version": "0.1.0",
+    "records": [
+      {
+        "mutation_id": "level_3_legacy-seed1-000",
+        "transformation_type": "documentation_decay",
+        "affected_entity_ids": [
+          "step-inventory-process-primary-validate"
+        ],
+        "original_state": {
+          "step-inventory-process-primary-validate": {
+            "description": "Checks the incoming inventory payload has all required fields."
+          }
+        },
+        "transformed_state": {
+          "step-inventory-process-primary-validate": {
+            "description": ""
+          }
+        },
+        "severity": 0.838973494774893,
+        "rationale": "Simulates incomplete enterprise documentation: description on 'step-inventory-process-primary-validate' was removed entirely.",
+        "sequence_index": 0,
+        "timestamp": "2026-07-30T19:13:07.347290+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-001",
+        "transformation_type": "naming_drift",
+        "affected_entity_ids": [
+          "flow-inventory-experience-main"
+        ],
+        "original_state": {
+          "flow-inventory-experience-main": {
+            "name": "inventory-experience-main-flow"
+          }
+        },
+        "transformed_state": {
+          "flow-inventory-experience-main": {
+            "name": "inventory-experience-main-flow-copy2"
+          }
+        },
+        "severity": 0.5471674814684244,
+        "rationale": "Simulates naming convention drift on Flow 'flow-inventory-experience-main' (styles applied: ['_style_abbreviate', '_style_abbreviate', '_style_add_legacy_suffix (forced, no-op guard)']), as if caused by an unrelated rebranding effort.",
+        "sequence_index": 1,
+        "timestamp": "2026-07-30T19:13:07.347986+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-002",
+        "transformation_type": "naming_drift",
+        "affected_entity_ids": [
+          "flow-pricing-system-sub"
+        ],
+        "original_state": {
+          "flow-pricing-system-sub": {
+            "name": "pricing-system-sub-flow"
+          }
+        },
+        "transformed_state": {
+          "flow-pricing-system-sub": {
+            "name": "pricing-system-sub-flow_v2_final"
+          }
+        },
+        "severity": 0.5113389906088025,
+        "rationale": "Simulates naming convention drift on Flow 'flow-pricing-system-sub' (styles applied: ['_style_abbreviate', '_style_abbreviate', '_style_add_legacy_suffix (forced, no-op guard)']), as if caused by a rushed migration that skipped a naming review.",
+        "sequence_index": 2,
+        "timestamp": "2026-07-30T19:13:07.348800+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-003",
+        "transformation_type": "duplicate_processing",
+        "affected_entity_ids": [
+          "flow-inventory-process-sub-dup3",
+          "step-inventory-process-subflow-ref"
+        ],
+        "original_state": {
+          "flow-inventory-process-sub-dup3": null,
+          "step-inventory-process-subflow-ref": {
+            "target_flow_id": "flow-inventory-process-sub"
+          }
+        },
+        "transformed_state": {
+          "flow-inventory-process-sub-dup3": {
+            "id": "flow-inventory-process-sub-dup3",
+            "name": "inventory-process-sub-flow-copy",
+            "flow_type": "sub_flow",
+            "trigger": null,
+            "steps": [
+              {
+                "id": "step-inventory-process-primary-validate-dup3-0",
+                "name": "Validate Inventory Payload",
+                "description": " (updated copy)",
+                "dataweave": "%dw 2.0\noutput application/json\n---\npayload",
+                "kind": "transform"
+              }
+            ]
+          },
+          "step-inventory-process-subflow-ref": {
+            "target_flow_id": "flow-inventory-process-sub-dup3"
+          }
+        },
+        "severity": 0.7364613740005216,
+        "rationale": "Simulates redundant processing paths: 'flow-inventory-process-sub' was duplicated as 'flow-inventory-process-sub-dup3', and caller step 'step-inventory-process-subflow-ref' was switched to use the duplicate while any other callers keep using the original.",
+        "sequence_index": 3,
+        "timestamp": "2026-07-30T19:13:07.349405+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-004",
+        "transformation_type": "naming_drift",
+        "affected_entity_ids": [
+          "flow-inventory-process-main"
+        ],
+        "original_state": {
+          "flow-inventory-process-main": {
+            "name": "inventory-process-main-flow"
+          }
+        },
+        "transformed_state": {
+          "flow-inventory-process-main": {
+            "name": "inventoryProcessMainFlowCamel"
+          }
+        },
+        "severity": 0.5122359932134214,
+        "rationale": "Simulates naming convention drift on Flow 'flow-inventory-process-main' (styles applied: ['_style_kebab_to_camel', '_style_kebab_to_camel']), as if caused by a rushed migration that skipped a naming review.",
+        "sequence_index": 4,
+        "timestamp": "2026-07-30T19:13:07.350155+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-005",
+        "transformation_type": "schema_inconsistency",
+        "affected_entity_ids": [
+          "step-inventory-process-build-result"
+        ],
+        "original_state": {
+          "step-inventory-process-build-result": {
+            "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    inventoryId: payload.id,\n    status: \"PROCESSED\"\n}"
+          }
+        },
+        "transformed_state": {
+          "step-inventory-process-build-result": {
+            "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    inventory_id: payload.id,\n    status: \"PROCESSED\"\n}"
+          }
+        },
+        "severity": 0.8876162601176398,
+        "rationale": "Simulates schema/contract inconsistency: field 'inventoryId' in 'step-inventory-process-build-result' was renamed to 'inventory_id' (snake_case convention), diverging from what related components expect.",
+        "sequence_index": 5,
+        "timestamp": "2026-07-30T19:13:07.350882+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-006",
+        "transformation_type": "legacy_version_introduction",
+        "affected_entity_ids": [
+          "api-inventory-process-v1-legacy6",
+          "flow-inventory-process-main-legacy6"
+        ],
+        "original_state": {
+          "api-inventory-process-v1-legacy6": null,
+          "flow-inventory-process-main-legacy6": null
+        },
+        "transformed_state": {
+          "api-inventory-process-v1-legacy6": {
+            "id": "api-inventory-process-v1-legacy6",
+            "name": "Inventory Process API (Legacy)",
+            "version": "v1-legacy",
+            "entry_flow_id": "flow-inventory-process-main-legacy6"
+          },
+          "flow-inventory-process-main-legacy6": {
+            "id": "flow-inventory-process-main-legacy6",
+            "name": "inventoryProcessMainFlowCamel-legacy",
+            "flow_type": "flow",
+            "trigger": {
+              "path": "/inventory/process",
+              "method": "POST",
+              "listener_config_ref": "HTTP_Listener_config",
+              "type": "http-listener"
+            },
+            "steps": [
+              {
+                "id": "step-inventory-process-subflow-ref-legacy6-0",
+                "target_flow_id": "flow-inventory-process-sub-dup3",
+                "kind": "flow-ref"
+              },
+              {
+                "id": "step-inventory-process-call-invoice-system-legacy6-1",
+                "name": "Call Invoice System API",
+                "description": "Calls the Invoice System API as part of process-layer processing for inventory.",
+                "target_api_id": "api-invoice-system-v1",
+                "kind": "api-call"
+              }
+            ]
+          }
+        },
+        "severity": 0.8054803980525957,
+        "rationale": "Simulates a legacy API version left running after 'api-inventory-process-v1' was superseded: 'api-inventory-process-v1-legacy6' still points at a frozen implementation ('flow-inventory-process-main-legacy6'), per real MuleSoft estates where deprecated versions stay live in API Manager.",
+        "sequence_index": 6,
+        "timestamp": "2026-07-30T19:13:07.351396+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-007",
+        "transformation_type": "dependency_change",
+        "affected_entity_ids": [
+          "step-inventory-process-subflow-ref-legacy6-0"
+        ],
+        "original_state": {
+          "step-inventory-process-subflow-ref-legacy6-0": {
+            "target_flow_id": "flow-inventory-process-sub-dup3"
+          }
+        },
+        "transformed_state": {
+          "step-inventory-process-subflow-ref-legacy6-0": {
+            "target_flow_id": "flow-inventory-process-main"
+          }
+        },
+        "severity": 0.5932337801030291,
+        "rationale": "Simulates a dependency change: 'step-inventory-process-subflow-ref-legacy6-0' now calls 'flow-inventory-process-main' instead of 'flow-inventory-process-sub-dup3', as if the team switched downstream providers while keeping the estate structurally valid.",
+        "sequence_index": 7,
+        "timestamp": "2026-07-30T19:13:07.351940+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-008",
+        "transformation_type": "schema_inconsistency",
+        "affected_entity_ids": [
+          "step-inventory-experience-build-response"
+        ],
+        "original_state": {
+          "step-inventory-experience-build-response": {
+            "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    inventoryId: attributes.uriParams.id,\n    status: \"OK\"\n}"
+          }
+        },
+        "transformed_state": {
+          "step-inventory-experience-build-response": {
+            "dataweave": "%dw 2.0\noutput application/json\n---\n{\n    InventoryId: attributes.uriParams.id,\n    status: \"OK\"\n}"
+          }
+        },
+        "severity": 0.8043790950167282,
+        "rationale": "Simulates schema/contract inconsistency: field 'inventoryId' in 'step-inventory-experience-build-response' was renamed to 'InventoryId' (PascalCase convention), diverging from what related components expect.",
+        "sequence_index": 8,
+        "timestamp": "2026-07-30T19:13:07.352425+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      },
+      {
+        "mutation_id": "level_3_legacy-seed1-009",
+        "transformation_type": "naming_drift",
+        "affected_entity_ids": [
+          "flow-inventory-process-sub"
+        ],
+        "original_state": {
+          "flow-inventory-process-sub": {
+            "name": "inventory-process-sub-flow"
+          }
+        },
+        "transformed_state": {
+          "flow-inventory-process-sub": {
+            "name": "inventoryProcessSubFlow_deprecatedCamel"
+          }
+        },
+        "severity": 0.8350311902650291,
+        "rationale": "Simulates naming convention drift on Flow 'flow-inventory-process-sub' (styles applied: ['_style_kebab_to_camel', '_style_add_legacy_suffix', '_style_kebab_to_camel']), as if caused by inconsistent onboarding of new engineers.",
+        "sequence_index": 9,
+        "timestamp": "2026-07-30T19:13:07.352954+00:00",
+        "seed": 1,
+        "record_schema_version": "0.1.0"
+      }
+    ]
+  },
+  "generation_manifest": {
+    "seed": 1,
+    "generator_version": "0.1.0",
+    "schema_version": "0.3.0",
+    "config": {
+      "seed": 1,
+      "num_experience_apis": 1,
+      "num_process_apis": 1,
+      "num_system_apis": 2,
+      "dependency_density": 0.6,
+      "shared_component_frequency": 0.5,
+      "scheduled_job_ratio": 0.3,
+      "topology_style": "layered",
+      "naming_style": "kebab-case",
+      "vocabulary_domain": "enterprise_default",
+      "estate_id_prefix": "generated",
+      "domain": null
+    }
+  }
+}

@@ -82,6 +82,22 @@ class GeneratedEstate:
     manifest: GenerationManifest
 
 
+def generation_manifest_from_dict(data: dict) -> GenerationManifest:
+    """Reconstruct a GenerationManifest from a dict produced by
+    dataclasses.asdict(manifest). Added for the estate persistence layer
+    (ark.generator.persistence), which needs to reload a previously-saved
+    estate's generation recipe without calling generate_estate() again.
+
+    GenerationManifest is already flat (seed/generator_version/
+    schema_version, plus `config` as a plain dict) so this is a direct
+    construction, not a nested reassembly like
+    ark.mutation.ledger.ledger_from_dict() needs -- kept as a named
+    function anyway, purely for symmetry/discoverability alongside that
+    one and ark.evaluator.report's *_from_dict() helpers. generate_estate()
+    itself is untouched; this is a new, additive function only."""
+    return GenerationManifest(**data)
+
+
 def generate_estate(config: GeneratorConfig) -> GeneratedEstate:
     rng = make_rng(config.seed)
     plan = build_topology(config, rng)

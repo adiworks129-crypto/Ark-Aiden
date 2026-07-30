@@ -1,0 +1,12 @@
+# Ark — Classical theme (visual layer only).
+# Streamlit's own theme primitives; the finer styling (fonts, borders, hover
+# states, tables, diff pane) is applied by ark/ui/theme.py's stylesheet.
+# No behavioural or server settings are set here.
+
+[theme]
+base = "light"
+primaryColor = "#b68235"
+backgroundColor = "#f3f2f2"
+secondaryBackgroundColor = "#f8f4f4"
+textColor = "#201f1d"
+font = "serif"

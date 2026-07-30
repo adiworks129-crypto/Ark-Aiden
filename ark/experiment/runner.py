@@ -42,6 +42,28 @@ any of the four -- `rendering_validation` in particular is a
 researcher/pipeline-side-only signal, per
 ark.validation.pipeline/ark.evaluator.report's own documentation of why it
 must never reach the agent or influence agent-performance metrics.
+
+A fifth, sibling researcher-only value follows the same rule:
+`result.baseline_estate` (the untouched estate BEFORE `run_trajectory()`
+mutated a clone of it into `result.transformed_estate`) is separately
+rendered through the same adapter into `baseline_rendered.artifacts` --
+never passed to `run_agent_harness()`, never passed to `evaluate()`,
+exposed only via `TrajectoryRunResult.baseline_artifacts` /
+`ExperimentRunResult.baseline_artifacts_by_label` for ark.ui's Artifact
+Viewer to show in its "Hidden from Agent (research view only)" section,
+so a researcher can diff "before mutation" against "what the agent saw."
+
+Session A ("Estate Persistence Layer") adds one opt-in side effect, never
+a new pipeline stage: `run_experiment(..., save_estates=True)` takes
+`result.baseline_estate` (the pre-mutation estate, deliberately NOT
+`result.transformed_estate` -- see `TrajectoryRunResult.baseline_estate`'s
+own docstring for why), `rendered.artifacts`, `result.ledger`, and
+`generation_manifest` -- all four already computed above, all four
+already research-only/post-agent -- and writes them to
+`<output_dir>/estates/<spec.label>/` via
+`ark.generator.persistence.save_estate()`. Default is `False`; nothing
+about the agent-facing or scoring path above changes because this flag
+exists.
 """
 
 from __future__ import annotations
@@ -58,9 +80,11 @@ from ark.evaluator.orchestrator import evaluate
 from ark.evaluator.report import EvaluationReport, report_to_json
 from ark.experiment.spec import TrajectorySpec
 from ark.generator.generator import GenerationManifest, generate_estate
+from ark.generator.persistence import save_estate
 from ark.harness.contract import AgentClient
 from ark.harness.runner import run_agent_harness
 from ark.mutation.engine import run_trajectory
+from ark.mutation.ledger import MutationLedger
 from ark.mutation.profiles import PROFILES
 from ark.validation.pipeline import RenderingValidationSummary, validate_rendered_estate_safe
 
@@ -95,6 +119,47 @@ class TrajectoryRunResult:
     """Exactly rendered.artifacts, verbatim -- the same object
     run_agent_harness() was called with. Never the manifest, the ledger,
     or the transformed estate."""
+    baseline_artifacts: dict[str, str] = field(default_factory=dict)
+    """The same baseline (pre-mutation) estate this trajectory's
+    rendered_artifacts were derived from, rendered through the same
+    adapter -- i.e. what the estate looked like before this trajectory's
+    mutation profile ran. Computed the same way rendered_artifacts is
+    (adapter.render(), never a second, divergent code path), but on
+    result.baseline_estate instead of result.transformed_estate.
+
+    This is strictly a research/isolation-boundary artifact, the same
+    tier as the manifest/ledger/transformed_estate: it is never passed to
+    run_agent_harness() and never influences evaluate(). It exists only
+    so a human researcher can diff "what the agent saw" against "what
+    existed before mutation" -- ark.ui's Artifact Viewer is the one
+    consumer today, in its "Hidden from Agent (research view only)"
+    section, never the "Visible to Agent" one."""
+    transformed_estate: GroundTruthEstate | None = None
+    """Session A (estate persistence) addition: exactly result.transformed_estate
+    -- the same object evaluate() was already called with, just also
+    exposed here instead of going out of scope once this function returns.
+    Same research-only tier as baseline_artifacts above. NOT what
+    save_estates persists as ground_truth.json (see baseline_estate below
+    for that) -- kept here anyway, for symmetry and in case a future
+    consumer wants the mutated estate object directly rather than
+    reconstructing it from baseline_estate + ledger."""
+    baseline_estate: GroundTruthEstate | None = None
+    """Exactly result.baseline_estate -- the untouched, pre-mutation
+    estate. Same research-only tier as transformed_estate above. THIS is
+    what save_estates persists to ground_truth.json (see
+    ark.generator.persistence's module docstring): a diff viewer built on
+    top of a saved estate needs an actual "before" state to render and
+    compare against rendered/'s actual "after" files -- ground_truth.json
+    holding the already-mutated estate instead would make that comparison
+    meaningless (both sides would describe the same, already-mutated,
+    state)."""
+    ledger: MutationLedger | None = None
+    """Exactly result.ledger -- same reasoning and same tier as
+    transformed_estate above."""
+    generation_manifest: GenerationManifest | None = None
+    """Exactly this trajectory's generation_manifest (None for a
+    hand-authored baseline, e.g. Milestone 1, which has none) -- same
+    reasoning and same tier as transformed_estate above."""
 
 
 def run_trajectory_spec_with_artifacts(
@@ -125,6 +190,13 @@ def run_trajectory_spec_with_artifacts(
 
     result = run_trajectory(baseline_estate, PROFILES[spec.profile_name], seed=spec.seed)
     rendered = resolved_adapter.render(result.transformed_estate)
+
+    # Research-only: render the untouched baseline estate through the same
+    # adapter, purely so a human can see "before mutation" alongside "what
+    # the agent saw." This happens after the line above and is never used
+    # for anything upstream of it -- it does not touch run_agent_harness(),
+    # evaluate(), or any scoring path below.
+    baseline_rendered = resolved_adapter.render(result.baseline_estate)
 
     # Isolation boundary: only rendered.artifacts crosses into the agent
     # harness. rendered.manifest, result.ledger, and result.transformed_estate
@@ -157,7 +229,15 @@ def run_trajectory_spec_with_artifacts(
         generation_manifest=generation_manifest,
         rendering_validation=rendering_validation,
     )
-    return TrajectoryRunResult(report=report, rendered_artifacts=rendered.artifacts)
+    return TrajectoryRunResult(
+        report=report,
+        rendered_artifacts=rendered.artifacts,
+        baseline_artifacts=baseline_rendered.artifacts,
+        transformed_estate=result.transformed_estate,
+        baseline_estate=result.baseline_estate,
+        ledger=result.ledger,
+        generation_manifest=generation_manifest,
+    )
 
 
 def run_trajectory_spec(
@@ -186,6 +266,13 @@ class ExperimentRunResult:
     trajectory's agent was shown. Defaulted to an empty dict so this is
     purely additive -- no existing caller that only reads .reports/
     .analysis/.output_dir is affected."""
+    baseline_artifacts_by_label: dict[str, dict[str, str]] = field(default_factory=dict)
+    """spec.label -> that trajectory's baseline (pre-mutation) estate,
+    rendered through the same adapter. Same additive-only reasoning as
+    artifacts_by_label above: defaulted to an empty dict, existing callers
+    reading only .reports/.analysis/.output_dir/.artifacts_by_label are
+    unaffected. Research-only, mirrors TrajectoryRunResult.baseline_artifacts
+    -- never shown to the agent, never part of scoring."""
 
 
 def run_experiment(
@@ -194,6 +281,7 @@ def run_experiment(
     *,
     adapter: TargetAdapter | None = None,
     output_dir: str | Path | None = None,
+    save_estates: bool = False,
 ) -> ExperimentRunResult:
     """Run every TrajectorySpec in `specs` through
     run_trajectory_spec_with_artifacts(), then aggregate the resulting
@@ -215,9 +303,29 @@ def run_experiment(
     silently skipping it: an experiment run is meant to be a complete,
     reproducible artifact, and a partial run should surface as an
     exception, not quietly become a shorter report list.
+
+    `save_estates` (Session A addition, default False): when True, also
+    persists each trajectory's baseline estate (ground_truth.json),
+    transformed/mutated estate (mutated_estate.json -- Session G
+    addition), rendered artifacts, mutation ledger, and generation
+    manifest to `<output_dir>/estates/<spec.label>/`, via
+    ark.generator.persistence.save_estate() -- see that module for the
+    exact on-disk layout. Requires `output_dir`; raises ValueError if
+    `save_estates=True` is passed without one, rather than silently doing
+    nothing, since a caller that explicitly asked for persistence with no
+    way to satisfy it deserves a loud error, not a quiet no-op.
+
+    Default (`save_estates=False`, the previous-only behavior): zero
+    change from before this flag existed -- no `estates/` directory, no
+    new files, no new I/O, byte-identical to every prior caller's
+    existing output. This is the whole point of the flag being opt-in.
     """
+    if save_estates and output_dir is None:
+        raise ValueError("save_estates=True requires output_dir to be set.")
+
     reports: list[EvaluationReport] = []
     artifacts_by_label: dict[str, dict[str, str]] = {}
+    baseline_artifacts_by_label: dict[str, dict[str, str]] = {}
     resolved_output_dir = Path(output_dir) if output_dir is not None else None
 
     if resolved_output_dir is not None:
@@ -227,9 +335,20 @@ def run_experiment(
         trajectory_result = run_trajectory_spec_with_artifacts(spec, agent_client, adapter=adapter)
         reports.append(trajectory_result.report)
         artifacts_by_label[spec.label] = trajectory_result.rendered_artifacts
+        baseline_artifacts_by_label[spec.label] = trajectory_result.baseline_artifacts
         if resolved_output_dir is not None:
             report_path = resolved_output_dir / "reports" / f"{spec.label}.json"
             report_path.write_text(report_to_json(trajectory_result.report), encoding="utf-8")
+            if save_estates:
+                save_estate(
+                    trajectory_result.baseline_estate,
+                    trajectory_result.rendered_artifacts,
+                    resolved_output_dir / "estates",
+                    spec.label,
+                    ledger=trajectory_result.ledger,
+                    generation_manifest=trajectory_result.generation_manifest,
+                    mutated_estate=trajectory_result.transformed_estate,
+                )
 
     analysis = analyze_reports(reports)
 
@@ -237,5 +356,9 @@ def run_experiment(
         (resolved_output_dir / "analysis.json").write_text(analysis_to_json(analysis), encoding="utf-8")
 
     return ExperimentRunResult(
-        reports=reports, analysis=analysis, output_dir=resolved_output_dir, artifacts_by_label=artifacts_by_label
+        reports=reports,
+        analysis=analysis,
+        output_dir=resolved_output_dir,
+        artifacts_by_label=artifacts_by_label,
+        baseline_artifacts_by_label=baseline_artifacts_by_label,
     )

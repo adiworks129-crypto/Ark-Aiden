@@ -24,6 +24,7 @@ from __future__ import annotations
 import ast
 import inspect
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -179,6 +180,70 @@ class TestTrajectorySpecBuilding(unittest.TestCase):
         )
         self.assertIsNone(specs[0].generator_config.domain)
 
+    def test_run_name_prefixes_every_label_in_the_batch(self):
+        specs = logic.build_trajectory_specs(
+            logic.ESTATE_SOURCE_MILESTONE1, "level_1_minor", seed=5, num_trajectories=3, run_name="my-run",
+        )
+        self.assertEqual(
+            [s.label for s in specs],
+            ["my-run-level_1_minor-seed5", "my-run-level_1_minor-seed6", "my-run-level_1_minor-seed7"],
+        )
+
+    def test_run_name_defaults_to_none_and_reproduces_the_exact_prior_label_shape(self):
+        """Backward compatibility: every existing caller/test (including
+        every test above this one in this class) never passes run_name at
+        all -- confirms that omitting it still produces the exact
+        unprefixed label shape those tests already assert on."""
+        with_default = logic.build_trajectory_specs(
+            logic.ESTATE_SOURCE_MILESTONE1, "level_1_minor", seed=5, num_trajectories=2
+        )
+        explicit_none = logic.build_trajectory_specs(
+            logic.ESTATE_SOURCE_MILESTONE1, "level_1_minor", seed=5, num_trajectories=2, run_name=None,
+        )
+        self.assertEqual([s.label for s in with_default], ["level_1_minor-seed5", "level_1_minor-seed6"])
+        self.assertEqual([s.label for s in with_default], [s.label for s in explicit_none])
+
+    def test_empty_string_run_name_also_produces_the_unprefixed_label_shape(self):
+        """slugify_run_name() never returns "" (it falls back to "estate"),
+        but build_trajectory_specs() itself treats a falsy run_name (None
+        or "") as "no prefix" -- confirms that boundary explicitly."""
+        specs = logic.build_trajectory_specs(
+            logic.ESTATE_SOURCE_MILESTONE1, "level_1_minor", seed=5, num_trajectories=1, run_name="",
+        )
+        self.assertEqual(specs[0].label, "level_1_minor-seed5")
+
+
+class TestRunNameHelpers(unittest.TestCase):
+    """suggest_run_name() / slugify_run_name() -- the two new helpers
+    behind app.py's "Estate name" field."""
+
+    def test_suggest_run_name_matches_the_expected_timestamp_shape(self):
+        name = logic.suggest_run_name()
+        self.assertRegex(name, r"^run-\d{8}-\d{6}$")
+
+    def test_suggest_run_name_is_already_a_safe_slug(self):
+        """Whatever suggest_run_name() produces should round-trip through
+        slugify_run_name() unchanged -- it's the *default* value of a field
+        that always gets slugified before use, so it should never itself
+        get mangled."""
+        name = logic.suggest_run_name()
+        self.assertEqual(logic.slugify_run_name(name), name)
+
+    def test_slugify_lowercases_and_replaces_spaces_and_punctuation(self):
+        self.assertEqual(logic.slugify_run_name("  My Cool Run!! #3  "), "my-cool-run-3")
+
+    def test_slugify_collapses_repeated_separators(self):
+        self.assertEqual(logic.slugify_run_name("a---b   c"), "a-b-c")
+
+    def test_slugify_empty_string_falls_back_to_estate(self):
+        self.assertEqual(logic.slugify_run_name(""), "estate")
+
+    def test_slugify_all_punctuation_falls_back_to_estate(self):
+        self.assertEqual(logic.slugify_run_name("!!!"), "estate")
+
+    def test_slugify_preserves_an_already_safe_name(self):
+        self.assertEqual(logic.slugify_run_name("already-safe-name"), "already-safe-name")
+
 
 class TestDomainInjectionUiWiring(unittest.TestCase):
     """Regression coverage for the "domain_injection_preview produces zero
@@ -231,6 +296,7 @@ class TestRunUiExperimentWithoutApiKeys(unittest.TestCase):
         self.assertEqual(run_result.analysis.report_count, 2)
         self.assertEqual(set(logic.trajectory_labels(run_result)), {"level_1_minor-seed1", "level_1_minor-seed2"})
         self.assertEqual(set(run_result.artifacts_by_label.keys()), set(logic.trajectory_labels(run_result)))
+        self.assertEqual(set(run_result.baseline_artifacts_by_label.keys()), set(logic.trajectory_labels(run_result)))
 
     def test_generator_estate_source_also_runs_offline(self):
         specs = logic.build_trajectory_specs(
@@ -240,6 +306,50 @@ class TestRunUiExperimentWithoutApiKeys(unittest.TestCase):
         run_result = logic.run_ui_experiment(specs, client)
         self.assertEqual(len(run_result.reports), 1)
         self.assertIsNotNone(run_result.reports[0].metadata.generator_version)
+
+
+class TestRunUiExperimentPersistence(unittest.TestCase):
+    """The live "Run Experiment" feature this task adds: app.py always
+    calls run_ui_experiment(..., output_dir=..., save_estates=True) now,
+    using a run-name-derived output_dir under logic.UI_RUNS_ROOT. This is
+    a thin passthrough to ark.experiment.runner.run_experiment() (already
+    tested exhaustively in tests/test_estate_persistence.py), so these
+    tests only confirm the passthrough itself actually reaches disk --
+    not re-testing save_estate()/load_estate() internals again here."""
+
+    def test_save_estates_and_output_dir_passthrough_actually_persists_to_disk(self):
+        run_name = logic.slugify_run_name("My Live Run")
+        with tempfile.TemporaryDirectory() as tmp:
+            output_dir = str(Path(tmp) / logic.UI_RUNS_ROOT / run_name)
+            specs = logic.build_trajectory_specs(
+                logic.ESTATE_SOURCE_MILESTONE1, "level_1_minor", seed=1, num_trajectories=1, run_name=run_name,
+            )
+            client = logic.build_agent_client(logic.AGENT_CHOICE_SCRIPTED)
+
+            run_result = logic.run_ui_experiment(specs, client, output_dir=output_dir, save_estates=True)
+
+            estates_dir = Path(output_dir) / "estates"
+            label = specs[0].label
+            self.assertEqual(len(run_result.reports), 1)
+            self.assertTrue((estates_dir / label / "ground_truth.json").is_file())
+            self.assertTrue((estates_dir / label / "manifest.json").is_file())
+            self.assertTrue((estates_dir / label / "rendered").is_dir())
+
+    def test_omitting_output_dir_and_save_estates_persists_nothing_exactly_as_before(self):
+        """Confirms run_ui_experiment()'s defaults (output_dir=None,
+        save_estates=False) still mean "don't touch disk at all" -- the
+        exact prior behavior every other test in this file (which never
+        passes either kwarg) already depends on."""
+        specs = logic.build_trajectory_specs(
+            logic.ESTATE_SOURCE_MILESTONE1, "level_1_minor", seed=1, num_trajectories=1
+        )
+        client = logic.build_agent_client(logic.AGENT_CHOICE_SCRIPTED)
+        # No exception, no output_dir required -- and nothing else in this
+        # test touches the filesystem, so a silent write would only be
+        # caught by the many other tests in this file that never pass
+        # save_estates at all; this test just documents the contract.
+        run_result = logic.run_ui_experiment(specs, client)
+        self.assertEqual(len(run_result.reports), 1)
 
 
 class TestResultsDisplayExtraction(unittest.TestCase):
@@ -535,6 +645,56 @@ class TestArtifactViewerIsolation(unittest.TestCase):
         self.assertNotIn("manifest", ui_artifacts)
         for internal_id in independent_rendered.manifest["entity_index"]:
             self.assertNotIn(internal_id, ui_artifacts.keys())
+
+    def test_original_artifacts_for_label_matches_a_fresh_independent_render_of_the_baseline(self):
+        """Same spirit and same technique as
+        test_artifacts_for_label_matches_a_fresh_independent_render_exactly
+        above, but for the new "before mutation" side: independently
+        re-derive the same deterministic baseline estate and render it
+        directly (no run_trajectory() call at all, since the baseline is
+        by definition pre-mutation), then confirm
+        logic.original_artifacts_for_label() is byte-for-byte identical."""
+        from ark.adapters.mulesoft.adapter import MuleSoftAdapter
+        from ark.core.validate import validate_ground_truth
+
+        specs = logic.build_trajectory_specs(logic.ESTATE_SOURCE_MILESTONE1, "level_2_structural", seed=7, num_trajectories=1)
+        client = logic.build_agent_client(logic.AGENT_CHOICE_SCRIPTED)
+        run_result = logic.run_ui_experiment(specs, client)
+        ui_original_artifacts = logic.original_artifacts_for_label(run_result, specs[0].label)
+
+        baseline = validate_ground_truth(logic.MILESTONE1_GROUND_TRUTH)
+        independent_baseline_rendered = MuleSoftAdapter().render(baseline)
+
+        self.assertEqual(ui_original_artifacts, independent_baseline_rendered.artifacts)
+        self.assertNotIn("manifest", ui_original_artifacts)
+
+    def test_original_artifacts_differ_from_visible_artifacts_when_a_mutation_actually_ran(self):
+        """A sanity check that the new "Original ground truth estate"
+        section actually shows something distinct, not an accidental
+        duplicate of the "Visible to Agent" section: under a profile that
+        does mutate the Milestone-1 estate, the pre-mutation and
+        post-mutation renders must not be identical."""
+        specs = logic.build_trajectory_specs(logic.ESTATE_SOURCE_MILESTONE1, "level_3_legacy", seed=1, num_trajectories=1)
+        client = logic.build_agent_client(logic.AGENT_CHOICE_SCRIPTED)
+        run_result = logic.run_ui_experiment(specs, client)
+
+        visible_artifacts = logic.artifacts_for_label(run_result, specs[0].label)
+        original_artifacts = logic.original_artifacts_for_label(run_result, specs[0].label)
+
+        self.assertNotEqual(visible_artifacts, original_artifacts)
+
+    def test_original_artifacts_for_label_is_a_plain_rendered_dict_too(self):
+        """The isolation guard applies just as well to the "before
+        mutation" side -- it's still just rendered file content, never
+        evaluator metadata -- so it must pass the same structural check
+        used on the agent-visible artifacts."""
+        specs = logic.build_trajectory_specs(logic.ESTATE_SOURCE_MILESTONE1, "level_1_minor", seed=1, num_trajectories=1)
+        client = logic.build_agent_client(logic.AGENT_CHOICE_SCRIPTED)
+        run_result = logic.run_ui_experiment(specs, client)
+        original_artifacts = logic.original_artifacts_for_label(run_result, specs[0].label)
+        # Should not raise.
+        logic.assert_artifacts_contain_no_evaluator_metadata(original_artifacts)
+        self.assertTrue(all(isinstance(k, str) and isinstance(v, str) for k, v in original_artifacts.items()))
 
 
 class TestAnthropicAgentIsolation(unittest.TestCase):

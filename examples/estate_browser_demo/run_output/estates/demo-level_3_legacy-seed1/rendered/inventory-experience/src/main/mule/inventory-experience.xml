@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <http:listener-config name="HTTP_Listener_config">
+        <http:listener-connection host="0.0.0.0" port="8081"/>
+    </http:listener-config>
+    <http:request-config name="HTTP_Request_config">
+        <http:request-connection host="localhost" port="8082"/>
+    </http:request-config>
+
+    <flow name="inventory-experience-main-flow-copy2">
+        <http:listener config-ref="HTTP_Listener_config" path="/inventory/{id}" allowedMethods="GET"/>
+        <http:request method="POST" path="/inventory/process" config-ref="HTTP_Request_config" doc:name="Call Inventory Process API"/>
+        <ee:transform doc:name="Build Inventory Response">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    InventoryId: attributes.uriParams.id,
+    status: "OK"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+        <flow-ref name="inventory-experience-sub-flow"/>
+    </flow>
+
+    <sub-flow name="inventory-experience-sub-flow">
+        <logger level="INFO" message="Inventory experience request received"/>
+    </sub-flow>
+
+</mule>

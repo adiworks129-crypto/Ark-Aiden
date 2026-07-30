@@ -19,6 +19,22 @@ TestHttpConnectorConfigRefsResolve).
 No new trajectory batches are run here -- every test uses the existing
 Milestone 1 hand-authored estate, same as every prior session in this
 thread.
+
+Session F addendum ("Wire HTTP Connector Validator Into the Pipeline"):
+Task 0 of that session re-investigated whether this wiring already
+existed, since a later report (domain_injection_preview-seed1) showed a
+populated rendering_validation block and it wasn't obvious from that
+report alone whether this file's own wiring was responsible. Confirmed,
+with direct evidence (grepping every rendering_validation/
+validate_rendered_estate_safe call site, and independently re-rendering
+Milestone 1 and running validate_rendered_estate() against it by hand):
+this wiring is exactly what this file already tests, has run
+systematically and profile-agnostically since before that later session,
+and nothing about it needed to change. The two test classes added at the
+bottom of this file (TestCleanRenderedEstateReportsFullyValid,
+TestDeferredDocNameBugStillPresent) close the two specific, real gaps
+that investigation found in this file's existing coverage -- everything
+else in Session F's scope was already satisfied by what's above.
 """
 
 from __future__ import annotations
@@ -37,7 +53,7 @@ from ark.evaluator.report import EvaluationReport, report_from_dict, report_to_j
 from ark.experiment.runner import run_trajectory_spec, run_trajectory_spec_with_artifacts
 from ark.experiment.spec import TrajectorySpec
 from ark.harness.scripted_client import ScriptedAgentClient
-from ark.validation.pipeline import RenderingValidationSummary, validate_rendered_estate_safe
+from ark.validation.pipeline import RenderingValidationSummary, validate_rendered_estate, validate_rendered_estate_safe
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MILESTONE1_GROUND_TRUTH = str(REPO_ROOT / "examples" / "milestone1" / "ground_truth.json")
@@ -303,6 +319,103 @@ class TestRenderingValidationSerializationRoundTrip(unittest.TestCase):
         del data["rendering_validation"]
         reloaded = report_from_dict(data)
         self.assertIsNone(reloaded.rendering_validation)
+
+
+class TestCleanRenderedEstateReportsFullyValid(unittest.TestCase):
+    """The one gap Session F's Task 0 investigation found in this file's
+    existing coverage: every other test that exercises real, adapter-
+    rendered output (Milestone 1, generated estates) inevitably also hits
+    the separate, pre-existing, still-unfixed doc:name attribute-namespace
+    bug (see TestDeferredDocNameBugStillPresent below) -- so nothing here
+    could previously assert is_valid=True/total_issues=0 without either
+    overclaiming or depending on that bug being fixed first (out of scope
+    for this session either way). A hand-written, independently-verified-
+    valid XML fixture (same snippet shape
+    tests/test_http_connector_validation.py's own TestValidDocuments class
+    already establishes as valid against the real schema) sidesteps that
+    entirely: this is a fixture-level RenderedEstate, not a real adapter
+    render, specifically so it can be genuinely, provably clean."""
+
+    _VALID_XML = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<mule xmlns="http://www.mulesoft.org/schema/mule/core"\n'
+        '      xmlns:http="http://www.mulesoft.org/schema/mule/http">\n'
+        '  <http:listener-config name="HTTP_Listener_config" basePath="api">\n'
+        '    <http:listener-connection host="0.0.0.0" port="8081"/>\n'
+        "  </http:listener-config>\n"
+        '  <http:request-config name="HTTP_Request_config">\n'
+        '    <http:request-connection host="localhost" port="8082"/>\n'
+        "  </http:request-config>\n"
+        '  <flow name="server">\n'
+        '    <http:listener path="/orders" allowedMethods="GET" config-ref="HTTP_Listener_config"/>\n'
+        '    <http:request method="POST" path="/downstream" config-ref="HTTP_Request_config"/>\n'
+        "  </flow>\n"
+        "</mule>\n"
+    )
+
+    def test_a_genuinely_clean_rendered_estate_is_reported_fully_valid(self):
+        rendered = RenderedEstate(
+            artifacts={"CleanApp/src/main/mule/CleanApp.xml": self._VALID_XML},
+            manifest={},
+        )
+        summary = validate_rendered_estate(rendered)
+
+        self.assertTrue(summary.is_valid)
+        self.assertEqual(summary.total_issues, 0)
+        self.assertEqual(summary.issues_by_artifact, {})
+        self.assertIsNone(summary.validation_error)
+
+    def test_a_non_xml_artifact_alongside_the_clean_xml_is_ignored_not_flagged(self):
+        """Confirms the existing "only .xml artifacts are validated"
+        decision (pipeline.py's own module docstring) holds for the
+        clean-fixture case too -- a .yaml sibling artifact shouldn't be
+        able to introduce a false issue or a false is_valid=False."""
+        rendered = RenderedEstate(
+            artifacts={
+                "CleanApp/src/main/mule/CleanApp.xml": self._VALID_XML,
+                "CleanApp/src/main/resources/api-clean-app-v1.yaml": "openapi: 3.0.0\ninfo:\n  title: whatever\n",
+            },
+            manifest={},
+        )
+        summary = validate_rendered_estate(rendered)
+
+        self.assertTrue(summary.is_valid)
+        self.assertEqual(summary.total_issues, 0)
+
+
+class TestDeferredDocNameBugStillPresent(unittest.TestCase):
+    """Session F's Task 0 explicitly asks to reconfirm (not fix) the
+    previously-deferred doc:name attribute-namespace bug. This is that
+    reconfirmation as an executable check, not just a prose claim in a
+    session summary -- run against the REAL Milestone 1 estate through
+    the real, unmodified adapter, exactly the scenario the seed1
+    domain_injection_preview report's own rendering_validation block
+    (mentioned in this session's Context) independently corroborates."""
+
+    def test_the_doc_name_attribute_bug_is_still_present_on_real_milestone1_output(self):
+        estate = validate_ground_truth(MILESTONE1_GROUND_TRUTH)
+        rendered = MuleSoftAdapter().render(estate)
+        summary = validate_rendered_estate(rendered)
+
+        doc_name_attribute = "{http://www.mulesoft.org/schema/mule/documentation}name"
+        doc_name_issues = [
+            issue
+            for issues in summary.issues_by_artifact.values()
+            for issue in issues
+            if issue["attribute"] == doc_name_attribute
+        ]
+
+        self.assertTrue(
+            doc_name_issues,
+            "Expected the previously-deferred doc:name attribute-namespace bug to still be "
+            "present -- if this now fails, the bug may have been fixed elsewhere; re-flag and "
+            "update/remove this test deliberately rather than assuming it's stale.",
+        )
+        for issue in doc_name_issues:
+            self.assertEqual(issue["element"], "http:request")
+        # Not fixed here, per this session's own DO NOT TOUCH list -- this
+        # test exists to reconfirm and re-flag, not to resolve it.
+        self.assertFalse(summary.is_valid)
 
 
 if __name__ == "__main__":

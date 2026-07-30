@@ -39,6 +39,9 @@ from ark.ui import logic
 
 st.set_page_config(page_title="Ark — Interactive Experiment Runner", layout="wide")
 
+from ark.ui.theme import apply_theme  # styling only -- no data, layout or behaviour
+apply_theme()
+
 st.title("Ark — Interactive Experiment Runner")
 st.caption(
     "A local, single-user demo of Ark's full pipeline: Generator → Mutation Engine → "
@@ -69,6 +72,21 @@ with st.sidebar:
         "These controls decide what gets built and who evaluates it — nothing runs "
         "until you click **Run Experiment** below."
     )
+
+    if "suggested_run_name" not in st.session_state:
+        st.session_state["suggested_run_name"] = logic.suggest_run_name()
+    estate_name = st.text_input(
+        "Estate name",
+        value=st.session_state["suggested_run_name"],
+        help=(
+            "Every trajectory this run produces is saved to disk under this name — "
+            "find it later in the Project Browser page's saved-estates list. Doesn't "
+            "need to be unique forever, just intuitive to you right now."
+        ),
+    )
+    run_name_slug = logic.slugify_run_name(estate_name)
+
+    st.markdown("---")
 
     agent_choice = st.selectbox(
         "Agent",
@@ -194,16 +212,21 @@ if run_clicked:
         try:
             agent_client = logic.build_agent_client(agent_choice)
             specs = logic.build_trajectory_specs(
-                estate_source, profile_name, int(seed), int(num_trajectories), domain=domain,
+                estate_source, profile_name, int(seed), int(num_trajectories),
+                domain=domain, run_name=run_name_slug,
             )
+            output_dir = f"{logic.UI_RUNS_ROOT}/{run_name_slug}"
             with st.spinner(
                 f"Running {len(specs)} trajectories: Generator → Mutation Engine → Renderer → "
                 "Agent Harness → Evaluator → Analysis..."
             ):
-                st.session_state["run_result"] = logic.run_ui_experiment(specs, agent_client)
+                st.session_state["run_result"] = logic.run_ui_experiment(
+                    specs, agent_client, output_dir=output_dir, save_estates=True,
+                )
                 st.session_state["agent_choice"] = agent_choice
                 st.session_state["estate_source"] = estate_source
                 st.session_state["profile_name"] = profile_name
+                st.session_state["saved_estates_dir"] = f"{output_dir}/estates"
                 # Read off the constructed client itself (never a hardcoded
                 # per-choice string), so this stays accurate even if the demo
                 # model constants change later -- see agent_model_label()'s
@@ -228,6 +251,11 @@ labels = logic.trajectory_labels(run_result)
 st.success(
     f"Ran {len(labels)} trajectories with **{st.session_state.get('agent_choice', '?')}**."
 )
+if st.session_state.get("saved_estates_dir"):
+    st.caption(
+        f"Estates saved to `{st.session_state['saved_estates_dir']}` — open the **Project "
+        "Browser** page in the sidebar to browse them."
+    )
 selected_label = st.selectbox("Select trajectory to inspect", labels)
 report = logic.report_for_label(run_result, selected_label)
 
@@ -372,7 +400,7 @@ else:
     scatter_df = pd.DataFrame(scatter_rows)
     points_chart = (
         alt.Chart(scatter_df)
-        .mark_circle(size=90, opacity=0.75, color="#4C78A8")
+        .mark_circle(size=90, opacity=0.75, color="#b68235")
         .encode(
             x=alt.X("complexity_score:Q", title="Complexity score"),
             y=alt.Y("category_f1:Q", title="Category F1", scale=alt.Scale(domain=[0, 1])),
@@ -400,7 +428,7 @@ else:
         )
         trend_chart = (
             alt.Chart(trend_df)
-            .mark_line(color="firebrick", strokeDash=[6, 3])
+            .mark_line(color="#7d5411", strokeDash=[6, 3])
             .encode(x="complexity_score:Q", y="category_f1:Q")
         )
         combined_chart = combined_chart + trend_chart
@@ -472,7 +500,7 @@ else:
     calibration_df = pd.DataFrame(calibration_rows)
     calibration_points = (
         alt.Chart(calibration_df)
-        .mark_circle(size=90, opacity=0.75, color="#E45756")
+        .mark_circle(size=90, opacity=0.75, color="#b68235")
         .encode(
             x=alt.X("complexity_score:Q", title="Complexity score"),
             y=alt.Y("brier_score:Q", title="Brier score (lower is better)", scale=alt.Scale(domain=[0, 1])),
@@ -503,7 +531,7 @@ else:
         )
         calibration_trend_chart = (
             alt.Chart(calibration_trend_df)
-            .mark_line(color="firebrick", strokeDash=[6, 3])
+            .mark_line(color="#7d5411", strokeDash=[6, 3])
             .encode(x="complexity_score:Q", y="brier_score:Q")
         )
         combined_calibration_chart = combined_calibration_chart + calibration_trend_chart
@@ -573,6 +601,27 @@ with st.expander("Ground truth / mutation ledger / evaluator metadata for this t
     st.dataframe(pd.DataFrame(issue_rows) if issue_rows else pd.DataFrame(), use_container_width=True)
     st.markdown("**Raw agent output (as parsed):**")
     st.json(report.raw_agent_output)
+
+with st.expander("Original ground truth estate (before mutation)"):
+    st.caption(
+        "The same estate the 'Visible to Agent' artifacts above were derived from, "
+        "rendered through the same adapter but BEFORE this trajectory's mutation "
+        "profile ran. The agent never saw this either -- it's here so you can pick "
+        "the same file name in both selectors and diff them to see exactly what "
+        "this trajectory's mutation profile changed."
+    )
+    original_artifacts = logic.original_artifacts_for_label(run_result, selected_label)
+    original_artifact_path = st.selectbox(
+        "Original artifact file", sorted(original_artifacts), key="original_artifact_path"
+    )
+    original_language = (
+        "xml"
+        if original_artifact_path.endswith(".xml")
+        else "yaml"
+        if original_artifact_path.endswith(".yaml")
+        else "text"
+    )
+    st.code(original_artifacts[original_artifact_path], language=original_language)
 
 # ---------------------------------------------------------------------------
 # 6. Export
